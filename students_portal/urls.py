@@ -10,5 +10,6 @@ urlpatterns = patterns(
     url(r'^$', home, name='home'),
     url(r'^portal/', include(urls_from_portal, namespace='portal')),
     url(r'^forum/', include(urls_from_forum, namespace='forum')),
+#    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
