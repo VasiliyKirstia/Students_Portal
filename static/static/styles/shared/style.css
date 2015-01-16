@@ -1,12 +1,12 @@
 body {
-	background: url("../images/footer.jpg") no-repeat center bottom;
+	background: url("../../images/shared/footer.jpg") no-repeat center bottom;
 	background-color:#747D82;
 	margin:0px;
 	font-family:Verdana;
 	font-size:11px;
 }
 #wrap {
-	background: url("../images/bg.jpg") center 0px no-repeat;
+	background: url("../../images/shared/bg.jpg") center 0px no-repeat;
 	width:100%;
 }
 
@@ -61,7 +61,7 @@ body {
 	background:transparent;
 }
 #logo {
-	background:url("../images/logo.png") no-repeat;
+	background:url("../../images/shared/logo.png") no-repeat;
 	width:439px;
 	height:115px;
 	position:relative;
@@ -74,7 +74,7 @@ body {
 	display:block;
 }
 .mh, .mt, .mw, .mi, .pop_posts, .rss, .twitt, #TwitterCounter, #submit {
-	background:url("../images/sprite.png") no-repeat;
+	background:url("../../images/shared/sprite.png") no-repeat;
 }
 #menu {
 	width:460px;
@@ -116,7 +116,7 @@ body {
 	min-height:1560px;
 	background-color:#FFF;
 	position:relative;
-	background:url("../images/cnt.jpg") repeat-y;
+	background:url("../../images/shared/cnt.jpg") repeat-y;
 	margin:0 auto;
 }
 #lcnt {
@@ -221,7 +221,7 @@ body {
 	position:relative;
 }
 .rss_twitt {
-	background:url("../images/rss_twitt_bg.png") no-repeat;
+	background:url("../../images/shared/rss_twitt_bg.png") no-repeat;
 	width:220px;
 	height:100px;
 	margin:10px 0 0 35px;
@@ -360,7 +360,7 @@ body {
 	margin:0 0 50px 0;
 }
 .comm_hdr, #cmnt_frm {
-	background:url("../images/form.jpg") no-repeat;
+	background:url("../../images/shared/form.jpg") no-repeat;
 }
 .comm_hdr {
 	background-position: 0 0;
