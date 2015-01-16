@@ -12,3 +12,4 @@ urlpatterns = patterns(
     url(r'^forum/', include(urls_from_forum, namespace='forum')),
     url(r'^admin/', include(admin.site.urls)),
 )
+
