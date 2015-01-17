@@ -1,98 +1,160 @@
 {% load staticfiles %}
-
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head lang="en">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/shared/style.css' %}" />
-    <title>{% block title %} Общага № 7 {% endblock title %}</title>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{% block title %} {% endblock title %}</title>
+<link href="{% static 'styles/shared/style.css' %}" rel="stylesheet" type="text/css" />
 </head>
-
 <body>
-    <!-- Wrap Div -->
-    <div id="wrap">
 
-        <!-- Header -->
-        <div id="hdr">
-
-            <!-- Top Menu -->
-            <div id="hdl">
-                <a href="#" class="hl">О Нас</a>
-                <a href="#" class="hl">Контакты</a>
-                <a href="#" class="hl">Войти</a>
-            </div>
-
-            <!-- Search form -->
-            <form id="search_form" method="get" action="">
-                <input class="search_field" type="text" placeholder="Найти" name="s" id="s" />
-                <input class="search_button" type="submit" value="" id="searchsubmit" />
-
+<div id="templatemo_body_wrapper">
+<div id="templatemo_wrapper">
+    
+    <div id="templatemo_header">
+            
+        <div id="site_title">
+            <a href="#" target="_parent">
+                Общежитие
+            	<span>№ 7</span>
+                <span class="tagline">Кто не жил в общаге - тот не был студентом.</span>
+            </a>
+        </div> <!-- end of site_title -->
+        
+        <div id="search_box">
+            <form action="#" method="get">
+                <input type="text" placeholder="Искать..." name="q" size="10" id="searchfield" title="searchfield"/>
+              <input type="submit" name="Search" value="Поехали" id="searchbutton" />
             </form>
-
-            <!-- Logo -->
-            <div id="logo">
-                <a href="index.html"></a>
-            </div>
-
-            <!-- Main Menu -->
-            <div id="menu">
-                <a class="mh" href="#">Главная</a>
-                <a class="mt" href="#">Форум</a>
-                <a class="mw" href="#">Фильмы</a>
-                <a class="mi" href="#">нечто</a>
-            </div>
-
         </div>
-
-        <!-- Container -->
-        <div id="cnt">
-
-            <!-- Left Container -->
-            <div id="lcnt">
-                {% block left_container %} {% endblock left_container %}
-            </div>
-
-            <!-- Right Container -->
-            <div id="rcnt">
-                {% block right_container %} {% endblock right_container %}
-            </div>
-
-            <br style="clear: both;" />
-
+    
+   
+        <div class="cleaner"></div>
+        
+    </div> <!-- end of header -->
+    
+    <div id="templatemo_menu">
+        <ul>
+            <li><a href="#" class="current"><span></span>Главная</a></li>
+            <li><a href="#"><span></span>Форум</a></li>
+            <li><a href="#"><span></span>Фильмы</a></li>
+            <li><a href="#"><span></span>Книги</a></li>
+            <li><a href="#"><span></span>Кое-что еще</a></li>
+        </ul>    	
+        
+        <div id="register_box">
+        	<a href="#" class="signup">Вход</a> | <a href="#" class="new_reg">Регистрация</a>
         </div>
+    </div> <!-- end of templatemo_menu -->
+    
+    <div id="templatemo_main">
+    	
+        <div id="templatemo_content">
+            {% block content %} {% endblock content %}
+        </div>
+        
+        <div id="templatemo_sidebar">
 
+            {% block about_as %}
+            <div id="aboutus">
+            	<h3>О Разработчиках</h3>
+                <div class="image_fl"><img src="images/templatemo_about.jpg" alt="about this blog" /></div>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras volutpat aliquet risus, a ornare orci scelerisque et. <a href="#" class="continue">more...</a></p>
+            </div>
+            {% endblock about_as %}
+
+            {% block categories %}
+            <div class="sidebar_box">
+            	<h3>Категории</h3>
+                <ul class="sidebar_menu">
+                    <li><a href="#">&raquo; Web Design Tips <span>(260)</span></a></li>
+                    <li><a href="#">&raquo; Beautiful Wallpapers <span>(380)</span></a></li>
+                    <li><a href="#">&raquo; Free Fonts <span>(125)</span></a></li>
+                  	<li><a href="#">&raquo; Digital Illustrations <span>(215)</span></a></li>
+       		  </ul>
+            </div>
+            {% endblock categories %}
+            
+            {% block archive %}
+            <div class="sidebar_box">
+            	<h3>Архив</h3>
+                <ul class="sm_two_col">
+                    <li><a href="#">&raquo; February 2048</a></li>
+                    <li><a href="#">&raquo; January 2048</a></li>
+                    <li class="cleaner"><a href="#">&raquo; December 2047</a></li>
+                    <li><a href="#">&raquo; Novermber 2047</a></li>
+                    <li><a href="#">&raquo; October 2047</a></li>
+                    <li><a href="#">&raquo; September 2047</a></li>
+                </ul>
+                <div class="cleaner"></div>
+            </div>
+            {% endblock archive %}
+        
+        </div>
+    	<div class="cleaner"></div>
     </div>
+    
+</div>
+    <div class="cleaner"></div>
+</div>
 
-    <!-- Footer -->
-    <div id="foo">
 
-        <!-- Footer Container -->
-        <div id="foo_d">
+<div id="templatemo_footer_wrapper">
+	<div id="templatemo_footer">
 
-            <!-- Footer Menu -->
-            <div id="foo_menu">
-
-                <a href="#">Главная</a><span>.</span>
-                <a href="#">Форум</a><span>.</span>
-                <a href="#">Фильмы</a><span>.</span>
-                <a href="#">Нечно</a><span>.</span>
-                <a href="#">О Нас</a><span>.</span>
-                <a href="#">Контактная информация</a>
-
-            </div>
-            <!-- DryIcons credit: Do not remove the following code if you are using this template under the DryIcons Free License Terms of Use
-                     If you'd like to use this theme without the obligatory back-link to http://dryicons.com/ please
-                     consider using it under the DryIcons Commercial License Terms
-                     For details see http://dryicons.com/terms/ -->
-
-            <p>&copy;2009 blogair. All rights reserved. Template and Icons by <a target="_blank" href="http://dryicons.com">DryIcons</a>
-            </p>
-
+        {% block popular_topics %}
+    	<div class="footer_box col_w300">
+        	<h4>Темы форума</h4>
+            <ul class="footer_menu">
+            	<li><a href="#">Duis vitae velit sed lesuada dignissim</a></li>
+                <li><a href="#">Donec mollis aliquet ligula</a></li>
+                <li><a href="#">Maecenas adipiscing elementum ipsum</a></li>
+                <li><a href="#">Vivamus leo velit, convallis id</a></li>
+                <li><a href="#">Curabitur condimentum porttitor</a></li>
+            </ul>     
         </div>
+        {% endblock popular_topics %}
 
+        {% block popular_books %}
+        <div class="footer_box col_w160">
+        	<h4>Книги</h4>
+            <ul class="footer_menu">
+            	<li><a href="#">Lesuada digni</a></li>
+                <li><a href="#">Aliquet ligula</a></li>
+                <li><a href="#">Convallis id</a></li>
+                <li><a href="#">Maecenas adipis</a></li>
+                <li><a href="#">Porttitor</a></li>
+            </ul>     
+        </div>
+        {% endblock popular_books %}
+
+        {% block popular_films %}
+        <div class="footer_box col_w160">
+        	<h4>Фильмы</h4>
+            <ul class="footer_menu">
+            	<li><a href="http://www.flashmo.com/page/1" target="_parent">Flash Components</a></li>
+                <li><a href="http://www.templatemo.com/page/1" target="_parent">Website Templates</a></li>
+                <li><a href="http://www.webdesignmo.com/blog" target="_parent">Web Design</a></li>
+                <li><a href="http://www.templatemo.com" target="_parent">CSS Templates</a></li>
+                <li><a href="http://www.koflash.com" target="_parent">Flash Web Gallery</a></li>
+            </ul>     
+        </div>
+        {% endblock popular_films %}
+
+        {% block tag_cloud %}
+        <div class="footer_box col_w260 fb_last">
+        	<h4>Облако тегов</h4>
+            	<a href="#" style="font-size:12px">Aenean</a> <a href="#" style="font-size:11px">Cursus</a> <a href="#" style="font-size:16px">Maecenas</a> <a href="#" style="font-size:11px">Aliquam Ligula</a> <a href="#" style="font-size:20px">Egestas</a> <a href="#" style="font-size:16px">Suscipit</a> <a href="#" style="font-size:12px">Sapien</a> <a href="#" style="font-size:28px">Dignissim</a> <a href="#" style="font-size:14px">Vestibulum</a> <a href="#" style="font-size:12px">Lorem</a> <a href="#" style="font-size:14px">Urnain</a> <a href="#" style="font-size:20px">Neque</a> <a href="#" style="font-size:12px">Aenean</a>
+        </div>
+        {% endblock tag_cloud %}
+
+    	<div class="cleaner"></div>
     </div>
+</div>
+
+<div id="templatemo_copyright">
+    Copyright © 2015 <a href="#">Vaselisk_</a> | Студент физико-математического факультета ПГУ им. Т. Г. Шевченко
+</div>
 
 </body>
-
 </html>
