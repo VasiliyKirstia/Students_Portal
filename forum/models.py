@@ -1,21 +1,29 @@
 from django.db import models
 
 
-#class Author:
-#    id = models.AutoField(primary_key=True)
-#    name = models.CharField("имя автора", max_length=50)
-#    questions = models.ForeignKey(Question, verbose_name="все вопросы автора")
-#    comments = models.ForeignKey(Comment, verbose_name="все ответы автора")
-#
-#
-#class Question:
-#    id = models.AutoField(primary_key=True)
-#    question = models.CharField("вопрос",max_length=150)
-#    detail = models.TextField("дополнительное описание вопроса")
-#    create_date = models.DateTimeField("время создания вопроса")
-#    comments = models.ForeignKey(Comment, verbose_name="все коментарии к вопросу")
-#
-#class Comment:
-#    id = models.AutoField(primary_key=True)
-#    text = models.TextField("текст ответа")
-#    create_date = models.DateTimeField("дата создания")
+class Topic(models.Model):
+    id = models.AutoField(primary_key=True)
+    title = models.TextField()
+    text = models.TextField()
+    date = models.DateTimeField()
+    category = models.ForeignKey(Category)
+    author = models.ForeignKey(Author)
+
+
+class Category(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=250)
+
+
+class Answer(models.Model):
+    id = models.AutoField(primary_key=True)
+    text = models.TextField()
+    date = models.DateTimeField()
+    topic = models.ForeignKey(Topic)
+    author = models.ForeignKey(Author)
+
+
+class Author(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=10)
+
