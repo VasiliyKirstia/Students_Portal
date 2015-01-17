@@ -4,4 +4,5 @@ import forum.views as views
 urlpatterns = patterns(
     '',
     url(r'^$', views.index, name='home'),
+    url(r'^categories/$', views.category, name='category'),
 )
