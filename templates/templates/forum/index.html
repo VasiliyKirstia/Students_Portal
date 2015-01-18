@@ -1,30 +1,26 @@
 {% extends "shared/layout.html" %}
 
+{% block title %} Форум {% endblock title %}
 
-{% comment %}
-принимает словарь:
-{
-    "comment_list": список коментариев {autor{"name","photo"},"data","text"}
-}
-{% endcomment %}
+{% block content %}
+    {% for topic in topics %}
+        {% if forloop.last %}
+            <div class="post_box pb_last">
+        {% elif not forloop.last %}
+            <div class="post_box">
+        {% endif %}
+                <h2>
+                    <a href="{% url 'forum:detail' topic.id %}">{{ topic.title|truncatechars:34 }}</a>
+                </h2>
+                <div class="news_meta">
+                    Автор <a href="#">{{ topic.author.name }}</a>, {{ topic.date|date:"j M" }} | Категория: <a href="{% url 'forum:home' topic.category.id %}">{{ topic.category.name }}</a>
+                </div>
+                <p align="justify">
+                    {{ topic.text|truncatewords:35 }}
+                    <a href="{% url 'forum:detail' topic.id %}" class="continue">Подробнее.</a>
+                </p>
+                <div class="cleaner"></div>
 
-{% block title %} {{ title }} {% endblock title %}
-
-{% block left_container %}
-<div class="comments">
-    {% for comment in comment_list %}
-        {% block comment %}
-        <div class="comment">
-            <div class="comm_hdr">
-                <p>{{ comment.author.name }}<span> | {{ comment.data }}</span></p>
             </div>
-            <div class="avat">
-                <img src="images/avatar.jpg" alt="avatar" />
-                <img src="images/avatar_frame.png" alt="avatar_frame" class="avatar_frame" />
-            </div>
-            <p class="comm_txt"> {{ comment.text }} </p>
-        </div>
-        {% endblock comment %}
     {% endfor %}
-</div>
-{% endblock left_container %}
+{% endblock content %}

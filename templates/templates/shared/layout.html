@@ -36,7 +36,7 @@
     <div id="templatemo_menu">
         <ul>
             <li><a href="#" class="current"><span></span>Главная</a></li>
-            <li><a href="#"><span></span>Форум</a></li>
+            <li><a href="{% url 'forum:home' %}"><span></span>Форум</a></li>
             <li><a href="#"><span></span>Фильмы</a></li>
             <li><a href="#"><span></span>Книги</a></li>
             <li><a href="#"><span></span>Кое-что еще</a></li>
@@ -67,10 +67,9 @@
             <div class="sidebar_box">
             	<h3>Категории</h3>
                 <ul class="sidebar_menu">
-                    <li><a href="#">&raquo; Web Design Tips <span>(260)</span></a></li>
-                    <li><a href="#">&raquo; Beautiful Wallpapers <span>(380)</span></a></li>
-                    <li><a href="#">&raquo; Free Fonts <span>(125)</span></a></li>
-                  	<li><a href="#">&raquo; Digital Illustrations <span>(215)</span></a></li>
+                    {% for category, topics_count in category_list %}
+                  	    <li><a href="{% url 'forum:home' 1 %}">&raquo; {{ category }}{{ category.id }} <span>({{ topics_count }})</span></a></li>
+                    {% endfor %}
        		  </ul>
             </div>
             {% endblock categories %}
