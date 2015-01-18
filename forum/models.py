@@ -5,19 +5,28 @@ class Category(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=250)
 
+    def __str__(self):
+        return self.name
+
 
 class Author(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=10)
 
+    def __str__(self):
+        return self.name
+
 
 class Topic(models.Model):
     id = models.AutoField(primary_key=True)
-    title = models.TextField()
+    title = models.CharField(max_length=150)
     text = models.TextField()
     date = models.DateTimeField()
     category = models.ForeignKey(Category)
     author = models.ForeignKey(Author)
+
+    def __str__(self):
+        return self.title
 
 
 class Answer(models.Model):
@@ -26,5 +35,8 @@ class Answer(models.Model):
     date = models.DateTimeField()
     topic = models.ForeignKey(Topic)
     author = models.ForeignKey(Author)
+
+    def __str__(self):
+        return self.text[0:150]
 
 

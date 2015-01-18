@@ -6,14 +6,21 @@
     {% for topic in topics %}
         {% if forloop.last %}
             <div class="post_box pb_last">
-        {% if not forloop.last %}
+        {% elif not forloop.last %}
             <div class="post_box">
-        {% enfif %}
-                <h2><a href="#">{{ topic.title|truncatechars:34 }}</a></h2>
-                <div class="news_meta">Автор <a href="#">{{ topic.author.name }}</a>, {{ topic.date|date:"j F" }} | Категория: <a href="#">{{ topic.category.name }}</a>
-                    <p align="justify">{{ topic.text|truncatewords:70 }} <a href="#" class="continue">Подробнее.</a></p>
-                    <div class="cleaner"></div>
+        {% endif %}
+                <h2>
+                    <a href="#">{{ topic.title|truncatechars:34 }}</a>
+                </h2>
+                <div class="news_meta">
+                    Автор <a href="#">{{ topic.author.name }}</a>, {{ topic.date|date:"j M" }} | Категория: <a href="#">{{ topic.category.name }}</a>
                 </div>
+                <p align="justify">
+                    {{ topic.text|truncatewords:35 }}
+                    <a href="#" class="continue">Подробнее.</a>
+                </p>
+                <div class="cleaner"></div>
+
             </div>
     {% endfor %}
 {% endblock content %}
