@@ -54,41 +54,7 @@
         </div>
         
         <div id="templatemo_sidebar">
-
-            {% block about_as %}
-            <div id="aboutus">
-            	<h3>О Разработчиках</h3>
-                <div class="image_fl"><img src="images/templatemo_about.jpg" alt="about this blog" /></div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras volutpat aliquet risus, a ornare orci scelerisque et. <a href="#" class="continue">more...</a></p>
-            </div>
-            {% endblock about_as %}
-
-            {% block categories %}
-            <div class="sidebar_box">
-            	<h3>Категории</h3>
-                <ul class="sidebar_menu">
-                    {% for category, topics_count in category_list %}
-                  	    <li><a href="{% url 'forum:home' 1 %}">&raquo; {{ category }}{{ category.id }} <span>({{ topics_count }})</span></a></li>
-                    {% endfor %}
-       		  </ul>
-            </div>
-            {% endblock categories %}
-            
-            {% block archive %}
-            <div class="sidebar_box">
-            	<h3>Архив</h3>
-                <ul class="sm_two_col">
-                    <li><a href="#">&raquo; February 2048</a></li>
-                    <li><a href="#">&raquo; January 2048</a></li>
-                    <li class="cleaner"><a href="#">&raquo; December 2047</a></li>
-                    <li><a href="#">&raquo; Novermber 2047</a></li>
-                    <li><a href="#">&raquo; October 2047</a></li>
-                    <li><a href="#">&raquo; September 2047</a></li>
-                </ul>
-                <div class="cleaner"></div>
-            </div>
-            {% endblock archive %}
-        
+            {% block sidebar %} {% endblock sidebar %}
         </div>
     	<div class="cleaner"></div>
     </div>

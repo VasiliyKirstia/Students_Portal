@@ -1,4 +1,4 @@
-{% extends "shared/layout.html" %}
+{% extends "forum/layout.html" %}
 
 {% block title %} Форум {% endblock title %}
 
@@ -19,16 +19,15 @@
     {% for answer in answers %}
         {% if forloop.last %}
             <div class="post_box pb_last">
-        {% elif not forloop.last %}
+        {% else %}
             <div class="post_box">
         {% endif %}
-                <p align="justify">
-                    {{ topic.text|truncatewords:35 }}
-                    <a href="#" class="continue">Подробнее.</a>
-                </p>
                 <div class="news_meta">
-                    Автор <a href="#">{{ answer.author.name }}</a>, {{ answer.date|date:"j M" }}</a>
+                    <a href="#">{{ answer.author.name }}</a>, {{ answer.date|date:"j M G:i" }}</a>
                 </div>
+                <p align="justify">
+                    {{ answer.text }}
+                </p>
                 <div class="cleaner"></div>
             </div>
     {% endfor %}

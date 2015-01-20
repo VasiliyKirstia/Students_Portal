@@ -1,0 +1,12 @@
+{% extends "shared/layout.html" %}
+{% load forum_tags %}
+
+{% block sidebar %}
+
+    {% about_as %}
+
+    {% forum_categories_partial %}
+
+    {% forum_archive_partial %}
+
+{% endblock sidebar %}
