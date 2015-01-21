@@ -24,6 +24,7 @@ class Topic(models.Model):
     date = models.DateTimeField()
     category = models.ForeignKey(Category, related_name='topics')
     author = models.ForeignKey(Author, related_name='topics')
+    solved = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

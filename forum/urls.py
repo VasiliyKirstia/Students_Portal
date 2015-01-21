@@ -1,9 +1,10 @@
 from django.conf.urls import patterns, include, url
-import forum.views as views
+from forum.views import *
 
 urlpatterns = patterns(
     '',
-    url(r'^$', views.index, name='home'),
-    url(r'^(?P<category_id>\d+)/$', views.index, name='home'),
-    url(r'^detail/(?P<topic_id>\d+)/$', views.detail, name='detail'),
+    url(r'^$', TopicList.as_view(), name='home'),
+    url(r'^(?P<category_id>\d+)/$', TopicList.as_view(), name='home'),
+    url(r'^detail/(?P<topic_id>\d+)/$', TopicDetail.as_view(), name='detail'),
+    url(r'^topic/create/$', TopicCreate.as_view(), name='create_topic')
 )

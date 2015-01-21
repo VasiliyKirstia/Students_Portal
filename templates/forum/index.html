@@ -3,7 +3,7 @@
 {% block title %} Форум {% endblock title %}
 
 {% block content %}
-    {% for topic in topics %}
+    {% for topic in topic_list %}
         {% if forloop.last %}
             <div class="post_box pb_last">
         {% elif not forloop.last %}
