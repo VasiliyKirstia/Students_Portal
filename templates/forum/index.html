@@ -4,23 +4,43 @@
 
 {% block content %}
     {% for topic in topic_list %}
-        {% if forloop.last %}
-            <div class="post_box pb_last">
-        {% elif not forloop.last %}
-            <div class="post_box">
-        {% endif %}
-                <h2>
-                    <a href="{% url 'forum:detail' topic.id %}">{{ topic.title|truncatechars:34 }}</a>
-                </h2>
-                <div class="news_meta">
-                    Автор <a href="#">{{ topic.author.name }}</a>, {{ topic.date|date:"j M" }} | Категория: <a href="{% url 'forum:home' topic.category.id %}">{{ topic.category.name }}</a>
-                </div>
-                <p align="justify">
-                    {{ topic.text|truncatewords:35 }}
-                    <a href="{% url 'forum:detail' topic.id %}" class="continue">Подробнее.</a>
-                </p>
-                <div class="cleaner"></div>
-
+        <div class="post_box">
+            <h2>
+                <a href="{% url 'forum:detail' topic.id %}">{{ topic.title|truncatechars:34 }}</a>
+            </h2>
+            <div class="news_meta">
+                Автор <a href="#">{{ topic.author.name }}</a>, {{ topic.date|date:"j M" }} | Категория: <a href="{% url 'forum:home' topic.category.id %}">{{ topic.category.name }}</a>
+                | <a href="{% url 'forum:update_topic' topic.id %}">Редактировать</a> | <a href="{% url 'forum:delete_topic' topic.id %}">Удалить</a>
             </div>
+            <p align="justify">
+                {{ topic.text|truncatewords:35 }}
+                <a href="{% url 'forum:detail' topic.id %}" class="continue">Подробнее.</a>
+            </p>
+            <div class="cleaner"></div>
+        </div>
     {% endfor %}
+
+    {% if is_paginated %}
+    <div class="post_box pb_last">
+        <div class="page-links">
+            <span>
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+                {% endif %}
+
+                {% if page_obj.has_previous and page_obj.has_next %}
+                    |
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">следующая</a>
+                {% endif %}
+            </span>
+
+        </div>
+        <div class="cleaner"></div>
+    </div>
+    {% endif %}
+
 {% endblock content %}

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Category(models.Model):
@@ -12,6 +13,7 @@ class Category(models.Model):
 class Author(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=10)
+    #user = models.OneToOneField(User)
 
     def __str__(self):
         return self.name
