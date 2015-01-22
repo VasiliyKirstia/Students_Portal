@@ -9,6 +9,7 @@
         </h2>
         <div class="news_meta">
             Автор <a href="#">{{ topic.author.name }}</a>, {{ topic.date|date:"j M" }} | Категория: <a href="{% url 'forum:home' topic.category.id %}">{{ topic.category.name }}</a>
+            | <a href="{% url 'forum:update_topic' topic.id %}">Редактировать</a> | <a href="{% url 'forum:delete_topic' topic.id %}">Удалить</a>
         </div>
         <p align="justify">
             {{ topic.text }}
