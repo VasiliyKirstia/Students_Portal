@@ -22,14 +22,15 @@
                 <span class="tagline">Кто не жил в общаге - тот не был студентом.</span>
             </a>
         </div> <!-- end of site_title -->
-        
+
+        {% block search_box %}
         <div id="search_box">
             <form action="#" method="get">
-                <input type="text" placeholder="Искать..." name="q" size="10" id="searchfield" title="searchfield"/>
+                <input type="text" placeholder="Искать..." name="text" size="10" id="searchfield"/>
               <input type="submit" name="Search" value="Поехали" id="searchbutton" />
             </form>
         </div>
-    
+        {% endblock search_box %}
    
         <div class="cleaner"></div>
         

@@ -383,3 +383,40 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
     color: green;
     margin-left: auto;
 }
+
+/* мои добавления */
+
+.fieldWrapper{
+	padding: 5px;
+}
+
+.fieldWrapper input[type=text], .fieldWrapper textarea{
+	border: 1px solid gainsboro;
+    box-shadow: 1px 1px 0 1px lightcyan;
+    font-family: Times New Roman;
+    font-size: 15px;
+    padding: 5px;
+    width: 490px;
+}
+.fieldWrapper textarea{
+    resize: none;
+}
+.fieldWrapper label{
+	color: black;
+    display: block;
+    float: left;
+    font-size: 15px;
+    width: 100px;
+}
+.fieldWrapper input:focus, .fieldWrapper textarea:focus{
+	border: 1px solid gray;
+}
+
+.fieldWrapper input[type=submit]{
+ 	background-color: black;
+    border: 1px solid;
+    color: white;
+    font-family: Times New Roman;
+    font-size: 20px;
+    padding: 5px;
+}

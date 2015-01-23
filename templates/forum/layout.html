@@ -1,6 +1,15 @@
 {% extends "shared/layout.html" %}
 {% load forum_tags %}
 
+{% block search_box %}
+    <div id="search_box">
+        <form action="{% url 'forum:home' %}" method="post">
+            <input type="text" placeholder="Искать..." name="text" size="10" id="searchfield"/>
+          <input type="submit" value="Поехали" id="searchbutton" />
+        </form>
+    </div>
+{% endblock search_box %}
+
 {% block sidebar %}
 
     {% about_as %}
@@ -9,6 +18,6 @@
 
     {% forum_categories_partial %}
 
-    {% forum_archive_partial %}
+    {# {% forum_archive_partial %} #}
 
 {% endblock sidebar %}

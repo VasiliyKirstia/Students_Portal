@@ -1,9 +1,8 @@
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormMixin, FormView
 from django.views.generic import ListView, DetailView
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from forum.models import *
-from django import forms
 
 
 class TopicList(ListView):
@@ -19,35 +18,44 @@ class TopicList(ListView):
             return Topic.objects.all()
 
 
-class TopicDetail(DetailView):
-    model = Topic
-    pk_url_kwarg = 'topic_id'
-    template_name = 'forum/detail.html'
+class TopicAnswers(ListView, FormView):
+    paginate_by = 30
+    context_object_name = 'answer_list'
+    template_name = 'forum/answers.html'
 
-    form_class = Answer
-    success_url = reverse_lazy('forum:detail')
+    def get_queryset(self):
+        topic = get_object_or_404(Topic, id=self.kwargs['topic_id'])
+        return Answer.objects.filter(topic=topic)
 
     def get_context_data(self, **kwargs):
-        context = super(TopicDetail, self).get_context_data(**kwargs)
-        context['answer_list'] = Answer.objects.filter(topic=self.object)
+        context = super(TopicAnswers, self).get_context_data(**kwargs)
+        context['topic'] = get_object_or_404(Topic, id=self.kwargs['topic_id'])
         return context
+
+    def post(self, request, *args, **kwargs):
+        return redirect(request.path)
 
 
 class TopicCreate(CreateView):
     model = Topic
-    fields = ['title', 'text', 'date', 'category', 'author', 'solved']
+    fields = ['title', 'text', 'category', 'author', 'solved']
     success_url = reverse_lazy('forum:home')
-    template_name = 'forum/create.html'
+    template_name = 'forum/topic_create.html'
+
+    def form_valid(self, form):
+        return super(TopicCreate, self).form_valid(form)
+
 
 class TopicUpdate(UpdateView):
     model = Topic
-    fields = ['title', 'text', 'date', 'category', 'solved']
+    fields = ['title', 'text', 'category', 'solved']
     pk_url_kwarg = 'topic_id'
     success_url = reverse_lazy('forum:home')
-    template_name = 'forum/create.html'
+    template_name = 'forum/topic_create.html'
+
 
 class TopicDelete(DeleteView):
     model = Topic
     pk_url_kwarg = 'topic_id'
     success_url = reverse_lazy('forum:home')
-    template_name = 'forum/delete.html'
+    template_name = 'forum/topic_delete.html'

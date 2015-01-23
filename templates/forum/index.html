@@ -6,7 +6,7 @@
     {% for topic in topic_list %}
         <div class="post_box">
             <h2>
-                <a href="{% url 'forum:detail' topic.id %}">{{ topic.title|truncatechars:34 }}</a>
+                <a href="{% url 'forum:answers' topic.id %}">{{ topic.title|truncatechars:40 }}</a>
             </h2>
             <div class="news_meta">
                 Автор <a href="#">{{ topic.author.name }}</a>, {{ topic.date|date:"j M" }} | Категория: <a href="{% url 'forum:home' topic.category.id %}">{{ topic.category.name }}</a>
@@ -14,7 +14,7 @@
             </div>
             <p align="justify">
                 {{ topic.text|truncatewords:35 }}
-                <a href="{% url 'forum:detail' topic.id %}" class="continue">Подробнее.</a>
+                <a href="{% url 'forum:answers' topic.id %}" class="continue">Подробнее.</a>
             </p>
             <div class="cleaner"></div>
         </div>

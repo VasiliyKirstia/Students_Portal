@@ -1,0 +1,66 @@
+{% extends "forum/layout.html" %}
+
+{% block title %} Форум {% endblock title %}
+
+{% block content %}
+    <div class="post_box">
+        <h2>
+            <a href="#">{{ topic.title}}</a>
+        </h2>
+        <div class="news_meta">
+            Автор <a href="#">{{ topic.author.name }}</a>, {{ topic.date|date:"j M" }} | Категория: <a href="{% url 'forum:home' topic.category.id %}">{{ topic.category.name }}</a>
+            | <a href="{% url 'forum:update_topic' topic.id %}">Редактировать</a> | <a href="{% url 'forum:delete_topic' topic.id %}">Удалить</a>
+        </div>
+        <p align="justify">
+            {{ topic.text }}
+        </p>
+        <div class="cleaner"></div>
+    </div>
+
+    {% for answer in answer_list %}
+            <div class="post_box">
+                <div class="news_meta">
+                    <a href="#">{{ answer.author.name }}</a>, {{ answer.date|date:"j M G:i" }}</a>
+                </div>
+                <p align="justify">
+                    {{ answer.text }}
+                </p>
+                <div class="cleaner"></div>
+            </div>
+    {% endfor %}
+
+    <div class="post_box pb_last">
+        <form action="{% url 'forum:answers' topic.id %}" method="post">
+            {% csrf_token %}
+            <div class="fieldWrapper">
+                <textarea style="height: 100px;width: 600px;" name="text"></textarea>
+            </div>
+            <div class="fieldWrapper">
+                <input type="submit" value="Ответить" />
+            </div>
+        </form>
+    </div>
+
+    {% if is_paginated %}
+    <div class="post_box pb_last">
+        <div class="page-links">
+            <span>
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+                {% endif %}
+
+                {% if page_obj.has_previous and page_obj.has_next %}
+                    |
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">следующая</a>
+                {% endif %}
+            </span>
+
+        </div>
+        <div class="cleaner"></div>
+    </div>
+    {% endif %}
+{% endblock content %}
