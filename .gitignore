@@ -1,3 +1,5 @@
 *.sqlite3
 .idea/
 _pycache_/
+
+mainDataBase.sqlite3

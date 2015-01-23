@@ -51,12 +51,3 @@ class TopicDelete(DeleteView):
     pk_url_kwarg = 'topic_id'
     success_url = reverse_lazy('forum:home')
     template_name = 'forum/delete.html'
-
-
-class TopicForm(forms.Form):
-    title = forms.CharField(max_length=150)
-    text = forms.CharField(widget=forms.Textarea)
-    date = forms.DateTimeField(widget=forms.DateTimeBaseInput)
-    category = forms.InlineForeignKeyField(Category)
-    author = forms.InlineForeignKeyField(Author)
-    solved = forms.CheckboxInput
