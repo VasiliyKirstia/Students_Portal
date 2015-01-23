@@ -1,0 +1,22 @@
+{% extends "account/layout.html" %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+
+        {% for field in form.visible_fields %}
+        <div class="RegfieldWrapper">
+            {{ field.errors }}
+            {{ field.label_tag }} {{ field }}
+        </div>
+        {% endfor %}
+
+        <div class="fieldWrapper">
+            <input type="submit" value="Зарегистрироватья" />
+        </div>
+    </form>
+{% endblock content %}
