@@ -8,7 +8,7 @@ from django.template import RequestContext
 from django.core.context_processors import csrf
 
 
-def login(request):
+def log_in(request):
     ctx = {}
     if request.method == 'POST':
         username = request.POST['username']
@@ -26,7 +26,7 @@ def login(request):
     return render_to_response('account/login.html', ctx, context_instance=RequestContext(request))
 
 
-def logout(request):
+def log_out(request):
     logout(request)
     return redirect('forum:home')
 

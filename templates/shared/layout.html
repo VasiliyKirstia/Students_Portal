@@ -38,15 +38,21 @@
     
     <div id="templatemo_menu">
         <ul>
-            <li><a href="#" class="current"><span></span>Главная</a></li>
-            <li><a href="{% url 'forum:home' %}"><span></span>Форум</a></li>
-            <li><a href="#"><span></span>Фильмы</a></li>
-            <li><a href="#"><span></span>Книги</a></li>
-            <li><a href="#"><span></span>Кое-что еще</a></li>
+            <li><a href="#" {% block home_current %}{% endblock home_current %}><span></span>Главная</a></li>
+            <li><a href="{% url 'forum:home' %}" {% block forum_current %}{% endblock forum_current %}><span></span>Форум</a></li>
+            <li><a href="#" {% block films_current %}{% endblock films_current %}><span></span>Фильмы</a></li>
+            <li><a href="#" {% block books_current %}{% endblock books_current %}><span></span>Книги</a></li>
+            <li><a href="#" {% block somethink_current %}{% endblock somethink_current %}><span></span>Кое-что еще</a></li>
         </ul>    	
         
         <div id="register_box">
-        	<a href="{% url 'account:login' %}" class="signup">Вход</a> | <a href="{% url 'account:registration' %}" class="new_reg">Регистрация</a>
+            {% if not user.is_authenticated %}
+        	    <a href="{% url 'account:login' %}" class="signup">Вход</a> |
+                <a href="{% url 'account:registration' %}" class="new_reg">Регистрация</a>
+            {% else %}
+                <a href="#" class="new_reg">{{user.username}}</a> |
+                <a href="{% url 'account:logout' %}" class="signup">Выход</a>
+            {% endif %}
         </div>
     </div> <!-- end of templatemo_menu -->
     

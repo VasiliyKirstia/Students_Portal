@@ -1,9 +1,12 @@
 {% extends "shared/layout.html" %}
 {% load forum_tags %}
 
+{% block somethink_current %} class="current" {% endblock somethink_current %}
+
 {% block search_box %}
     <div id="search_box">
         <form action="{% url 'forum:home' %}" method="post">
+            {% csrf_token %}
             <input type="text" placeholder="Искать..." name="text" size="10" id="searchfield"/>
           <input type="submit" value="Поехали" id="searchbutton" />
         </form>

@@ -19,6 +19,7 @@ class Author(models.Model):
 
     name = models.CharField(max_length=10)
 
+    #TODO разобраться с этим
     #user = models.OneToOneField(User)
 
     def __str__(self):
