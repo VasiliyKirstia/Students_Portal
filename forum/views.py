@@ -15,12 +15,13 @@ class TopicList(ListView):
     template_name = 'forum/index.html'
 
     def get_queryset(self):
-        try:
-            #TODO выводить темы в порядке от новых к старым
-            category = get_object_or_404(Category, id=self.kwargs['category_id'])
-            return Topic.objects.filter(category=category)
-        except KeyError:
-            return Topic.objects.all()
+        #TODO выводить темы в порядке от новых к старым
+        if 'filter_by' in self.kwargs:
+            if self.kwargs['filter_by'] == 'category':
+                return Topic.objects.filter(category=get_object_or_404(Category, pk=self.kwargs['category_pk']))
+            elif self.kwargs['filter_by'] == 'author':
+                return Topic.objects.filter(user=get_object_or_404(User, pk=self.kwargs['user_pk']))
+        return Topic.objects.all()
 
 
 class TopicAnswers(ListView):

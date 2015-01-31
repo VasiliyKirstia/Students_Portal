@@ -8,11 +8,11 @@
             <a href="#">{{ topic.title}}</a>
         </h2>
         <div class="news_meta">
-            Автор <a href="#">{{ topic.user.first_name|default:topic.user.username }}</a>, {{ topic.date|date:"j M" }}
-            | Категория: <a href="{% url 'forum:home' topic.category.id %}">{{ topic.category.name }}</a>
+            Автор <a href="{% url 'forum:by-author' topic.user.pk %}">{{ topic.user.first_name|default:topic.user.username }}</a>, {{ topic.date|date:"j M" }}
+            | Категория: <a href="{% url 'forum:by-category' topic.category.pk %}">{{ topic.category.name }}</a>
             {% if user.is_authenticated %}
-                | <a href="{% url 'forum:update_topic' topic.id %}">Редактировать</a>
-                | <a href="{% url 'forum:delete_topic' topic.id %}">Удалить</a>
+                | <a href="{% url 'forum:update_topic' topic.id %}">Р</a>
+                | <a href="{% url 'forum:delete_topic' topic.id %}">У</a>
             {% endif %}
             {% if topic.solved %}
                 | <strong style="color: green;">Решено!</strong>
@@ -27,7 +27,7 @@
     {% for answer in answer_list %}
             <div class="post_box">
                 <div class="news_meta">
-                    <a href="#">{{ answer.user.first_name|default:answer.user.username }}</a>, {{ answer.date|date:"j M G:i" }}</a>
+                    <a>{{ answer.user.first_name|default:answer.user.username }}</a>, {{ answer.date|date:"j M G:i" }}</a>
                 </div>
                 <p align="justify">
                     {{ answer.text }}

@@ -9,11 +9,11 @@
                 <a href="{% url 'forum:answers' topic.id %}">{{ topic.title|truncatechars:38 }}</a>
             </h2>
             <div class="news_meta">
-                Автор <a href="#">{{ topic.user.first_name|default:topic.user.username }}</a>, {{ topic.date|date:"j M" }}
-                | Категория: <a href="{% url 'forum:home' topic.category.id %}">{{ topic.category.name }}</a>
-                {% if user.is_authenticated %}
-                    | <a href="{% url 'forum:update_topic' topic.id %}">Редактировать</a>
-                    | <a href="{% url 'forum:delete_topic' topic.id %}">Удалить</a>
+                Автор <a href="{% url 'forum:by-author' topic.user.pk %}">{{ topic.user.first_name|default:topic.user.username }}</a>, {{ topic.date|date:"j M" }}
+                | Категория: <a href="{% url 'forum:by-category' topic.category.pk %}">{{ topic.category.name }}</a>
+                {% if user.is_authenticated and topic.user == user %}
+                    | <a href="{% url 'forum:update_topic' topic.id %}">Р</a>
+                    | <a href="{% url 'forum:delete_topic' topic.id %}">У</a>
                 {% endif %}
                 {% if topic.solved %}
                     | <strong style="color: green;">Решено!</strong>
