@@ -1,9 +1,12 @@
+from django.http import Http404, HttpResponseRedirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormMixin, FormView
 from django.views.generic import ListView, DetailView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect
 from forum.models import *
 from django.contrib.auth.decorators import login_required
+from mixins.AccessMixins import LoginRequiredMixin
+from django.utils.decorators import method_decorator
 
 
 class TopicList(ListView):
@@ -20,7 +23,7 @@ class TopicList(ListView):
             return Topic.objects.all()
 
 
-class TopicAnswers(ListView, FormView):
+class TopicAnswers(ListView):
     paginate_by = 30
     context_object_name = 'answer_list'
     template_name = 'forum/answers.html'
@@ -35,23 +38,29 @@ class TopicAnswers(ListView, FormView):
         return context
 
     def post(self, request, *args, **kwargs):
-        #TODO обработать запрос на добавление ответа
+        if not request.user.is_authenticated():
+            return HttpResponseRedirect('/account/login/?next=%s' % request.path)
+        answer = Answer(
+            text=request.POST['text'],
+            topic=get_object_or_404(Topic, id=self.kwargs['topic_id']),
+            user=request.user,
+        )
+        answer.save()
         return redirect(request.path)
 
 
-class TopicCreate(CreateView):
+class TopicCreate(LoginRequiredMixin, CreateView):
     model = Topic
-    fields = ['title', 'text', 'category', 'author', 'solved']
+    fields = ['title', 'text', 'category', 'solved']
     success_url = reverse_lazy('forum:home')
     template_name = 'forum/topic_create.html'
 
     def form_valid(self, form):
-        #TODO добавить текущего пользователя как автора темы и в шаблонах при отображении элементов управления проверять является ли пользователь владельцем
+        form.instance.user = self.request.user
         return super(TopicCreate, self).form_valid(form)
 
 
-#TODO проверить является ли данный пользователь владельцем статьи
-class TopicUpdate(UpdateView):
+class TopicUpdate(LoginRequiredMixin, UpdateView):
     model = Topic
     fields = ['title', 'text', 'category', 'solved']
     pk_url_kwarg = 'topic_id'
@@ -59,8 +68,7 @@ class TopicUpdate(UpdateView):
     template_name = 'forum/topic_create.html'
 
 
-#TODO проверить является ли данный пользователь владельцем статьи
-class TopicDelete(DeleteView):
+class TopicDelete(LoginRequiredMixin, DeleteView):
     model = Topic
     pk_url_kwarg = 'topic_id'
     success_url = reverse_lazy('forum:home')

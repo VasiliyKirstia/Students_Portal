@@ -1,5 +1,5 @@
 from django import template
-from forum.models import Category, Answer, Author, Topic
+from forum.models import Category, Answer, Topic
 
 register = template.Library()
 

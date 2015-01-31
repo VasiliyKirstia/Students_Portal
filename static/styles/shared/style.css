@@ -208,7 +208,7 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 
 .post_box { clear: both; margin-bottom: 40px; }
 .post_box h2 { margin-bottom: 5px; padding-bottom: 0px; }
-.post_box h2 a { text-decoration: none; }
+.post_box h2 a { text-decoration: none; line-height:1; }
 
 .post_box .news_meta { margin-bottom: 10px; font-size: 11px; color: #666; }
 .post_box .news_meta a { color: #666; text-decoration: underline; }
@@ -386,29 +386,34 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 
 /* мои добавления */
 
-.fieldWrapper{
+.fieldWrapper, .RegfieldWrapper{
 	padding: 5px;
 }
 
-.fieldWrapper input[type=text], .fieldWrapper textarea{
+.fieldWrapper input[type=text], .fieldWrapper textarea, .RegfieldWrapper input[type=text],
+ .RegfieldWrapper input[type=email], .RegfieldWrapper input[type=password]{
 	border: 1px solid gainsboro;
     box-shadow: 1px 1px 0 1px lightcyan;
     font-family: Times New Roman;
     font-size: 15px;
     padding: 5px;
-    width: 490px;
+}
+.fieldWrapper input[type=text], .fieldWrapper textarea{
+	width: 490px;
 }
 .fieldWrapper textarea{
     resize: none;
 }
-.fieldWrapper label{
+.fieldWrapper label, .RegfieldWrapper label{
 	color: black;
     display: block;
     float: left;
     font-size: 15px;
-    width: 100px;
 }
-.fieldWrapper input:focus, .fieldWrapper textarea:focus{
+.fieldWrapper label{
+	width: 100px;
+}
+.fieldWrapper input:focus, .fieldWrapper textarea:focus, .RegfieldWrapper input:focus{
 	border: 1px solid gray;
 }
 
@@ -419,4 +424,11 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
     font-family: Times New Roman;
     font-size: 20px;
     padding: 5px;
+}
+
+.RegfieldWrapper input[type=text], .RegfieldWrapper input[type=email], .RegfieldWrapper input[type=password]{
+	width: 350px;
+}
+.RegfieldWrapper label{
+	width: 240px;
 }

@@ -2,11 +2,14 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import datetime
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
 
     dependencies = [
+        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
@@ -15,17 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(serialize=False, primary_key=True)),
                 ('text', models.TextField()),
-                ('date', models.DateTimeField()),
-            ],
-            options={
-            },
-            bases=(models.Model,),
-        ),
-        migrations.CreateModel(
-            name='Author',
-            fields=[
-                ('id', models.AutoField(serialize=False, primary_key=True)),
-                ('name', models.CharField(max_length=10)),
+                ('date', models.DateTimeField(default=datetime.datetime(2015, 1, 31, 13, 21, 53, 907015))),
             ],
             options={
             },
@@ -45,11 +38,12 @@ class Migration(migrations.Migration):
             name='Topic',
             fields=[
                 ('id', models.AutoField(serialize=False, primary_key=True)),
-                ('title', models.TextField()),
-                ('text', models.TextField()),
-                ('date', models.DateTimeField()),
-                ('author', models.ForeignKey(to='forum.Author')),
-                ('category', models.ForeignKey(to='forum.Category')),
+                ('title', models.CharField(verbose_name='Заголовок', max_length=150)),
+                ('text', models.TextField(verbose_name='Описание')),
+                ('date', models.DateTimeField(default=datetime.datetime(2015, 1, 31, 13, 21, 53, 904497))),
+                ('solved', models.BooleanField(verbose_name='Решено', default=False)),
+                ('category', models.ForeignKey(verbose_name='Категория', related_name='topics', to='forum.Category')),
+                ('user', models.ForeignKey(verbose_name='Автор', related_name='topics', to=settings.AUTH_USER_MODEL)),
             ],
             options={
             },
@@ -57,14 +51,14 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='answer',
-            name='author',
-            field=models.ForeignKey(to='forum.Author'),
+            name='topic',
+            field=models.ForeignKey(related_name='topics', to='forum.Topic'),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='answer',
-            name='topic',
-            field=models.ForeignKey(to='forum.Topic'),
+            name='user',
+            field=models.ForeignKey(related_name='answers', to=settings.AUTH_USER_MODEL),
             preserve_default=True,
         ),
     ]

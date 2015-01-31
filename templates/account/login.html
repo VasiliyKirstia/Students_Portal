@@ -6,14 +6,14 @@
     {% endif %}
     <form action="" method="post">
         {% csrf_token %}
-        <div>
-            <label for="username">Логин</label>
+        <div class="RegfieldWrapper">
+            <label for="username" style="width:100px">Логин</label>
             <div>
                 <input type="text"  id="username" name="username" placeholder="Логин">
             </div>
         </div>
-        <div>
-            <label for="password">Пароль</label>
+        <div class="RegfieldWrapper">
+            <label for="password" style="width:100px">Пароль</label>
             <div>
                 <input type="password"  id="password" name="password" placeholder="Пароль">
             </div>

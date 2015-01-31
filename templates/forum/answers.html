@@ -8,7 +8,7 @@
             <a href="#">{{ topic.title}}</a>
         </h2>
         <div class="news_meta">
-            Автор <a href="#">{{ topic.author.name }}</a>, {{ topic.date|date:"j M" }}
+            Автор <a href="#">{{ topic.user.first_name|default:topic.user.username }}</a>, {{ topic.date|date:"j M" }}
             | Категория: <a href="{% url 'forum:home' topic.category.id %}">{{ topic.category.name }}</a>
             {% if user.is_authenticated %}
                 | <a href="{% url 'forum:update_topic' topic.id %}">Редактировать</a>
@@ -27,7 +27,7 @@
     {% for answer in answer_list %}
             <div class="post_box">
                 <div class="news_meta">
-                    <a href="#">{{ answer.author.name }}</a>, {{ answer.date|date:"j M G:i" }}</a>
+                    <a href="#">{{ answer.user.first_name|default:answer.user.username }}</a>, {{ answer.date|date:"j M G:i" }}</a>
                 </div>
                 <p align="justify">
                     {{ answer.text }}
@@ -47,6 +47,15 @@
                     <input type="submit" value="Ответить" />
                 </div>
             </form>
+        </div>
+    {% elif not user.is_authenticated %}
+        <div class="post_box pb_last">
+            <b><i>Для того чтобы оставлять ответы на форуме Вам необходимо <a href="{% url 'account:login' %}">войти</a> на сайт,
+            либо пройти <a href="{% url 'account:registration' %}">регистрацию</a>, если Вы еще не зарегистрированы.</i></b>
+        </div>
+    {% elif topic.solved %}
+        <div class="post_box pb_last">
+            <b><i>Этот вопрос считается решенным, Ваша помощь тут не требуется. Помогите, пожалуйста, с решением других вопросов.</i></b>
         </div>
     {% endif %}
 
