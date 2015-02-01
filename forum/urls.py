@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 from forum.views import *
 
+
 urlpatterns = patterns(
     '',
     url(r'^$', TopicList.as_view(), name='home'),
@@ -17,3 +18,5 @@ urlpatterns = patterns(
 
     url(r'^topic/(?P<topic_id>\d+)/delete/$', TopicDelete.as_view(), name='delete_topic'),
 )
+
+

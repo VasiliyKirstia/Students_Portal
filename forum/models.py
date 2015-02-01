@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-import datetime
 
 
 class Category(models.Model):
@@ -21,7 +20,7 @@ class Topic(models.Model):
 
     text = models.TextField(verbose_name='Описание')
 
-    date = models.DateTimeField(default=datetime.datetime.now())
+    date = models.DateTimeField()
 
     category = models.ForeignKey(Category,
                                  related_name='topics',
@@ -37,13 +36,16 @@ class Topic(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ['-date']
+
 
 class Answer(models.Model):
     id = models.AutoField(primary_key=True)
 
     text = models.TextField()
 
-    date = models.DateTimeField(default=datetime.datetime.now())
+    date = models.DateTimeField()
 
     topic = models.ForeignKey(Topic, related_name='topics')
 
@@ -52,4 +54,6 @@ class Answer(models.Model):
     def __str__(self):
         return self.text[0:150]
 
+    class Meta:
+        ordering = ['date']
 

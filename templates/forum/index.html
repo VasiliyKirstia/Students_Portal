@@ -25,6 +25,11 @@
             </p>
             <div class="cleaner"></div>
         </div>
+    {% empty %}
+        <div class="post_box">
+            <b><i>По Вашему запросу ничего не найдено. Попробуйте переформулировать запрос.</i></b>
+            <div class="cleaner"></div>
+        </div>
     {% endfor %}
 
     {% if is_paginated %}

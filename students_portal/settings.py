@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'account',
     'forum',
-    'mixins'
+    'hallway',
+    'mixins',
 )
 
 MIDDLEWARE_CLASSES = (

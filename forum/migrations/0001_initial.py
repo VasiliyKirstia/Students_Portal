@@ -18,9 +18,10 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(serialize=False, primary_key=True)),
                 ('text', models.TextField()),
-                ('date', models.DateTimeField(default=datetime.datetime(2015, 1, 31, 13, 21, 53, 907015))),
+                ('date', models.DateTimeField(default=datetime.datetime(2015, 2, 1, 16, 51, 0, 923238))),
             ],
             options={
+                'ordering': ['date'],
             },
             bases=(models.Model,),
         ),
@@ -28,7 +29,7 @@ class Migration(migrations.Migration):
             name='Category',
             fields=[
                 ('id', models.AutoField(serialize=False, primary_key=True)),
-                ('name', models.CharField(max_length=250)),
+                ('name', models.CharField(max_length=50, verbose_name='Название')),
             ],
             options={
             },
@@ -38,14 +39,15 @@ class Migration(migrations.Migration):
             name='Topic',
             fields=[
                 ('id', models.AutoField(serialize=False, primary_key=True)),
-                ('title', models.CharField(verbose_name='Заголовок', max_length=150)),
+                ('title', models.CharField(max_length=150, verbose_name='Заголовок')),
                 ('text', models.TextField(verbose_name='Описание')),
-                ('date', models.DateTimeField(default=datetime.datetime(2015, 1, 31, 13, 21, 53, 904497))),
-                ('solved', models.BooleanField(verbose_name='Решено', default=False)),
-                ('category', models.ForeignKey(verbose_name='Категория', related_name='topics', to='forum.Category')),
-                ('user', models.ForeignKey(verbose_name='Автор', related_name='topics', to=settings.AUTH_USER_MODEL)),
+                ('date', models.DateTimeField(default=datetime.datetime(2015, 2, 1, 16, 51, 0, 920827))),
+                ('solved', models.BooleanField(default=False, verbose_name='Решено')),
+                ('category', models.ForeignKey(related_name='topics', verbose_name='Категория', to='forum.Category')),
+                ('user', models.ForeignKey(related_name='topics', verbose_name='Автор', to=settings.AUTH_USER_MODEL)),
             ],
             options={
+                'ordering': ['-date'],
             },
             bases=(models.Model,),
         ),
