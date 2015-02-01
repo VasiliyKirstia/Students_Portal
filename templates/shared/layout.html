@@ -38,7 +38,7 @@
     
     <div id="templatemo_menu">
         <ul>
-            <li><a href="#" {% block home_current %}{% endblock home_current %}><span></span>Главная</a></li>
+            <li><a href="{% url 'hallway:home' %}" {% block hallway_current %}{% endblock hallway_current %}><span></span>Главная</a></li>
             <li><a href="{% url 'forum:home' %}" {% block forum_current %}{% endblock forum_current %}><span></span>Форум</a></li>
             <li><a href="#" {% block films_current %}{% endblock films_current %}><span></span>Фильмы</a></li>
             <li><a href="#" {% block books_current %}{% endblock books_current %}><span></span>Книги</a></li>

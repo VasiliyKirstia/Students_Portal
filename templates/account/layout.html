@@ -1,5 +1,6 @@
 {% extends "shared/layout.html" %}
 {% load forum_tags %}
+{% load hallway_tags %}
 
 {% block title %} Регистрация/Вход/Выход {% endblock title %}
 
@@ -17,9 +18,8 @@
 
 {% block sidebar %}
 
-    {% about_as %}
 
-    {% forum_menu_partial %}
+    {% developers_partial %}
 
     {% forum_categories_partial %}
 

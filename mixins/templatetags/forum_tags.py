@@ -3,10 +3,6 @@ from forum.models import Category, Answer, Topic
 
 register = template.Library()
 
-@register.inclusion_tag('forum/partial/menu.html')
-def forum_menu_partial():
-    return {}
-
 @register.inclusion_tag('forum/partial/categories.html')
 def forum_categories_partial():
     return {'categories': Category.objects.all()}
@@ -14,7 +10,3 @@ def forum_categories_partial():
 @register.inclusion_tag('forum/partial/archive.html')
 def forum_archive_partial():
     return {'months': 0}
-
-@register.inclusion_tag('forum/partial/about_as.html')
-def about_as():
-    return {}
