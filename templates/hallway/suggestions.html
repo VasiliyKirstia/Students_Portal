@@ -6,7 +6,7 @@
     {% for suggestion in suggestions_list %}
             <div class="post_box">
                 <div class="news_meta">
-                    <a>{{ suggestion.user.first_name|default:suggestion.user.username }}</a>, {{ suggestion.date|date:"j M G:i" }}</a>
+                    <a>{{ suggestion.user.first_name}} {{ suggestion.user.last_name}}</a>, {{ suggestion.date|date:"j E oг. H:i" }}</a>
                 </div>
                 <p align="justify">
                     {{ suggestion.text }}
