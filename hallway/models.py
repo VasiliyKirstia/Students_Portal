@@ -17,6 +17,9 @@ class Developer(models.Model):
 
     description = models.TextField(verbose_name='полное описание')
 
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
+
     class Meta:
         ordering = ['first_name']
         verbose_name = 'Разработчик'
@@ -27,6 +30,9 @@ class Rules(models.Model):
     id = models.AutoField(primary_key=True)
 
     text = models.TextField(verbose_name='правила')
+
+    def __str__(self):
+        return 'список правил № '+self.id
 
     class Meta:
         verbose_name = 'Правила'
@@ -45,6 +51,9 @@ class News(models.Model):
 
     text = models.TextField(verbose_name='новость')
 
+    def __str__(self):
+        return self.title
+
     class Meta:
         ordering = ['-date']
         verbose_name = 'Новости'
@@ -61,6 +70,9 @@ class Suggestion(models.Model):
     date = models.DateTimeField()
 
     text = models.TextField(verbose_name='предложение')
+
+    def __str__(self):
+        return self.text[:150]
 
     class Meta:
         ordering = ['-date']
