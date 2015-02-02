@@ -3,5 +3,47 @@
 {% block title %} Гостиная {% endblock title %}
 
 {% block content %}
+    {% for news in news_list %}
+        <div class="post_box">
+            <h2>
+                <a href="{% url 'hallway:news' news.pk %}">{{ news.title|truncatechars:38 }}</a>
+            </h2>
+            <div class="news_meta">
+                Автор <a>Команда разработчиков</a>, {{ news.date|date:"j E oг. H:i" }}
+            </div>
+            <p align="justify">
+                {{ news.description }}
+                <a href="{% url 'hallway:news' news.pk %}" class="continue">Подробнее.</a>
+            </p>
+            <div class="cleaner"></div>
+        </div>
+    {% empty %}
+        <div class="post_box">
+            <b><i>По Вашему запросу ничего не найдено. Попробуйте переформулировать запрос.</i></b>
+            <div class="cleaner"></div>
+        </div>
+    {% endfor %}
 
+    {% if is_paginated %}
+    <div class="post_box pb_last">
+        <div class="page-links">
+            <span>
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+                {% endif %}
+
+                {% if page_obj.has_previous and page_obj.has_next %}
+                    |
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">следующая</a>
+                {% endif %}
+            </span>
+
+        </div>
+        <div class="cleaner"></div>
+    </div>
+    {% endif %}
 {% endblock content %}

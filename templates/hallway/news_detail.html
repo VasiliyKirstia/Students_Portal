@@ -1,0 +1,18 @@
+{% extends "hallway/layout.html" %}
+
+{% block title %} Гостиная {% endblock title %}
+
+{% block content %}
+        <div class="post_box">
+            <h2>
+                <a>{{ news.title }}</a>
+            </h2>
+            <div class="news_meta">
+                Автор <a>Команда разработчиков</a>, {{ news.date|date:"j E oг. H:i" }}
+            </div>
+            <p align="justify">
+                {{ news.text }}
+            </p>
+            <div class="cleaner"></div>
+        </div>
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% extends "hallway/layout.html" %}
+
+{% block title %} Команда разработчиков {% endblock title %}
+
+{% block content %}
+    {% for developer in developers_list %}
+        <div class="post_box">
+            <h2>
+                <a>{{ developer.first_name }} {{developer.last_name}}</a>
+            </h2>
+            <p align="justify">
+                {{ developer.description }}
+            </p>
+            <div class="cleaner"></div>
+        </div>
+    {% endfor %}
+{% endblock content %}

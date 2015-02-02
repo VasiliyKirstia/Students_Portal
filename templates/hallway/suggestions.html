@@ -1,0 +1,52 @@
+{% extends "hallway/layout.html" %}
+
+{% block title %} Предложения и пожелания {% endblock title %}
+
+{% block content %}
+    {% for suggestion in suggestions_list %}
+            <div class="post_box">
+                <div class="news_meta">
+                    <a>{{ suggestion.user.first_name|default:suggestion.user.username }}</a>, {{ suggestion.date|date:"j M G:i" }}</a>
+                </div>
+                <p align="justify">
+                    {{ suggestion.text }}
+                </p>
+                <div class="cleaner"></div>
+            </div>
+    {% endfor %}
+
+    <div class="post_box pb_last">
+        <form action="{% url 'hallway:suggestions' %}" method="post">
+            {% csrf_token %}
+            <div class="fieldWrapper">
+                <textarea style="height: 100px;width: 600px;" name="text"></textarea>
+            </div>
+            <div class="fieldWrapper">
+                <input type="submit" value="Отправить" />
+            </div>
+        </form>
+    </div>
+
+    {% if is_paginated %}
+    <div class="post_box pb_last">
+        <div class="page-links">
+            <span>
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+                {% endif %}
+
+                {% if page_obj.has_previous and page_obj.has_next %}
+                    |
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">следующая</a>
+                {% endif %}
+            </span>
+
+        </div>
+        <div class="cleaner"></div>
+    </div>
+    {% endif %}
+{% endblock content %}
