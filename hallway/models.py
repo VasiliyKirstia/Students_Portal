@@ -32,7 +32,7 @@ class Rules(models.Model):
     text = models.TextField(verbose_name='правила')
 
     def __str__(self):
-        return 'список правил № '+self.id
+        return 'список правил № '+ str(self.id)
 
     class Meta:
         verbose_name = 'Правила'

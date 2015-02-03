@@ -61,4 +61,4 @@ class SuggestionCreate(LoginRequiredMixin, ListView):
             )
             suggestion.save()
         #TODO Настроить редирект так, чтоб он отсылал на ту же самую страницу с которой пришел пользователь без использования костыля
-        return redirect(request.path + '?page=last')
+        return redirect(request.path)

@@ -37,7 +37,7 @@ class Topic(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['-date']
+        ordering = ['solved', '-date']
 
 
 class Answer(models.Model):
