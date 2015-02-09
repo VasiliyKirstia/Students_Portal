@@ -9,6 +9,13 @@ from mixins.AccessMixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.db.models import Q
 from datetime import datetime
+from django import forms
+
+#TODO убрать к чертям эту подпорку
+class AnswerForm(forms.ModelForm):
+    class Meta:
+        model = Answer
+        fields = ['text']
 
 
 class TopicList(ListView):
@@ -31,6 +38,7 @@ class TopicList(ListView):
                           {'topic_list': Topic.objects.filter(Q(title__contains=query)|Q(text__contains=query))[:40]})
         return redirect('forum:home')
 
+
 class TopicAnswers(ListView):
     paginate_by = 30
     context_object_name = 'answer_list'
@@ -42,6 +50,7 @@ class TopicAnswers(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(TopicAnswers, self).get_context_data(**kwargs)
+        context['form'] = AnswerForm()
         context['topic'] = get_object_or_404(Topic, id=self.kwargs['topic_id'])
         return context
 
@@ -68,7 +77,7 @@ class TopicCreate(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        form.instance.date = date=datetime.now()
+        form.instance.date =datetime.now()
         return super(TopicCreate, self).form_valid(form)
 
 

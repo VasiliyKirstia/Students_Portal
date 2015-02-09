@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
 
 
 class Developer(models.Model):
@@ -15,7 +16,7 @@ class Developer(models.Model):
     short_description = models.TextField(max_length=80,
                                          verbose_name='краткое описание')
 
-    description = models.TextField(verbose_name='полное описание')
+    description = RichTextField(verbose_name='полное описание')
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
@@ -49,7 +50,7 @@ class News(models.Model):
 
     description = models.TextField(verbose_name='описание')
 
-    text = models.TextField(verbose_name='новость')
+    text = RichTextField(verbose_name='новость')
 
     def __str__(self):
         return self.title
@@ -69,7 +70,7 @@ class Suggestion(models.Model):
 
     date = models.DateTimeField()
 
-    text = models.TextField(verbose_name='предложение')
+    text = RichTextField(verbose_name='предложение', )
 
     def __str__(self):
         return self.text[:150]

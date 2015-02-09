@@ -1,0 +1,16 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>500</title>
+    <link href="{% static 'styles/shared/error-pages-style.css' %}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="error-message">
+        Опять что-то сломали!?
+    </div>
+    <img src="{% static 'images/shared/500.png' %}" class="img-500">
+</body>
+</html>

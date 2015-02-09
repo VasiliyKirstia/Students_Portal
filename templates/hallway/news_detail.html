@@ -11,7 +11,7 @@
                 Автор <a>Команда разработчиков</a>, {{ news.date|date:"j E oг. H:i" }}
             </div>
             <p align="justify">
-                {{ news.text }}
+                {{ news.text|safe }}
             </p>
             <div class="cleaner"></div>
         </div>

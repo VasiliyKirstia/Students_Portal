@@ -390,7 +390,7 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 	padding: 5px;
 }
 
-.fieldWrapper input[type=text], .fieldWrapper textarea, .RegfieldWrapper input[type=text],
+.fieldWrapper input[type=text], .RegfieldWrapper input[type=text],
  .RegfieldWrapper input[type=email], .RegfieldWrapper input[type=password]{
 	border: 1px solid gainsboro;
     box-shadow: 1px 1px 0 1px lightcyan;
@@ -398,11 +398,8 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
     font-size: 15px;
     padding: 5px;
 }
-.fieldWrapper input[type=text], .fieldWrapper textarea{
+.fieldWrapper input[type=text]{
 	width: 490px;
-}
-.fieldWrapper textarea{
-    resize: none;
 }
 .fieldWrapper label, .RegfieldWrapper label{
 	color: black;
@@ -413,7 +410,7 @@ a.continue { color: #F00; font-weight: bold; text-decoration: none; }
 .fieldWrapper label{
 	width: 100px;
 }
-.fieldWrapper input:focus, .fieldWrapper textarea:focus, .RegfieldWrapper input:focus{
+.fieldWrapper input:focus, .RegfieldWrapper input:focus{
 	border: 1px solid gray;
 }
 

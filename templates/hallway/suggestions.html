@@ -9,7 +9,7 @@
                     <a>{{ suggestion.user.first_name}} {{ suggestion.user.last_name}}</a>, {{ suggestion.date|date:"j E oг. H:i" }}</a>
                 </div>
                 <p align="justify">
-                    {{ suggestion.text }}
+                    {{ suggestion.text|safe }}
                 </p>
                 <div class="cleaner"></div>
             </div>
@@ -18,9 +18,8 @@
     <div class="post_box pb_last">
         <form action="{% url 'hallway:suggestions' %}" method="post">
             {% csrf_token %}
-            <div class="fieldWrapper">
-                <textarea style="height: 100px;width: 600px;" name="text"></textarea>
-            </div>
+            {{ form.media }}
+            {{ form.text }}
             <div class="fieldWrapper">
                 <input type="submit" value="Отправить" />
             </div>

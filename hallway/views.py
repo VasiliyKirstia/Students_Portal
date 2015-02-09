@@ -8,6 +8,13 @@ from mixins.AccessMixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.db.models import Q
 from datetime import datetime
+from django import forms
+
+#TODO убрать к чертям эту подпорку 2
+class SuggestionForm(forms.ModelForm):
+    class Meta:
+        model = Suggestion
+        fields = ['text']
 
 
 class HomeView(ListView):
@@ -49,6 +56,11 @@ class SuggestionCreate(LoginRequiredMixin, ListView):
     model = Suggestion
     context_object_name = 'suggestions_list'
     template_name = 'hallway/suggestions.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SuggestionCreate, self).get_context_data(**kwargs)
+        context['form'] = SuggestionForm()
+        return context
 
     def post(self, request, *args, **kwargs):
         if not request.user.is_authenticated():

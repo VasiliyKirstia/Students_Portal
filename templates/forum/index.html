@@ -20,7 +20,7 @@
                 {% endif %}
             </div>
             <p align="justify">
-                {{ topic.text|truncatewords:35 }}
+                {{ topic.text|truncatewords:35|safe }}
                 <a href="{% url 'forum:answers' topic.id %}" class="continue">Подробнее.</a>
             </p>
             <div class="cleaner"></div>

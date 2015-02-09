@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from ckeditor.fields import RichTextField
 
 
 class Category(models.Model):
@@ -18,7 +19,7 @@ class Topic(models.Model):
     title = models.CharField(max_length=150,
                              verbose_name='Заголовок')
 
-    text = models.TextField(verbose_name='Описание')
+    text = RichTextField(verbose_name='Описание')
 
     date = models.DateTimeField()
 
@@ -43,7 +44,7 @@ class Topic(models.Model):
 class Answer(models.Model):
     id = models.AutoField(primary_key=True)
 
-    text = models.TextField()
+    text = RichTextField()
 
     date = models.DateTimeField()
 

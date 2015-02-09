@@ -5,7 +5,7 @@
 {% block content %}
     <form action="" method="post">
         {% csrf_token %}
-
+        {{ form.media }}
         {% for hidden in form.hidden_fields %}
             {{ hidden }}
         {% endfor %}
@@ -15,6 +15,7 @@
             {{ field.errors }}
             {{ field.label_tag }} {{ field }}
         </div>
+
         {% endfor %}
 
         <div class="fieldWrapper">

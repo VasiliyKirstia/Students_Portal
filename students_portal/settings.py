@@ -23,7 +23,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['students-portal.net', 'www.students-portal.net', '127.0.0.1']
 
 
 # Application definition
@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor',
     'account',
     'forum',
     'hallway',
@@ -88,6 +89,31 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static/'),
 )
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
+CKEDITOR_IMAGE_BACKEND = 'pillow'
+
+CKEDITOR_JQUERY_URL = '/static/scripts/jquery.min.js'
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': [
+            ['Undo', 'Redo'],
+            ['Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'SpecialChar'],
+            ['TextColor', 'BGColor'],
+            ['NumberedList', 'BulletedList', 'Subscript', 'Superscript'],
+            ['Maximize'],
+        ],
+        'height': 150,
+        'width': 600,
+        'forcePasteAsPlainText': True,
+    },
+}
 
 TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates/'),
