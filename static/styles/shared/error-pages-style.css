@@ -1,0 +1,16 @@
+.img-500, .img-404{
+    bottom: 0;
+    height: 100%;
+    min-height: 500px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+}
+.error-message{
+    color: gray;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-size: 50px;
+    margin: 50px;
+    width: 450px;
+}

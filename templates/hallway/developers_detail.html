@@ -5,11 +5,11 @@
 {% block content %}
     {% for developer in developers_list %}
         <div class="post_box">
-            <h2>
+            <h2 class='title'>
                 <a>{{ developer.first_name }} {{developer.last_name}}</a>
             </h2>
-            <p align="justify">
-                {{ developer.description }}
+            <p class='wrapper'>
+                {{ developer.description|safe }}
             </p>
             <div class="cleaner"></div>
         </div>

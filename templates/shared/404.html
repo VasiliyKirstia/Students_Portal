@@ -1,0 +1,16 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>404</title>
+    <link href="{% static 'styles/shared/error-pages-style.css' %}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="error-message">
+        Вы уверены, что хотите сюда?
+    </div>
+    <img src="{% static 'images/shared/404.png' %}" class="img-404">
+</body>
+</html>
