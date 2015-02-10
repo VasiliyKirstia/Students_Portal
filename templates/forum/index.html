@@ -5,7 +5,7 @@
 {% block content %}
     {% for topic in topic_list %}
         <div class="post_box">
-            <h2>
+            <h2 class='title'>
                 <a href="{% url 'forum:answers' topic.id %}">{{ topic.title|truncatechars:38 }}</a>
             </h2>
             <div class="news_meta">
@@ -19,8 +19,8 @@
                     | <strong style="color: green;">Решено!</strong>
                 {% endif %}
             </div>
-            <p align="justify">
-                {{ topic.text|truncatewords:35|safe }}
+            <p class='wrapper'>
+                {{ topic.text|truncatewords_html:35|safe }}
                 <a href="{% url 'forum:answers' topic.id %}" class="continue">Подробнее.</a>
             </p>
             <div class="cleaner"></div>

@@ -10,6 +10,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 # Quick-start development settings - unsuitable for production
@@ -101,18 +102,41 @@ CKEDITOR_IMAGE_BACKEND = 'pillow'
 CKEDITOR_JQUERY_URL = '/static/scripts/jquery.min.js'
 
 CKEDITOR_CONFIGS = {
-    'default': {
+    "default": {
         'toolbar': [
-            ['Undo', 'Redo'],
-            ['Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'SpecialChar'],
-            ['TextColor', 'BGColor'],
-            ['NumberedList', 'BulletedList', 'Subscript', 'Superscript'],
-            ['Maximize'],
+            ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-',
+             'TextColor', 'BGColor', '-',
+             'NumberedList', 'BulletedList', '-',
+             'Smiley', 'SpecialChar', '-',
+             'Undo', 'Redo', '-',
+             'Maximize']
         ],
-        'height': 150,
-        'width': 600,
         'forcePasteAsPlainText': True,
-    },
+        'allowedContent': True,
+        'height': 150,
+        'width': 500,
+        'undoStackSize': 50,
+        'toolbarLocation': 'top',
+        'tabSpaces': 4,
+        'smiley_columns': 7,
+        'enterMode': 2,  # br
+        'shiftEnterMode': 1,  # p
+        'autoParagraph': False,
+
+
+        # 'toolbar_Full': [
+        #   ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ],
+        #   ['Image', 'Flash', 'Table', 'HorizontalRule'],
+        #   ['TextColor', 'BGColor'],
+        #   ['Smiley','sourcearea', 'SpecialChar'],
+        #   [ 'Link', 'Unlink', 'Anchor' ],
+        #   [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ],
+        #   [ 'Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates' ],
+        #   [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
+        #   [ 'Find', 'Replace', '-', 'SelectAll', '-', 'Scayt' ],
+        #   [ 'Maximize', 'ShowBlocks' ]
+        #],
+    }
 }
 
 TEMPLATE_DIRS = (

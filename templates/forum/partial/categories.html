@@ -1,5 +1,5 @@
 <div class="sidebar_box">
-    <h3>Категории</h3>
+    <h3 class='title'>Категории</h3>
     <ul class="sidebar_menu">
         {% for category in categories %}
             <li><a href="{% url 'forum:by-category' category.pk %}">&raquo;{{ category.name }} <span>({{ category.topics.count }})</span></a></li>

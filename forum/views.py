@@ -58,13 +58,17 @@ class TopicAnswers(ListView):
         if not request.user.is_authenticated():
             return HttpResponseRedirect('/account/login/?next=%s' % request.path)
         if request.POST['text'] != '':
+            _topic = get_object_or_404(Topic, id=self.kwargs['topic_id'])
             answer = Answer(
                 text=request.POST['text'],
                 date=datetime.now(),
-                topic=get_object_or_404(Topic, id=self.kwargs['topic_id']),
+                topic=_topic,
                 user=request.user,
             )
             answer.save()
+            #TODO еще один костылец
+            _topic.answers_count += 1
+            _topic.save()
         #TODO Настроить редирект так, чтоб он отсылал на ту же самую страницу с которой пришел пользователь без использования костыля
         return redirect(request.path + '?page=last')
 

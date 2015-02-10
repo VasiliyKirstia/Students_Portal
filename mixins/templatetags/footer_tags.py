@@ -5,7 +5,7 @@ register = template.Library()
 
 @register.inclusion_tag('shared/partial/popular_topics.html')
 def popular_topics_partial():
-    return {'topics': Topic.objects.filter(solved=False)[:5]}
+    return {'topics': Topic.objects.filter(solved=False).order_by('-answers_count')[:5]}
 
 @register.inclusion_tag('shared/partial/popular_books.html')
 def popular_books_partial():

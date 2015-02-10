@@ -8,7 +8,7 @@
                 <div class="news_meta">
                     <a>{{ suggestion.user.first_name}} {{ suggestion.user.last_name}}</a>, {{ suggestion.date|date:"j E oг. H:i" }}</a>
                 </div>
-                <p align="justify">
+                <p class='wrapper'>
                     {{ suggestion.text|safe }}
                 </p>
                 <div class="cleaner"></div>

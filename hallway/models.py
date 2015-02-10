@@ -57,7 +57,7 @@ class News(models.Model):
 
     class Meta:
         ordering = ['-date']
-        verbose_name = 'Новости'
+        verbose_name = 'Новость'
 
 
 class Suggestion(models.Model):
@@ -77,4 +77,4 @@ class Suggestion(models.Model):
 
     class Meta:
         ordering = ['-date']
-        verbose_name = 'Предложения и пожелания'
+        verbose_name = 'Пожелание (предложение)'

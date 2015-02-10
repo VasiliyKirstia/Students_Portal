@@ -5,13 +5,13 @@
 {% block content %}
     {% for news in news_list %}
         <div class="post_box">
-            <h2>
+            <h2 class='title'>
                 <a href="{% url 'hallway:news' news.pk %}">{{ news.title|truncatechars:38 }}</a>
             </h2>
             <div class="news_meta">
                 Автор <a>Команда разработчиков</a>, {{ news.date|date:"j E oг. H:i" }}
             </div>
-            <p align="justify">
+            <p class='wrapper'>
                 {{ news.description }}
                 <a href="{% url 'hallway:news' news.pk %}" class="continue">Подробнее.</a>
             </p>

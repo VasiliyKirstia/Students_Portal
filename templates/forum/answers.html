@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="post_box">
-        <h2>
+        <h2 class='title'>
             <a href="#">{{ topic.title}}</a>
         </h2>
         <div class="news_meta">
@@ -18,7 +18,7 @@
                 | <strong style="color: green;">Решено!</strong>
             {% endif %}
         </div>
-        <p align="justify">
+        <p class='wrapper'>
             {{ topic.text|safe }}
         </p>
         <div class="cleaner"></div>
@@ -29,7 +29,7 @@
                 <div class="news_meta">
                     <a>{{ answer.user.first_name}} {{ answer.user.last_name}}</a>, {{ answer.date|date:"j E oг. H:i" }}</a>
                 </div>
-                <p align="justify">
+                <p class='wrapper'>
                     {{ answer.text|safe }}
                 </p>
                 <div class="cleaner"></div>
