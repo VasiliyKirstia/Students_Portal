@@ -1,11 +1,11 @@
 {% extends "shared/layout.html" %}
 {% load forum_tags %}
 
-{% block forum_current %} class="current" {% endblock forum_current %}
+{% block library_current %} class="current" {% endblock library_current %}
 
 {% block search_box %}
     <div id="search_box">
-        <form action="{% url 'forum:home' %}" method="post">
+        <form action="{% url 'library:home' %}" method="post">
             {% csrf_token %}
             <input type="text" placeholder="Искать..." name="query" id="searchfield"/>
           <input type="submit" value="Поехали" id="searchbutton" />
@@ -16,7 +16,7 @@
 {% block sidebar %}
 
     <div class="sidebar_box">
-        <h3 class='title'><a style="color:white;" href="{% url 'forum:create_question' %}">Задать вопрос</a></h3>
+        <h3 class='title'><a style="color:white;" href="{% url 'library:add' %}">Добавить книгу</a></h3>
     </div>
 
     {% forum_categories_partial %}

@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import ckeditor.fields
 
 
 class Migration(migrations.Migration):
@@ -13,9 +12,15 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AlterField(
-            model_name='developer',
-            name='description',
-            field=ckeditor.fields.RichTextField(verbose_name='полное описание'),
+            model_name='news',
+            name='date',
+            field=models.DateTimeField(auto_now=True),
+            preserve_default=True,
+        ),
+        migrations.AlterField(
+            model_name='suggestion',
+            name='date',
+            field=models.DateTimeField(auto_now=True),
             preserve_default=True,
         ),
     ]

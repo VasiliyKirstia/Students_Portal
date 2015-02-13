@@ -1,8 +1,0 @@
-<div class="footer_box col_w300">
-    <h4 class='title'>Темы форума</h4>
-    <ul class="footer_menu">
-        {% for topic in topics %}
-            <li><a href="{% url 'forum:answers' topic.id %}">{{ topic.title|truncatechars:35 }}</a></li>
-        {% endfor %}
-    </ul>
-</div>

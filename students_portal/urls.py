@@ -1,9 +1,10 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
+from students_portal import views
 import forum.urls as forum_urls
 import account.urls as account_urls
 import hallway.urls as hallway_urls
-from students_portal import views
+import library.urls as library_urls
 
 urlpatterns = patterns(
     '',
@@ -12,11 +13,15 @@ urlpatterns = patterns(
 
     url(r'^forum/', include(forum_urls, namespace='forum')),
 
-    url(r'^admin/', include(admin.site.urls)),
-
     url(r'^account/', include(account_urls, namespace='account')),
 
-    (r'^ckeditor/', include('ckeditor.urls')),
+    url(r'^library/', include(library_urls, namespace='library')),
+
+    url(r'^ckeditor/', include('ckeditor.urls')),
+
+    url(r'^tags_input/', include('tags_input.urls', namespace='tags_input')),
+
+    url(r'^admin/', include(admin.site.urls)),
 
     url(r'^secret_view_404/$', views.error_page_404),
 

@@ -40,7 +40,7 @@
                     </li>
                     <li><a href="#" {% block films_current %}{% endblock films_current %}><span></span>Фильмы</a>
                     </li>
-                    <li><a href="#" {% block books_current %}{% endblock books_current %}><span></span>Книги</a>
+                    <li><a href="{% url 'library:home' %}" {% block library_current %}{% endblock library_current %}><span></span>Библитотека</a>
                     </li>
                     <li><a href="#" {% block somethink_current %}{% endblock somethink_current %}><span></span>Кое-что еще</a>
                     </li>

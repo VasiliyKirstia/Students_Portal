@@ -46,7 +46,7 @@ class News(models.Model):
     title = models.CharField(max_length=150,
                              verbose_name='заголовок')
 
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now=True)
 
     description = models.TextField(verbose_name='описание')
 
@@ -68,7 +68,7 @@ class Suggestion(models.Model):
                              related_name='suggestions',
                              verbose_name='автор')
 
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now=True)
 
     text = RichTextField(verbose_name='предложение', )
 

@@ -1,27 +1,25 @@
-{% extends "forum/layout.html" %}
+{% extends "library/layout.html" %}
 
 {% block title %} Форум {% endblock title %}
 
 {% block content %}
-    {% for question in question_list %}
+    {% for book in books_list %}
         <div class="post_box">
             <h2 class='title'>
-                <a href="{% url 'forum:answers' question.id %}">{{ question.title|truncatechars:38 }}</a>
+                <a href="{% url 'library:detail' book.id %}">{{ book.title|truncatechars:38 }}</a>
             </h2>
+            {% comment %}
             <div class="news_meta">
                 Автор <a href="{% url 'forum:by-author' question.user.pk %}">{{ question.user.first_name}} {{ question.user.last_name}}</a>, {{ question.date|date:"j M" }}
                 | Категория: <a href="{% url 'forum:by-category' question.category.pk %}">{{ question.category.name }}</a>
                 {% if user.is_authenticated and question.user == user %}
-                    | <a href="{% url 'forum:update_question' question.id %}">Р</a>
-                    | <a href="{% url 'forum:delete_question' question.id %}">У</a>
-                {% endif %}
-                {% if question.solved %}
-                    | <strong style="color: green;">Решено!</strong>
+                    | <a href="{% url 'library:update' book.id %}">Р</a>
                 {% endif %}
             </div>
+            {% endcomment %}
             <p class='wrapper'>
-                {{ question.text|truncatewords_html:35|safe }}
-                <a href="{% url 'forum:answers' question.id %}" class="continue">Подробнее.</a>
+                {{ book.description|truncatewords_html:35|safe }}
+                <a href="{% url 'library:detail' book.id %}" class="continue">Подробнее.</a>
             </p>
             <div class="cleaner"></div>
         </div>

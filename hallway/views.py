@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from mixins.AccessMixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.db.models import Q
-from datetime import datetime
 from django import forms
 
 #TODO убрать к чертям эту подпорку 2
@@ -68,7 +67,6 @@ class SuggestionCreate(LoginRequiredMixin, ListView):
         if request.POST['text'] != '':
             suggestion = Suggestion(
                 text=request.POST['text'],
-                date=datetime.now(),
                 user=request.user,
             )
             suggestion.save()

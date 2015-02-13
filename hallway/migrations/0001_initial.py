@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import ckeditor.fields
 from django.conf import settings
 
 
@@ -16,10 +17,10 @@ class Migration(migrations.Migration):
             name='Developer',
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('first_name', models.CharField(max_length=30, verbose_name='имя')),
-                ('last_name', models.CharField(max_length=30, verbose_name='фамилия')),
-                ('short_description', models.TextField(max_length=80, verbose_name='краткое описание')),
-                ('description', models.TextField(verbose_name='полное описание')),
+                ('first_name', models.CharField(verbose_name='имя', max_length=30)),
+                ('last_name', models.CharField(verbose_name='фамилия', max_length=30)),
+                ('short_description', models.TextField(verbose_name='краткое описание', max_length=80)),
+                ('description', ckeditor.fields.RichTextField(verbose_name='полное описание')),
             ],
             options={
                 'verbose_name': 'Разработчик',
@@ -31,13 +32,13 @@ class Migration(migrations.Migration):
             name='News',
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('title', models.CharField(max_length=150, verbose_name='заголовок')),
+                ('title', models.CharField(verbose_name='заголовок', max_length=150)),
                 ('date', models.DateTimeField()),
                 ('description', models.TextField(verbose_name='описание')),
-                ('text', models.TextField(verbose_name='новость')),
+                ('text', ckeditor.fields.RichTextField(verbose_name='новость')),
             ],
             options={
-                'verbose_name': 'Новости',
+                'verbose_name': 'Новость',
                 'ordering': ['-date'],
             },
             bases=(models.Model,),
@@ -58,11 +59,11 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
                 ('date', models.DateTimeField()),
-                ('text', models.TextField(verbose_name='предложение')),
-                ('user', models.ForeignKey(verbose_name='автор', to=settings.AUTH_USER_MODEL, related_name='suggestions')),
+                ('text', ckeditor.fields.RichTextField(verbose_name='предложение')),
+                ('user', models.ForeignKey(related_name='suggestions', to=settings.AUTH_USER_MODEL, verbose_name='автор')),
             ],
             options={
-                'verbose_name': 'Предложения и пожелания',
+                'verbose_name': 'Пожелание (предложение)',
                 'ordering': ['-date'],
             },
             bases=(models.Model,),

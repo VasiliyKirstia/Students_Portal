@@ -17,7 +17,7 @@ class Category(models.Model):
         verbose_name = 'Категория'
 
 
-class Topic(models.Model):
+class Question(models.Model):
 
     id = models.AutoField(primary_key=True)
 
@@ -26,14 +26,14 @@ class Topic(models.Model):
 
     text = RichTextField(verbose_name='Описание')
 
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now=True)
 
     category = models.ForeignKey(Category,
-                                 related_name='topics',
+                                 related_name='questions',
                                  verbose_name='Категория')
 
     user = models.ForeignKey(User,
-                             related_name='topics',
+                             related_name='questions',
                              verbose_name='Автор')
 
     solved = models.BooleanField(default=False,
@@ -46,7 +46,7 @@ class Topic(models.Model):
 
     class Meta:
         ordering = ['solved', '-date']
-        verbose_name = 'Тема'
+        verbose_name = 'Вопрос'
 
 
 class Answer(models.Model):
@@ -55,9 +55,9 @@ class Answer(models.Model):
 
     text = RichTextField()
 
-    date = models.DateTimeField()
+    date = models.DateTimeField(auto_now=True)
 
-    topic = models.ForeignKey(Topic, related_name='topics')
+    question = models.ForeignKey(Question, related_name='questions')
 
     user = models.ForeignKey(User, related_name='answers')
 

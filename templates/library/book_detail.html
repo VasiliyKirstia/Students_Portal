@@ -1,0 +1,21 @@
+{% extends "library/layout.html" %}
+
+{% block title %} Книга {% endblock title %}
+
+{% block content %}
+        <div class="post_box">
+            <h2 class='title'>
+                <a>{{ book.title }}</a>
+            </h2>
+            <div class="news_meta">
+                Автор <a>{{ book.user.first_name }}</a>, {{ book.date|date:"j E oг. H:i" }}
+            </div>
+            <p class='wrapper'>
+                {{ book.description|safe }}
+            </p>
+            <p class='wrapper'>
+                <a href="{{ book.book_file.url }}">Скачать</a>
+            </p>
+            <div class="cleaner"></div>
+        </div>
+{% endblock content %}
