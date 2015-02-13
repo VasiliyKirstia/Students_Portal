@@ -37,6 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'ckeditor',
+    'tagging_autocomplete',
+    'tagging',
     'account',
     'forum',
     'hallway',

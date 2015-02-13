@@ -1,3 +1,5 @@
 python 3.4
 Django 1.7.1
 django-ckeditor 4.4.7
+django-tagging
+django-tagging-autocomplete обязательно поставить ручками с https://github.com/ludwiktrammer/django-tagging-autocomplete.git

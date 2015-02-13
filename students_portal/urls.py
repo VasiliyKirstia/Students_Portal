@@ -19,7 +19,7 @@ urlpatterns = patterns(
 
     url(r'^ckeditor/', include('ckeditor.urls')),
 
-    url(r'^tags_input/', include('tags_input.urls', namespace='tags_input')),
+    url(r'^tagging_autocomplete/', include('tagging_autocomplete.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 
