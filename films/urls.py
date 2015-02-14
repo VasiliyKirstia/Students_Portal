@@ -11,5 +11,5 @@ urlpatterns = patterns(
 
     url(r'^film/add/$', FilmCreateView.as_view(), name='add'),
 
-    url(r'^film/update/$', FilmUpdateView.as_view(), name='update'),
+    url(r'^film/(?P<film_pk>\d+)/update/$', FilmUpdateView.as_view(), name='update'),
 )

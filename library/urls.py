@@ -11,5 +11,5 @@ urlpatterns = patterns(
 
     url(r'^book/add/$', BookCreateView.as_view(), name='add'),
 
-    url(r'^book/update/$', BookUpdateView.as_view(), name='update'),
+    url(r'^book/(?P<book_pk>\d+)/update/$', BookUpdateView.as_view(), name='update'),
 )

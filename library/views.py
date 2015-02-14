@@ -23,10 +23,11 @@ class HomeView(ListView):
             query = self.request.POST['query']
             return render(self.request, 'library/index.html',
                           {'books_list': Book.objects.filter(Q(title__contains=query) |
-                                                             Q(text__contains=query) |
+                                                             Q(author__contains=query) |
                                                              Q(imprint_date__contains=query) |
                                                              Q(publisher__contains=query) |
-                                                             Q(description__contains=query))[:40]})
+                                                             Q(description__contains=query))[:40]
+                          })
         return redirect('library:home')
 
 
@@ -51,6 +52,6 @@ class BookCreateView(LoginRequiredMixin, CreateView):
 class BookUpdateView(LoginRequiredMixin, UpdateView):
     model = Book
     fields = ['title', 'author', 'publisher', 'imprint_date', 'description', 'imprint_date', 'tags', 'book_file']
-    pk_url_kwarg = 'book_id'
+    pk_url_kwarg = 'book_pk'
     success_url = reverse_lazy('library:home')
     template_name = 'library/book_create.html'

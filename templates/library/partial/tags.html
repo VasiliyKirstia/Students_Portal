@@ -1,0 +1,8 @@
+<div class="sidebar_box">
+    <h3 class='title'>Теги</h3>
+    <ul class="sidebar_menu">
+        {% for tag in tags %}
+            <li><a href="#">&raquo; {{ tag.name }} <span>({{ tag.books.count }})</span></a></li>
+        {% endfor %}
+    </ul>
+</div>
