@@ -36,14 +36,13 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ckeditor',
-    'tagging_autocomplete',
-    'tagging',
     'account',
     'forum',
     'hallway',
+    'films',
     'library',
     'mixins',
+    'ckeditor',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -102,6 +101,12 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 
 CKEDITOR_IMAGE_BACKEND = 'pillow'
 
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates/'),
+)
+
+LOGIN_URL = '/account/login/'
+
 CKEDITOR_JQUERY_URL = '/static/scripts/jquery.min.js'
 
 CKEDITOR_CONFIGS = {
@@ -141,9 +146,3 @@ CKEDITOR_CONFIGS = {
         #],
     }
 }
-
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates/'),
-)
-
-LOGIN_URL = '/account/login/'

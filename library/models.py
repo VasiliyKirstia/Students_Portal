@@ -1,10 +1,22 @@
 from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
-from tagging_autocomplete.models import TagAutocompleteField
 import datetime
 
 YEAR_CHOICES = [(year, year) for year in range(0, datetime.date.today().year + 1)]
+
+
+class Tag(models.Model):
+    id = models.AutoField(primary_key=True)
+
+    name = models.CharField(max_length=40)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Тег'
+
 
 class Book(models.Model):
     id = models.AutoField(primary_key=True)
@@ -25,7 +37,9 @@ class Book(models.Model):
 
     date = models.DateTimeField(auto_now=True)
 
-    tags = TagAutocompleteField(verbose_name='Тэги',auto_created=True )
+    tags = models.ManyToManyField(Tag,
+                                  verbose_name='Тэги',
+                                  related_name='books')
 
     def __str__(self):
         return self.title

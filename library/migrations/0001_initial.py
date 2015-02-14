@@ -2,7 +2,6 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import tagging_autocomplete.models
 from django.conf import settings
 import ckeditor.fields
 
@@ -25,13 +24,34 @@ class Migration(migrations.Migration):
                 ('description', ckeditor.fields.RichTextField(verbose_name='Описание')),
                 ('book_file', models.FileField(verbose_name='Книга', upload_to='books')),
                 ('date', models.DateTimeField(auto_now=True)),
-                ('tags', tagging_autocomplete.models.TagAutocompleteField(verbose_name='Тэги', max_length=255, blank=True)),
-                ('user', models.ForeignKey(related_name='books', to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'verbose_name': 'Книга',
                 'ordering': ['-date'],
             },
             bases=(models.Model,),
+        ),
+        migrations.CreateModel(
+            name='Tag',
+            fields=[
+                ('id', models.AutoField(serialize=False, primary_key=True)),
+                ('name', models.CharField(max_length=40)),
+            ],
+            options={
+                'verbose_name': 'Тег',
+            },
+            bases=(models.Model,),
+        ),
+        migrations.AddField(
+            model_name='book',
+            name='tags',
+            field=models.ManyToManyField(verbose_name='Тэги', to='library.Tag'),
+            preserve_default=True,
+        ),
+        migrations.AddField(
+            model_name='book',
+            name='user',
+            field=models.ForeignKey(related_name='books', to=settings.AUTH_USER_MODEL),
+            preserve_default=True,
         ),
     ]

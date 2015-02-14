@@ -38,7 +38,7 @@
                     </li>
                     <li><a href="{% url 'forum:home' %}" {% block forum_current %}{% endblock forum_current %}><span></span>Форум</a>
                     </li>
-                    <li><a href="#" {% block films_current %}{% endblock films_current %}><span></span>Фильмы</a>
+                    <li><a href="{% url 'films:home' %}" {% block films_current %}{% endblock films_current %}><span></span>Фильмы</a>
                     </li>
                     <li><a href="{% url 'library:home' %}" {% block library_current %}{% endblock library_current %}><span></span>Библитотека</a>
                     </li>

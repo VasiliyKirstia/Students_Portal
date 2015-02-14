@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(verbose_name='Заголовок', max_length=150)),
                 ('text', ckeditor.fields.RichTextField(verbose_name='Описание')),
                 ('date', models.DateTimeField(auto_now=True)),
-                ('solved', models.BooleanField(verbose_name='Решено', default=False)),
+                ('solved', models.BooleanField(default=False, verbose_name='Решено')),
                 ('answers_count', models.IntegerField(default=0)),
                 ('category', models.ForeignKey(verbose_name='Категория', related_name='questions', to='forum.Category')),
                 ('user', models.ForeignKey(verbose_name='Автор', related_name='questions', to=settings.AUTH_USER_MODEL)),
