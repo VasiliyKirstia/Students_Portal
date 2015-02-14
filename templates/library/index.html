@@ -8,15 +8,11 @@
             <h2 class='title'>
                 <a href="{% url 'library:detail' book.id %}">{{ book.title|truncatechars:38 }}</a>
             </h2>
-            {% comment %}
             <div class="news_meta">
-                Автор <a href="{% url 'forum:by-author' question.user.pk %}">{{ question.user.first_name}} {{ question.user.last_name}}</a>, {{ question.date|date:"j M" }}
-                | Категория: <a href="{% url 'forum:by-category' question.category.pk %}">{{ question.category.name }}</a>
-                {% if user.is_authenticated and question.user == user %}
-                    | <a href="{% url 'library:update' book.id %}">Р</a>
-                {% endif %}
+                Автор: <a>{{ book.author }}</a>
+                | Издана: {{ book.publisher }}, {{ book.imprint_date }}г.
+                | Добавил <a>{{ book.user.first_name }} {{ book.user.last_name }}</a>, {{ book.date|date:"j E oг. H:i" }}
             </div>
-            {% endcomment %}
             <p class='wrapper'>
                 {{ book.description|truncatewords_html:35|safe }}
                 <a href="{% url 'library:detail' book.id %}" class="continue">Подробнее.</a>

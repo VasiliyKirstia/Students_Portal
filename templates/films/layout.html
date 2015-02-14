@@ -1,5 +1,5 @@
 {% extends "shared/layout.html" %}
-{% load forum_tags %}
+{% load films_tags %}
 
 {% block films_current %} class="current" {% endblock films_current %}
 
@@ -7,7 +7,7 @@
     <div id="search_box">
         <form action="{% url 'films:home' %}" method="post">
             {% csrf_token %}
-            <input type="text" placeholder="Искать..." name="query" id="searchfield"/>
+            <input type="text" placeholder="Искать среди фильмов..." name="query" id="searchfield"/>
           <input type="submit" value="Поехали" id="searchbutton" />
         </form>
     </div>
@@ -19,7 +19,7 @@
         <h3 class='title'><a style="color:white;" href="{% url 'films:add' %}">Добавить фильм</a></h3>
     </div>
 
-    {% forum_categories_partial %}
+    {% films_categories_partial %}
 
     {# {% forum_archive_partial %} #}
 

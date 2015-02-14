@@ -44,8 +44,8 @@ class QuestionAnswers(ListView):
     template_name = 'forum/answers.html'
 
     def get_queryset(self):
-        topic = get_object_or_404(Question, id=self.kwargs['question_id'])
-        return Answer.objects.filter(topic=topic)
+        question = get_object_or_404(Question, id=self.kwargs['question_id'])
+        return Answer.objects.filter(question=question)
 
     def get_context_data(self, **kwargs):
         context = super(QuestionAnswers, self).get_context_data(**kwargs)

@@ -49,6 +49,6 @@ class FilmCreateView(LoginRequiredMixin, CreateView):
 class FilmUpdateView(LoginRequiredMixin, UpdateView):
     model = Film
     fields = ['title', 'release_date', 'description', 'category', 'film_file']
-    pk_url_kwarg = 'film_id'
+    pk_url_kwarg = 'film_pk'
     success_url = reverse_lazy('films:home')
     template_name = 'films/film_create.html'

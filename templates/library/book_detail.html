@@ -8,7 +8,9 @@
                 <a>{{ book.title }}</a>
             </h2>
             <div class="news_meta">
-                Автор <a>{{ book.user.first_name }}</a>, {{ book.date|date:"j E oг. H:i" }}
+                Автор: <a>{{ book.author }}</a>
+                | Издана: {{ book.publisher }}, {{ book.imprint_date }}г.
+                | Добавил <a>{{ book.user.first_name }} {{ book.user.last_name }}</a>, {{ book.date|date:"j E oг. H:i" }}
             </div>
             <p class='wrapper'>
                 {{ book.description|safe }}

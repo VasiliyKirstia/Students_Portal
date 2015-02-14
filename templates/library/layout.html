@@ -1,5 +1,5 @@
 {% extends "shared/layout.html" %}
-{% load forum_tags %}
+{% load library_tags %}
 
 {% block library_current %} class="current" {% endblock library_current %}
 
@@ -7,7 +7,7 @@
     <div id="search_box">
         <form action="{% url 'library:home' %}" method="post">
             {% csrf_token %}
-            <input type="text" placeholder="Искать..." name="query" id="searchfield"/>
+            <input type="text" placeholder="Искать среди книг..." name="query" id="searchfield"/>
           <input type="submit" value="Поехали" id="searchbutton" />
         </form>
     </div>
@@ -19,7 +19,7 @@
         <h3 class='title'><a style="color:white;" href="{% url 'library:add' %}">Добавить книгу</a></h3>
     </div>
 
-    {% forum_categories_partial %}
+    {% library_tags_partial %}
 
     {# {% forum_archive_partial %} #}
 

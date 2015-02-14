@@ -33,7 +33,7 @@ class Film(models.Model):
 
     date = models.DateTimeField(auto_now=True)
 
-    category = models.ForeignKey(Category, verbose_name='Категория', related_name='categories')
+    category = models.ForeignKey(Category, verbose_name='Категория', related_name='films')
 
     def __str__(self):
         return self.title
