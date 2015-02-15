@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 import datetime
 
-YEAR_CHOICES = [(year, year) for year in range(0, datetime.date.today().year + 1)]
+YEAR_CHOICES = [(year, year) for year in range(datetime.date.today().year, 1499, -1)]
 
 
 class Tag(models.Model):

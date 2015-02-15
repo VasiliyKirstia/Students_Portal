@@ -1,6 +1,11 @@
+html,
 body {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
     color: #333;
     font-family: Tahoma, Geneva, sans-serif;
     font-size: 13px;
@@ -203,7 +208,7 @@ a.continue {
     background: url(../../images/shared/body_top.jpg) top repeat-x;
 }
 
-.header_wrapper {
+.site_content_wrapper {
     width: 1000px;
     padding: 0 10px;
     margin: 0 auto;
@@ -274,8 +279,8 @@ a.continue {
     border: 1px solid #444444;
     vertical-align: bottom;
 }
-
 /* menu */
+
 .site_menu {
     clear: both;
     width: 1000px;
@@ -348,8 +353,8 @@ a.continue {
     text-decoration: none;
 }
 /* end of menu */
-
 /* content */
+
 .site_main {
     width: 920px;
     padding: 40px;
@@ -519,8 +524,8 @@ a.continue {
     width: 50px;
 }
 /* end of content */
-
 /* footer */
+
 .footer_wrapper {
     width: 100%;
     background: #000;
@@ -661,7 +666,4 @@ a.continue {
 
 .RegfieldWrapper label {
     width: 240px;
-}
-.my_custom_body_class{
-
 }
