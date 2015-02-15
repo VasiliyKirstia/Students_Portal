@@ -10,7 +10,7 @@
         <div class="news_meta">
             Автор <a href="{% url 'forum:by-author' question.user.pk %}">{{ question.user.first_name}} {{ question.user.last_name}}</a>, {{ question.date|date:"j M" }}
             | Категория: <a href="{% url 'forum:by-category' question.category.pk %}">{{ question.category.name }}</a>
-            {% if user.is_authenticated %}
+            {% if user.is_authenticated and user == question.user %}
                 | <a href="{% url 'forum:update_question' question.id %}">Р</a>
                 | <a href="{% url 'forum:delete_question' question.id %}">У</a>
             {% endif %}

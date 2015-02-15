@@ -11,6 +11,9 @@
                 Автор: <a>{{ book.author }}</a>
                 | Издана: {{ book.publisher }}, {{ book.imprint_date }}г.
                 | Добавил <a>{{ book.user.first_name }} {{ book.user.last_name }}</a>, {{ book.date|date:"j E oг. H:i" }}
+                {% if user.is_authenticated and user == question.user %}
+                    | <a href="{% url 'library:update' book.id %}">Р</a>
+                {% endif %}
             </div>
             <p class='wrapper'>
                 {{ book.description|safe }}
