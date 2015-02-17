@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-from django.conf import settings
 import ckeditor.fields
+from django.conf import settings
 
 
 class Migration(migrations.Migration):
@@ -29,10 +29,11 @@ class Migration(migrations.Migration):
             name='Category',
             fields=[
                 ('id', models.AutoField(serialize=False, primary_key=True)),
-                ('name', models.CharField(verbose_name='Название', max_length=50)),
+                ('name', models.CharField(verbose_name='название', max_length=50)),
             ],
             options={
-                'verbose_name': 'Категория',
+                'verbose_name': 'категория',
+                'verbose_name_plural': 'категории',
             },
             bases=(models.Model,),
         ),
@@ -40,16 +41,17 @@ class Migration(migrations.Migration):
             name='Question',
             fields=[
                 ('id', models.AutoField(serialize=False, primary_key=True)),
-                ('title', models.CharField(verbose_name='Заголовок', max_length=150)),
-                ('text', ckeditor.fields.RichTextField(verbose_name='Описание')),
+                ('title', models.CharField(verbose_name='заголовок', max_length=150)),
+                ('text', ckeditor.fields.RichTextField(verbose_name='описание')),
                 ('date', models.DateTimeField(auto_now=True)),
-                ('solved', models.BooleanField(default=False, verbose_name='Решено')),
+                ('solved', models.BooleanField(verbose_name='решено', default=False)),
                 ('answers_count', models.IntegerField(default=0)),
-                ('category', models.ForeignKey(verbose_name='Категория', related_name='questions', to='forum.Category')),
-                ('user', models.ForeignKey(verbose_name='Автор', related_name='questions', to=settings.AUTH_USER_MODEL)),
+                ('category', models.ForeignKey(to='forum.Category', verbose_name='категория', related_name='questions')),
+                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name='автор', related_name='questions')),
             ],
             options={
-                'verbose_name': 'Вопрос',
+                'verbose_name': 'вопрос',
+                'verbose_name_plural': 'вопросы',
                 'ordering': ['solved', '-date'],
             },
             bases=(models.Model,),
@@ -57,13 +59,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='answer',
             name='question',
-            field=models.ForeignKey(related_name='questions', to='forum.Question'),
+            field=models.ForeignKey(to='forum.Question', related_name='questions'),
             preserve_default=True,
         ),
         migrations.AddField(
             model_name='answer',
             name='user',
-            field=models.ForeignKey(related_name='answers', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, related_name='answers'),
             preserve_default=True,
         ),
     ]

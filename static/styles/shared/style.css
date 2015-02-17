@@ -1,3 +1,34 @@
+@font-face {
+    font-family: Tahoma;
+    src: url(../../fonts/TahomaRegular.ttf);
+    font-style: normal;
+}
+@font-face {
+    font-family: Georgia;
+    src: url(../../fonts/GeorgiaRegular.ttf);
+    font-style: normal;
+}
+@font-face {
+    font-family: Georgia;
+    src: url(../../fonts/GeorgiaItalic.ttf);
+    font-style: italic;
+}
+@font-face {
+    font-family: Times New Roman;
+    src: url(../../fonts/Times_New_Roman.ttf);
+}
+@font-face {
+    font-family: Times New Roman;
+    src: url(../../fonts/Times_New_Roman_Bold_Italic.ttf);
+    font-style: italic;
+    font-weight: bold;
+}
+@font-face {
+    font-family: Times New Roman;
+    src: url(../../fonts/Times_New_Roman_Bold.ttf);
+    font-weight: bold;
+}
+
 html,
 body {
     margin: 0;
@@ -7,7 +38,7 @@ body {
 
 body {
     color: #333;
-    font-family: Tahoma, Geneva, sans-serif;
+    font-family: Tahoma;
     font-size: 13px;
     line-height: 1.5em;
     background-color: #ccc;
@@ -223,7 +254,7 @@ a.continue {
     float: left;
     width: 615px;
     padding: 40px 0 30px;
-    font-family: Georgia, "Times New Roman", Times, serif;
+    font-family: Times New Roman;
 }
 
 .site_title a {
@@ -413,7 +444,7 @@ a.continue {
     height: 23px;
     padding: 10px;
     color: #fff;
-    font-family: Georgia, "Times New Roman", Times, serif;
+    font-family: Georgia;
     background: url(../../images/shared/sidebar_title.jpg) no-repeat;
 }
 
@@ -427,7 +458,7 @@ a.continue {
 #aboutus h3 {
     color: #fff;
     padding: 0;
-    font-family: Georgia, "Times New Roman", Times, serif;
+    font-family: Georgia;
 }
 
 .sidebar_box {
@@ -623,7 +654,7 @@ a.continue {
 .RegfieldWrapper input[type=password] {
     border: 1px solid gainsboro;
     box-shadow: 1px 1px 0 1px lightcyan;
-    font-family: Times New Roman;
+    font-family: Georgia;
     font-size: 15px;
     padding: 5px;
 }
@@ -653,7 +684,7 @@ a.continue {
     background-color: black;
     border: 1px solid;
     color: white;
-    font-family: Times New Roman;
+    font-family: Georgia;
     font-size: 20px;
     padding: 5px;
 }
