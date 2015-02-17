@@ -234,7 +234,7 @@ a.continue {
     text-decoration: none;
 }
 
-.body_wrapper {
+.site_body_wrapper {
     width: 100%;
     background: url(../../images/shared/body_top.jpg) top repeat-x;
 }
@@ -562,6 +562,8 @@ a.continue {
     background: #000;
 }
 
+
+
 .footer {
     width: 920px;
     padding: 30px 40px;
@@ -594,8 +596,12 @@ a.continue {
     width: 200px;
 }
 
-.col_300 {
+.col_w300 {
     width: 300px;
+}
+
+.col_w293{
+    width: 293,3px;
 }
 
 .fb_last {

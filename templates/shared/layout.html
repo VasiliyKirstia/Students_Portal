@@ -11,7 +11,7 @@
 
 <body>
 
-    <div class="body_wrapper">
+    <div class="site_body_wrapper">
         <div class="site_content_wrapper">
 
             <div class="header-container">
@@ -71,7 +71,7 @@
         </div>
         <div class="cleaner"></div>
     </div>
-
+    
     <div class="footer_wrapper">
         <div class="footer">
 
@@ -81,14 +81,12 @@
 
             {% popular_films_partial %}
 
-            {% tag_cloud_partial %}
-
             <div class="cleaner"></div>
         </div>
     </div>
 
     <div class="copyright">
-        Copyright © 2015 <a href="#">Василий</a> | Студент физико-математического факультета ПГУ им. Т. Г. Шевченко
+        Copyright © 2015 <a href="{% url 'hallway:developers' %}">Василий</a> | Студент физико-математического факультета ПГУ им. Т. Г. Шевченко
     </div>
 
 </body>

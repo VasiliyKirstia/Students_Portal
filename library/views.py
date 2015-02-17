@@ -1,13 +1,10 @@
-from django.http import Http404, HttpResponseRedirect
-from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect, render
-from library.models import *
-from django.contrib.auth.decorators import login_required
-from mixins.decorators import login_required_for_class
-from django.utils.decorators import method_decorator
 from django.db.models import Q
-from django import forms
+
+from library.models import *
+from mixins.decorators import login_required_for_class
 
 
 class HomeView(ListView):
@@ -16,6 +13,11 @@ class HomeView(ListView):
     template_name = 'library/index.html'
 
     def get_queryset(self):
+        if 'filter_by' in self.kwargs:
+            if self.kwargs['filter_by'] == 'category':
+                return Book.objects.filter(category=get_object_or_404(Category, pk=self.kwargs['category_pk']))
+            elif self.kwargs['filter_by'] == 'author':
+                return Book.objects.filter(user=get_object_or_404(User, pk=self.kwargs['user_pk']))
         return Book.objects.all()
 
     def post(self, request, *args, **kwargs):
@@ -41,7 +43,7 @@ class BookDetailView(DetailView):
 @login_required_for_class
 class BookCreateView(CreateView):
     model = Book
-    fields = ['title', 'author', 'publisher', 'imprint_date', 'description', 'imprint_date', 'tags', 'book_file']
+    fields = ['title', 'author', 'publisher', 'imprint_date', 'description', 'imprint_date', 'category', 'book_file']
     success_url = reverse_lazy('library:home')
     template_name = 'library/book_create.html'
 
@@ -53,7 +55,7 @@ class BookCreateView(CreateView):
 @login_required_for_class
 class BookUpdateView(UpdateView):
     model = Book
-    fields = ['title', 'author', 'publisher', 'imprint_date', 'description', 'imprint_date', 'tags', 'book_file']
+    fields = ['title', 'author', 'publisher', 'imprint_date', 'description', 'imprint_date', 'category', 'book_file']
     pk_url_kwarg = 'book_pk'
     success_url = reverse_lazy('library:home')
     template_name = 'library/book_create.html'

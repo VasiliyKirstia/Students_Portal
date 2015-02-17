@@ -8,9 +8,9 @@
                 <a>{{ film.title }}</a>
             </h2>
             <div class="news_meta">
-                Добавил <a href="{# {% url 'forum:by-author' film.user.pk %} #}">{{ film.user.first_name}} {{ film.user.last_name}}</a>, {{ film.date|date:"j M" }}
-                | Категория: <a href="{# {% url 'forum:by-category' film.category.pk %} #}">{{ film.category.name }}</a>
-                | Год выхода: <a href="{# {% url 'forum:by-category' film.category.pk %} #}">{{ film.release_date }}</a>
+                Добавил <a href="{% url 'films:by-author' film.user.pk %}">{{ film.user.first_name}} {{ film.user.last_name}}</a>, {{ film.date|date:"j M" }}
+                | Категория: <a href="{% url 'films:by-category' film.category.pk %}">{{ film.category.name }}</a>
+                | Год выхода: {{ film.release_date }}
                 {% if user.is_authenticated and film.user == user %}
                     | <a href="{% url 'films:update' film.id %}">Р</a>
                 {% endif %}

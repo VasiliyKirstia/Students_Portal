@@ -8,10 +8,11 @@
                 <a>{{ book.title }}</a>
             </h2>
             <div class="news_meta">
-                Автор: <a>{{ book.author }}</a>
+                Автор: {{ book.author }}
                 | Издана: {{ book.publisher }}, {{ book.imprint_date }}г.
-                | Добавил <a>{{ book.user.first_name }} {{ book.user.last_name }}</a>, {{ book.date|date:"j E oг. H:i" }}
-                {% if user.is_authenticated and user == question.user %}
+                | Добавил <a href="{% url 'library:by-author' book.user.pk %}">{{ book.user.first_name }} {{ book.user.last_name }}</a>, {{ book.date|date:"j M"}}
+                | Категория: <a href="{% url 'library:by-category' book.category.pk %}">{{ book.category.name }}</a>
+                {% if user.is_authenticated and user == book.user %}
                     | <a href="{% url 'library:update' book.id %}">Р</a>
                 {% endif %}
             </div>

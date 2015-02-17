@@ -1,13 +1,10 @@
-from django.http import Http404, HttpResponseRedirect
-from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect, render
-from films.models import *
-from django.contrib.auth.decorators import login_required
-from mixins.decorators import login_required_for_class
-from django.utils.decorators import method_decorator
 from django.db.models import Q
-from django import forms
+
+from films.models import *
+from mixins.decorators import login_required_for_class
 
 
 class HomeView(ListView):
@@ -16,6 +13,11 @@ class HomeView(ListView):
     template_name = 'films/index.html'
 
     def get_queryset(self):
+        if 'filter_by' in self.kwargs:
+            if self.kwargs['filter_by'] == 'category':
+                return Film.objects.filter(category=get_object_or_404(Category, pk=self.kwargs['category_pk']))
+            elif self.kwargs['filter_by'] == 'author':
+                return Film.objects.filter(user=get_object_or_404(User, pk=self.kwargs['user_pk']))
         return Film.objects.all()
 
     def post(self, request, *args, **kwargs):

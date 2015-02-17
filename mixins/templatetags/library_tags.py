@@ -3,7 +3,7 @@ from library.models import *
 
 register = template.Library()
 
-@register.inclusion_tag('library/partial/tags.html')
+@register.inclusion_tag('library/partial/categories.html')
 def library_tags_partial():
-    return {'tags': Tag.objects.all()}
+    return {'categories': Category.objects.all()}
 

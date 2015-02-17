@@ -31,7 +31,7 @@ class UserCreationFormExtended(UserCreationForm):
 
 def log_out(request):
     logout(request)
-    return redirect('forum:home')
+    return redirect('hallway:home')
 
 
 def log_in(request):
@@ -58,4 +58,4 @@ def log_in(request):
 class RegistrationView(CreateView):
     form_class = UserCreationFormExtended
     template_name = 'account/registration.html'
-    success_url = reverse_lazy('hallway:home')
+    success_url = reverse_lazy('account:login')

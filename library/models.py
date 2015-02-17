@@ -6,7 +6,7 @@ import datetime
 YEAR_CHOICES = [(year, year) for year in range(datetime.date.today().year, 1499, -1)]
 
 
-class Tag(models.Model):
+class Category(models.Model):
     id = models.AutoField(primary_key=True)
 
     name = models.CharField(max_length=40)
@@ -15,8 +15,8 @@ class Tag(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'тег'
-        verbose_name_plural = 'теги'
+        verbose_name = 'категория'
+        verbose_name_plural = 'категории'
 
 
 class Book(models.Model):
@@ -44,9 +44,9 @@ class Book(models.Model):
 
     date = models.DateTimeField(auto_now=True)
 
-    tags = models.ManyToManyField(Tag,
-                                  verbose_name='теги',
-                                  related_name='books')
+    category = models.ForeignKey(Category,
+                                 verbose_name='категория',
+                                 related_name='books')
 
     def __str__(self):
         return self.title
