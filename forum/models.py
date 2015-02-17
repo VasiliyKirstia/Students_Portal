@@ -8,13 +8,14 @@ class Category(models.Model):
     id = models.AutoField(primary_key=True)
 
     name = models.CharField(max_length=50,
-                            verbose_name='Название')
+                            verbose_name='название')
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name = 'Категория'
+        verbose_name = 'категория'
+        verbose_name_plural = 'категории'
 
 
 class Question(models.Model):
@@ -22,22 +23,22 @@ class Question(models.Model):
     id = models.AutoField(primary_key=True)
 
     title = models.CharField(max_length=150,
-                             verbose_name='Заголовок')
+                             verbose_name='заголовок')
 
-    text = RichTextField(verbose_name='Описание')
+    text = RichTextField(verbose_name='описание')
 
     date = models.DateTimeField(auto_now=True)
 
     category = models.ForeignKey(Category,
                                  related_name='questions',
-                                 verbose_name='Категория')
+                                 verbose_name='категория')
 
     user = models.ForeignKey(User,
                              related_name='questions',
-                             verbose_name='Автор')
+                             verbose_name='автор')
 
     solved = models.BooleanField(default=False,
-                                 verbose_name='Решено')
+                                 verbose_name='решено')
     #TODO сделать чтоб оно само увеличивалось при добавлении коментария
     answers_count = models.IntegerField(default=0)
 
@@ -46,7 +47,8 @@ class Question(models.Model):
 
     class Meta:
         ordering = ['solved', '-date']
-        verbose_name = 'Вопрос'
+        verbose_name = 'вопрос'
+        verbose_name_plural = 'вопросы'
 
 
 class Answer(models.Model):
@@ -57,9 +59,11 @@ class Answer(models.Model):
 
     date = models.DateTimeField(auto_now=True)
 
-    question = models.ForeignKey(Question, related_name='questions')
+    question = models.ForeignKey(Question,
+                                 related_name='questions')
 
-    user = models.ForeignKey(User, related_name='answers')
+    user = models.ForeignKey(User,
+                             related_name='answers')
 
     def __str__(self):
         return self.text[0:150]

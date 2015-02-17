@@ -23,7 +23,8 @@ class Developer(models.Model):
 
     class Meta:
         ordering = ['first_name']
-        verbose_name = 'Разработчик'
+        verbose_name = 'разработчик'
+        verbose_name_plural = 'разработчики'
 
 
 class Rules(models.Model):
@@ -36,7 +37,8 @@ class Rules(models.Model):
         return 'список правил № '+ str(self.id)
 
     class Meta:
-        verbose_name = 'Правила'
+        verbose_name = 'правила'
+        verbose_name_plural = 'правила'
 
 
 class News(models.Model):
@@ -57,7 +59,8 @@ class News(models.Model):
 
     class Meta:
         ordering = ['-date']
-        verbose_name = 'Новость'
+        verbose_name = 'новость'
+        verbose_name_plural = 'новости'
 
 
 class Suggestion(models.Model):
@@ -77,4 +80,5 @@ class Suggestion(models.Model):
 
     class Meta:
         ordering = ['-date']
-        verbose_name = 'Пожелание (предложение)'
+        verbose_name = 'пожелание (предложение)'
+        verbose_name_plural = 'предложения (пожелания)'

@@ -15,29 +15,36 @@ class Category(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Категория'
-
+        verbose_name = 'категория'
+        verbose_name_plural = 'категории'
 
 class Film(models.Model):
     id = models.AutoField(primary_key=True)
 
-    title = models.CharField(max_length=150, verbose_name='Название')
+    title = models.CharField(max_length=150,
+                             verbose_name='название')
 
-    release_date = models.IntegerField(choices=YEAR_CHOICES, verbose_name='Год выхода')
+    release_date = models.IntegerField(choices=YEAR_CHOICES,
+                                       verbose_name='год выхода')
 
-    description = RichTextField(verbose_name='Описание')
+    description = RichTextField(verbose_name='описание')
 
-    film_file = models.FileField(upload_to='films', verbose_name='Фильм')
+    film_file = models.FileField(upload_to='films',
+                                 verbose_name='фильм')
 
-    user = models.ForeignKey(User, related_name='films')
+    user = models.ForeignKey(User,
+                             related_name='films')
 
     date = models.DateTimeField(auto_now=True)
 
-    category = models.ForeignKey(Category, verbose_name='Категория', related_name='films')
+    category = models.ForeignKey(Category,
+                                 verbose_name='категория',
+                                 related_name='films')
 
     def __str__(self):
         return self.title
 
     class Meta:
         ordering = ['-date']
-        verbose_name = 'Фильм'
+        verbose_name = 'фильм'
+        verbose_name_plural = 'фильмы'

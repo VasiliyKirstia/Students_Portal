@@ -15,30 +15,37 @@ class Tag(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Тег'
+        verbose_name = 'тег'
+        verbose_name_plural = 'теги'
 
 
 class Book(models.Model):
     id = models.AutoField(primary_key=True)
 
-    title = models.CharField(max_length=150, verbose_name='Название')
+    title = models.CharField(max_length=150,
+                             verbose_name='название')
 
-    author = models.CharField(max_length=50, verbose_name='Автор(ы)')
+    author = models.CharField(max_length=50,
+                              verbose_name='автор(ы)')
 
-    imprint_date = models.IntegerField(choices=YEAR_CHOICES, verbose_name='Год издания')
+    imprint_date = models.IntegerField(choices=YEAR_CHOICES,
+                                       verbose_name='год издания')
 
-    publisher = models.CharField(max_length=30, verbose_name='Издательство')
+    publisher = models.CharField(max_length=30,
+                                 verbose_name='издательство')
 
-    description = RichTextField(verbose_name='Описание')
+    description = RichTextField(verbose_name='описание')
 
-    book_file = models.FileField(upload_to='books', verbose_name='Книга')
+    book_file = models.FileField(upload_to='books',
+                                 verbose_name='книга')
 
-    user = models.ForeignKey(User, related_name='books')
+    user = models.ForeignKey(User,
+                             related_name='books')
 
     date = models.DateTimeField(auto_now=True)
 
     tags = models.ManyToManyField(Tag,
-                                  verbose_name='Тэги',
+                                  verbose_name='теги',
                                   related_name='books')
 
     def __str__(self):
@@ -46,4 +53,5 @@ class Book(models.Model):
 
     class Meta:
         ordering = ['-date']
-        verbose_name = 'Книга'
+        verbose_name = 'книга'
+        verbose_name_plural = 'книги'
