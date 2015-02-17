@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect, render
 from library.models import *
 from django.contrib.auth.decorators import login_required
-from mixins.AccessMixins import LoginRequiredMixin
+from mixins.decorators import login_required_for_class
 from django.utils.decorators import method_decorator
 from django.db.models import Q
 from django import forms
@@ -38,7 +38,8 @@ class BookDetailView(DetailView):
     context_object_name = 'book'
 
 
-class BookCreateView(LoginRequiredMixin, CreateView):
+@login_required_for_class
+class BookCreateView(CreateView):
     model = Book
     fields = ['title', 'author', 'publisher', 'imprint_date', 'description', 'imprint_date', 'tags', 'book_file']
     success_url = reverse_lazy('library:home')
@@ -49,7 +50,8 @@ class BookCreateView(LoginRequiredMixin, CreateView):
         return super(BookCreateView, self).form_valid(form)
 
 
-class BookUpdateView(LoginRequiredMixin, UpdateView):
+@login_required_for_class
+class BookUpdateView(UpdateView):
     model = Book
     fields = ['title', 'author', 'publisher', 'imprint_date', 'description', 'imprint_date', 'tags', 'book_file']
     pk_url_kwarg = 'book_pk'

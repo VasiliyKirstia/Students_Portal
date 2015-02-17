@@ -1,14 +1,14 @@
-from django.http import Http404, HttpResponseRedirect
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormMixin, FormView
-from django.views.generic import ListView, DetailView
+from django.http import HttpResponseRedirect
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect, render
-from forum.models import *
-from django.contrib.auth.decorators import login_required
-from mixins.AccessMixins import LoginRequiredMixin
-from django.utils.decorators import method_decorator
 from django.db.models import Q
 from django import forms
+
+from forum.models import *
+from mixins.decorators import login_required_for_class
+
 
 #TODO убрать к чертям эту подпорку
 class AnswerForm(forms.ModelForm):
@@ -71,7 +71,8 @@ class QuestionAnswers(ListView):
         return redirect(request.path + '?page=last')
 
 
-class QuestionCreate(LoginRequiredMixin, CreateView):
+@login_required_for_class
+class QuestionCreate(CreateView):
     model = Question
     fields = ['title', 'text', 'category', 'solved']
     success_url = reverse_lazy('forum:home')
@@ -82,7 +83,8 @@ class QuestionCreate(LoginRequiredMixin, CreateView):
         return super(QuestionCreate, self).form_valid(form)
 
 
-class QuestionUpdate(LoginRequiredMixin, UpdateView):
+@login_required_for_class
+class QuestionUpdate(UpdateView):
     model = Question
     fields = ['title', 'text', 'category', 'solved']
     pk_url_kwarg = 'question_id'
@@ -90,7 +92,8 @@ class QuestionUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'forum/question_create.html'
 
 
-class QuestionDelete(LoginRequiredMixin, DeleteView):
+@login_required_for_class
+class QuestionDelete(DeleteView):
     model = Question
     pk_url_kwarg = 'question_id'
     success_url = reverse_lazy('forum:home')

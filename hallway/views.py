@@ -1,13 +1,12 @@
-from django.http import Http404, HttpResponseRedirect
-from django.views.generic import ListView, DetailView, TemplateView, CreateView
-from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect, render
-from hallway.models import *
-from django.contrib.auth.decorators import login_required
-from mixins.AccessMixins import LoginRequiredMixin
-from django.utils.decorators import method_decorator
+from django.http import HttpResponseRedirect
+from django.views.generic import ListView, DetailView, TemplateView
+from django.shortcuts import redirect, render
 from django.db.models import Q
 from django import forms
+
+from hallway.models import *
+from mixins.decorators import login_required_for_class
+
 
 #TODO убрать к чертям эту подпорку 2
 class SuggestionForm(forms.ModelForm):
@@ -50,7 +49,8 @@ class DevelopersDetailView(ListView):
     context_object_name = 'developers_list'
 
 
-class SuggestionCreate(LoginRequiredMixin, ListView):
+@login_required_for_class
+class SuggestionCreate(ListView):
     paginate_by = 30
     model = Suggestion
     context_object_name = 'suggestions_list'

@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect, render
 from films.models import *
 from django.contrib.auth.decorators import login_required
-from mixins.AccessMixins import LoginRequiredMixin
+from mixins.decorators import login_required_for_class
 from django.utils.decorators import method_decorator
 from django.db.models import Q
 from django import forms
@@ -35,7 +35,8 @@ class FilmDetailView(DetailView):
     context_object_name = 'film'
 
 
-class FilmCreateView(LoginRequiredMixin, CreateView):
+@login_required_for_class
+class FilmCreateView(CreateView):
     model = Film
     fields = ['title', 'release_date', 'description', 'category', 'film_file']
     success_url = reverse_lazy('films:home')
@@ -46,7 +47,8 @@ class FilmCreateView(LoginRequiredMixin, CreateView):
         return super(FilmCreateView, self).form_valid(form)
 
 
-class FilmUpdateView(LoginRequiredMixin, UpdateView):
+@login_required_for_class
+class FilmUpdateView(UpdateView):
     model = Film
     fields = ['title', 'release_date', 'description', 'category', 'film_file']
     pk_url_kwarg = 'film_pk'

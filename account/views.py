@@ -1,24 +1,14 @@
-from django.views.generic.edit import CreateView, UpdateView
-from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.template import RequestContext
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
 from django.contrib.auth.forms import UserCreationForm
-
-from django.http import Http404, HttpResponseRedirect
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormMixin, FormView
-from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect, render
-from forum.models import *
-from django.contrib.auth.decorators import login_required
-from mixins.AccessMixins import LoginRequiredMixin
-from django.utils.decorators import method_decorator
-from django.db.models import Q
-from datetime import datetime
+from django.shortcuts import redirect
 from django import forms
+
+from forum.models import *
 
 
 class UserCreationFormExtended(UserCreationForm):
