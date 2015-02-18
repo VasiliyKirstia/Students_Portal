@@ -5,18 +5,32 @@
 {% block content %}
     <form action="" method="post">
         {% csrf_token %}
-
-        {% for hidden in form.hidden_fields %}
-            {{ hidden }}
-        {% endfor %}
-
-        {% for field in form.visible_fields %}
+        {{form.non_field_errors}}
         <div class="RegfieldWrapper">
-            {{ field.errors }}
-            {{ field.label_tag }} {{ field }}
+            {{ form.username.errors }}
+            {{ form.username.label_tag }}
+            <input placeholder="логин" type="text" id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}" value="{{ form.username.value|default_if_none:'' }}" maxlength="{{ form.username.field.max_length }}">
         </div>
-        {% endfor %}
-
+        <div class="RegfieldWrapper">
+            {{ form.first_name.errors }}
+            {{ form.first_name.label_tag }}
+            <input placeholder="ваше имя" type="text" id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.html_name }}" value="{{ form.first_name.value|default_if_none:'' }}" maxlength="{{ form.first_name.field.max_length }}">
+        </div>
+        <div class="RegfieldWrapper">
+            {{ form.last_name.errors }}
+            {{ form.last_name.label_tag }}
+            <input placeholder="ваша фамилия" type="text" id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.html_name }}" value="{{ form.last_name.value|default_if_none:'' }}" maxlength="{{ form.last_name.field.max_length }}">
+        </div>
+        <div class="RegfieldWrapper">
+            {{ form.password1.errors }}
+            {{ form.password1.label_tag }}
+            <input placeholder="ваш сложный пароль" type="password" id="{{ form.password1.id_for_label }}" name="{{ form.password1.html_name }}" value="">
+        </div>
+        <div class="RegfieldWrapper">
+            {{ form.password2.errors }}
+            {{ form.password2.label_tag }}
+            <input placeholder="повторите ваш сложний пароль" type="password" id="{{ form.password2.id_for_label }}" name="{{ form.password2.html_name }}" value="">
+        </div>
         <div class="fieldWrapper">
             <input type="submit" value="Зарегистрироватьcя" />
         </div>

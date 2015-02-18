@@ -10,14 +10,27 @@
             {{ hidden }}
         {% endfor %}
 
-        {% for field in form.visible_fields %}
+        {{form.non_field_errors}}
         <div class="fieldWrapper">
-            {{ field.errors }}
-            {{ field.label_tag }} {{ field }}
+            {{ form.title.errors }}
+            {{ form.title.label_tag }}
+            <input placeholder="заголовок вопроса" type="text" id="{{ form.title.id_for_label }}" name="{{ form.title.html_name }}" value="{{ form.title.value|default_if_none:'' }}" maxlength="{{ form.title.field.max_length }}">
         </div>
-
-        {% endfor %}
-
+        <div class="fieldWrapper">
+            {{ form.text.errors }}
+            {{ form.text.label_tag }}
+            {{ form.text }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.category.errors }}
+            {{ form.category.label_tag }}
+            {{ form.category }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.solved.errors }}
+            {{ form.solved.label_tag }}
+            {{ form.solved }}
+        </div>
         <div class="fieldWrapper">
             <input type="submit" value="Сохранить" />
         </div>

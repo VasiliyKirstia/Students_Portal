@@ -43,7 +43,7 @@ class BookDetailView(DetailView):
 @login_required_for_class
 class BookCreateView(CreateView):
     model = Book
-    fields = ['title', 'author', 'publisher', 'imprint_date', 'description', 'imprint_date', 'category', 'book_file']
+    fields = ['title', 'author', 'publisher', 'imprint_date', 'description', 'category', 'book_file']
     success_url = reverse_lazy('library:home')
     template_name = 'library/book_create.html'
 
@@ -55,7 +55,7 @@ class BookCreateView(CreateView):
 @login_required_for_class
 class BookUpdateView(UpdateView):
     model = Book
-    fields = ['title', 'author', 'publisher', 'imprint_date', 'description', 'imprint_date', 'category', 'book_file']
+    fields = ['title', 'author', 'publisher', 'imprint_date', 'description', 'category', 'book_file']
     pk_url_kwarg = 'book_pk'
     success_url = reverse_lazy('library:home')
     template_name = 'library/book_create.html'

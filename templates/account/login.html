@@ -11,17 +11,17 @@
         <div class="RegfieldWrapper">
             <label for="username" style="width:100px">Логин</label>
             <div>
-                <input type="text"  id="username" name="username" placeholder="Логин">
+                <input type="text"  id="username" name="username" placeholder="логин">
             </div>
         </div>
         <div class="RegfieldWrapper">
             <label for="password" style="width:100px">Пароль</label>
             <div>
-                <input type="password"  id="password" name="password" placeholder="Пароль">
+                <input type="password"  id="password" name="password" placeholder="пароль">
             </div>
         </div>
         <div class="fieldWrapper">
-            <input type="submit" value="Войти" />
+            <input type="submit" value="Войти" /> <a style="margin-left: 260px;" href="{% url 'account:registration' %}">Зарегистрироваться</a>
         </div>
     </form>
 {% endblock content %}
