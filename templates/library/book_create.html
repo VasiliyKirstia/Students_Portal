@@ -1,9 +1,10 @@
 {% extends "library/layout.html" %}
+{% load staticfiles %}
 
 {% block title %}Библиотека | Добавление/Редактирование книги{% endblock title %}
 
 {% block content %}
-    <form action="" method="post" enctype="multipart/form-data">
+    <form id="form_with_big_data" action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.media }}
         {% for hidden in form.hidden_fields %}
@@ -51,4 +52,5 @@
             <input type="submit" value="Сохранить" />
         </div>
     </form>
+    <script src="{% static 'scripts/forms-messager.js' %}"></script>
 {% endblock content %}
