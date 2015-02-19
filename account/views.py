@@ -12,8 +12,8 @@ from forum.models import *
 
 
 class UserCreationFormExtended(UserCreationForm):
-    first_name = forms.CharField(max_length=40, label='Имя', required=True)
-    last_name = forms.CharField(max_length=40, label='Фимилия', required=True)
+    first_name = forms.CharField(max_length=40, min_length=4, label='Имя', required=True)
+    last_name = forms.CharField(max_length=40, min_length=4, label='Фимилия', required=True)
 
     class Meta:
         model = User
