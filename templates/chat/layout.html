@@ -1,0 +1,27 @@
+{% extends "shared/layout.html" %}
+{% load forum_tags %}
+{% load hallway_tags %}
+{% load staticfiles %}
+
+{% block head %}
+    <script type="text/javascript" src="{% static 'scripts/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'scripts/chat.js' %}"></script>
+{% endblock head %}
+
+{% block somethink_current %} class="current" {% endblock somethink_current %}
+
+{% block search_box %}
+    <div id="search_box">
+        <form action="{% url 'forum:home' %}" method="post">
+            {% csrf_token %}
+            <input type="text" placeholder="Искать..." name="text" id="searchfield"/>
+          <input type="submit" value="Поехали" id="searchbutton" />
+        </form>
+    </div>
+{% endblock search_box %}
+
+{% block sidebar %}
+
+    {% developers_partial %}
+
+{% endblock sidebar %}

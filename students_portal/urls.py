@@ -8,6 +8,7 @@ import account.urls as account_urls
 import hallway.urls as hallway_urls
 import library.urls as library_urls
 import films.urls as films_urls
+import chat.urls as chat_urls
 
 urlpatterns = patterns(
     '',
@@ -21,6 +22,8 @@ urlpatterns = patterns(
     url(r'^library/', include(library_urls, namespace='library')),
 
     url(r'^films/', include(films_urls, namespace='films')),
+
+    url(r'^chat/', include(chat_urls, namespace='chat')),
 
     url(r'^ckeditor/', include('ckeditor.urls')),
 

@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'hallway',
     'films',
     'library',
+    'chat',
     'mixins',
     'ckeditor',
 )
