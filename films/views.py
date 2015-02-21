@@ -30,6 +30,7 @@ class HomeView(ListView):
         return redirect('films:home')
 
 
+@login_required_for_class
 class FilmDetailView(DetailView):
     model = Film
     pk_url_kwarg = 'film_pk'

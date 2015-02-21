@@ -58,10 +58,15 @@ a:hover {
     text-decoration: none;
 }
 
-p.wrapper {
-    margin: 0px;
+p.wrapper, p.video_wrapper{
+    margin: 0;
     padding: 0;
     text-align: justify;
+}
+
+p.video_wrapper{
+    box-shadow: 0 0 5px 0 lightslategrey;
+    margin: 50px 0;
 }
 
 img {
@@ -745,3 +750,5 @@ a.continue {
     top: 185px;
     width: 300px;
 }
+
+/* end of 'индикатор занрузки данных на сервер' */

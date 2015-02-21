@@ -33,6 +33,7 @@ class HomeView(ListView):
         return redirect('library:home')
 
 
+@login_required_for_class
 class BookDetailView(DetailView):
     model = Book
     pk_url_kwarg = 'book_pk'
