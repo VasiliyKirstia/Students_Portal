@@ -48,7 +48,7 @@ function layout_and_bind(html_el_id) {
 		'</div>'+
 		'<form id="chat-form">'+
 		'<input name="message" type="text" class="message" />'+
-		'<input type="submit" value="Say"/>'+
+		'<input type="submit" value="Отправить"/>'+
 		'</form>';
 
 		$("#"+html_el_id).append(html);
@@ -97,9 +97,9 @@ function get_messages() {
 				else if (m.type == 'm')
 					$('#chat-messages').append('<div class="message"><div class="author">'+m.author+'</div>'+replace_emoticons(m.message) + '</div>');
 				else if (m.type == 'j')
-					$('#chat-messages').append('<div class="join">'+m.author+' has joined</div>');
+					$('#chat-messages').append('<div class="join">'+m.author+' присоеденился к чату.</div>');
 				else if (m.type == 'l')
-					$('#chat-messages').append('<div class="leave">'+m.author+' has left</div>');
+					$('#chat-messages').append('<div class="leave">'+m.author+' покинул чат.</div>');
 
 				last_received = m.id;
 			})

@@ -5,6 +5,12 @@ from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect, render
+from django.db.models import Q
+
+from mixins.decorators import login_required_for_class
 
 from chat.models import Room, Message
 
@@ -108,16 +114,36 @@ def leave(request):
     p = request.POST
     r = Room.objects.get(id=int(p['chat_room_id']))
     r.leave(request.user)
+    if r.members.count() < 1:
+        r.delete()
     return HttpResponse('')
 
 
-@login_required
-@csrf_exempt
-def test(request):
-    """Test the chat application"""
+class RoomsListView(ListView):
+    paginate_by = 20
+    queryset = Room.objects.all()
+    context_object_name = 'rooms_list'
+    template_name = 'chat/index.html'
 
-    u = User.objects.get(id=1)  # always attach to first user id
-    r = Room.objects.get_or_create(u)
+    def post(self, request, *args, **kwargs):
+        if 'query' in self.request.POST and self.request.POST['query'] != '':
+            query = self.request.POST['query']
+            return render(self.request, 'chat/index.html',
+                          {'rooms_list': Room.objects.filter(title__contains=query)[:40]})
+        return redirect('chat:home')
 
-    return render_to_response('chat/index.html', {'js': ['/media/js/mg/chat.js'], 'chat_id': r.pk},
-                              context_instance=RequestContext(request))
+
+@login_required_for_class
+class RoomCreateView(CreateView):
+    model = Room
+    fields = ['title']
+    template_name = 'chat/room_create.html'
+    success_url = reverse_lazy('chat:home' )
+
+
+@login_required_for_class
+class RoomDetailView(DetailView):
+    model = Room
+    pk_url_kwarg = 'room_pk'
+    template_name = 'chat/room_detail.html'
+    context_object_name = 'room'

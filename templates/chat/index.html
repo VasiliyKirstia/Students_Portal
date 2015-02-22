@@ -1,13 +1,58 @@
 {% extends "chat/layout.html" %}
 
-{% block title %}Чат | Общий{% endblock title %}
+{% block title %}Чаты | Главная{% endblock title %}
 
 {% block content %}
-<div id="chat"></div>
+    {% for room in rooms_list %}
+        <div class="post_box">
+            <h2 class='title'>
+                <a href="{% url 'chat:room' room.id %}">{{ room.title|truncatechars:38 }}</a>
+            </h2>
+            <div class="news_meta">
+                Дата(придумайте пожалуйста название этому полю): {{ room.date|date:"j E oг. H:i" }}
+            </div>
+            <p class='wrapper'>
+                Участники:
+                {% for user in room.members.all %}
+                    {% if not forloop.last %}
+                        {{ user.first_name }} {{ user.last_name }},
+                    {% else %}
+                        {{ user.first_name }} {{ user.last_name }}.
+                    {% endif %}
+                {% empty %}
+                    Раздор, Война, Недуг, Голод.
+                {% endfor %}
+            </p>
+            <div class="cleaner"></div>
+        </div>
+    {% empty %}
+        <div class="post_box">
+            <b><i>По Вашему запросу ничего не найдено. Попробуйте переформулировать запрос.</i></b>
+            <div class="cleaner"></div>
+        </div>
+    {% endfor %}
 
-<script type="text/javascript">
-    $(window).ready(function(){
-        init_chat({{ chat_id }}, "chat");
-    })
-</script>
+    {% if is_paginated %}
+    <div class="post_box pb_last" style="margin-left: 320px;">
+        <div class="page-links">
+            <span>
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+                {% endif %}
+
+                {% if page_obj.has_previous and page_obj.has_next %}
+                    |
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">следующая</a>
+                {% endif %}
+            </span>
+
+        </div>
+        <div class="cleaner"></div>
+    </div>
+    {% endif %}
+
 {% endblock content %}

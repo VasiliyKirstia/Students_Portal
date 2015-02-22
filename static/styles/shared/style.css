@@ -758,7 +758,7 @@ a.continue {
 #chat-messages-container {
 	overflow: auto; /* used for scrolling */
 	width: 100%;
-	height: 100px;
+	height: 200px;
 	border: 1px solid #777;
 	-moz-border-radius: 5px;
 }
