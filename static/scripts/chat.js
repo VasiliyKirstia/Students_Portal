@@ -1,6 +1,31 @@
 var chat_room_id = undefined;
 var last_received = 0;
 
+// emoticons
+var emoticons = {
+	'\\(angel\\)' : 'angel_smile.png',
+	'\\(angry\\)' : 'angry_smile.png',
+	'\\(broken\\)' : 'broken_heart.png',
+	':\\/' : 'confused_smile.png',
+	'\\(cry\\)' : 'cry_smile.png',
+	'\\(devil\\)' : 'devil_smile.png',
+	'\\(embarrassed\\)' : 'embarrassed_smile.png',
+	'\\(envelope\\)' : 'envelope.png',
+	'\\(heart\\)' : 'heart.png',
+	'\\(kiss\\)' : 'kiss.png',
+	'\\(lightbulb\\)' : 'lightbulb.png',
+	':o' : 'omg_smile.png',
+	':\\)' : 'regular_smile.png',
+	':\\(' : 'sad_smile.png',
+	'8\\|' : 'shades_smile.png',
+	':D' : 'teeth_smile.png',
+	'\\(thumbs_down\\)' : 'thumbs_down.png',
+	'\\(thumbs_up\\)' : 'thumbs_up.png',
+	':p' : 'tongue_smile.png',
+	':\\|' : 'whatchutalkingabout_smile.png',
+	';\\)' : 'wink_smile.png',
+}
+
 /**
  * Initialize chat:
  * - Set the room id
@@ -43,15 +68,29 @@ function sync_messages() {
 function layout_and_bind(html_el_id) {
 		// layout stuff
 		var html = '<div id="chat-messages-container">'+
-		'<div id="chat-messages"> </div>'+
-		'<div id="chat-last"> </div>'+
-		'</div>'+
-		'<form id="chat-form">'+
-		'<input name="message" type="text" class="message" />'+
-		'<input type="submit" value="Отправить"/>'+
-		'</form>';
+						'<div id="chat-messages"> </div>'+
+						'<div id="chat-last"> </div>'+
+					'</div>'+
+					'<div id="chat-smiles-container"> </div>'+
+					'<form id="chat-form">'+
+						'<input name="message" type="text" class="message" value="" />'+
+						'<input type="submit" value="Отправить"/>'+
+					'</form>';
 
+		//рендерим чатик
 		$("#"+html_el_id).append(html);
+
+		//вставляем панель с сайликами
+		for(key in emoticons){
+			$("#chat-smiles-container").append('<img style="margin: 3px;" src="/static/images/emotions/'+ emoticons[key] +' " value="'+ key.replace(/\\/g,'') +'" />');
+		}
+
+		//навешиваем обработчиков нажатия на каждый смайлик
+		$.each($('#chat-smiles-container > img'), function(i, obj) {
+			$(obj).bind('click', function(eventObj){
+				$('#chat-form > input.message').val($('#chat-form > input.message').val() + ' ' + $(eventObj.target).attr('value') + ' ');
+			});
+		});
 
 		// event stuff
     	$("#chat-form").submit( function () {
@@ -95,7 +134,7 @@ function get_messages() {
 				if (m.type == 's')
 					$('#chat-messages').append('<div class="system">' + replace_emoticons(m.message) + '</div>');
 				else if (m.type == 'm')
-					$('#chat-messages').append('<div class="message"><div class="author">'+m.author+'</div>'+replace_emoticons(m.message) + '</div>');
+					$('#chat-messages').append('<div class="message"><div class="author">'+m.author+': </div>'+replace_emoticons(m.message) + '</div>');
 				else if (m.type == 'j')
 					$('#chat-messages').append('<div class="join">'+m.author+' присоеденился к чату.</div>');
 				else if (m.type == 'l')
@@ -141,20 +180,6 @@ function chat_leave() {
 $(window).load(function(){chat_join()});
 $(window).unload(function(){chat_leave()});
 
-// emoticons
-var emoticons = {
-	'>:D' : 'emoticon_evilgrin.png',
-	':D' : 'emoticon_grin.png',
-	'=D' : 'emoticon_happy.png',
-	':\\)' : 'emoticon_smile.png',
-	':O' : 'emoticon_surprised.png',
-	':P' : 'emoticon_tongue.png',
-	':\\(' : 'emoticon_unhappy.png',
-	':3' : 'emoticon_waii.png',
-	';\\)' : 'emoticon_wink.png',
-	'\\(ball\\)' : 'sport_soccer.png'
-}
-
 /**
  * Regular expression maddness!!!
  * Replace the above strings for their img counterpart
@@ -163,7 +188,7 @@ function replace_emoticons(text) {
 	$.each(emoticons, function(char, img) {
 		re = new RegExp(char,'g');
 		// replace the following at will
-		text = text.replace(re, '<img src="/media/img/silk/'+img+'" />');
+		text = text.replace(re, '<img src="/static/images/emotions/'+img+'" />');
 	});
 	return text;
 }

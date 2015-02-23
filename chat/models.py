@@ -27,12 +27,14 @@ class Room(models.Model):
     def join(self, user):
         """A user has joined"""
         Membership.objects.create(room=self, user=user)
-        return self.__add_message('j', user)
+        if Membership.objects.filter(room=self).filter(user=user).count() == 1:
+            return self.__add_message('j', user)
 
     def leave(self, user):
         """A user has leaved"""
-        Membership.objects.filter(room=self).get(user=user).delete()
-        return self.__add_message('l', user)
+        Membership.objects.filter(room=self).filter(user=user)[0].delete()
+        if Membership.objects.filter(room=self).filter(user=user).count() == 0:
+            return self.__add_message('l', user)
 
     def messages(self, after_pk=None, after_date=None):
         """List messages, after the given id or date"""
