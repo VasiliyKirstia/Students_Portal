@@ -76,7 +76,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = None
+TIME_ZONE = 'Europe/Chisinau'
 
 USE_I18N = True
 

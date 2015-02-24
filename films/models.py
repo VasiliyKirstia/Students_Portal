@@ -1,9 +1,19 @@
+from os.path import join
 from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 import datetime
 
 YEAR_CHOICES = [(year, year) for year in range(datetime.date.today().year, 1799, -1)]
+
+FILMS_FOLDER = 'films'
+
+
+def UPLOAD_TO(s, fn):
+    return join(FILMS_FOLDER, "{hour}{minute}{microsecond}{fn}".format(hour=datetime.datetime.utcnow().hour,
+                                                                       minute=datetime.datetime.utcnow().minute,
+                                                                       microsecond=datetime.datetime.utcnow().microsecond,
+                                                                       fn=fn))
 
 
 class Category(models.Model):
@@ -18,6 +28,7 @@ class Category(models.Model):
         verbose_name = 'категория'
         verbose_name_plural = 'категории'
 
+
 class Film(models.Model):
     id = models.AutoField(primary_key=True)
 
@@ -29,7 +40,7 @@ class Film(models.Model):
 
     description = RichTextField(verbose_name='описание')
 
-    film_file = models.FileField(upload_to='films',
+    film_file = models.FileField(upload_to=UPLOAD_TO,
                                  verbose_name='фильм')
 
     user = models.ForeignKey(User,

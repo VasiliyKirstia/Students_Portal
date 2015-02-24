@@ -2,8 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 from ckeditor.fields import RichTextField
 import datetime
+from os.path import join
 
 YEAR_CHOICES = [(year, year) for year in range(datetime.date.today().year, 1499, -1)]
+
+BOOKS_FOLDER = 'books'
+
+
+def UPLOAD_TO(s, fn):
+    return join(BOOKS_FOLDER, "{hour}{minute}{microsecond}{fn}".format(hour=datetime.datetime.utcnow().hour,
+                                                                       minute=datetime.datetime.utcnow().minute,
+                                                                       microsecond=datetime.datetime.utcnow().microsecond,
+                                                                       fn=fn))
 
 
 class Category(models.Model):
@@ -36,7 +46,7 @@ class Book(models.Model):
 
     description = RichTextField(verbose_name='описание')
 
-    book_file = models.FileField(upload_to='books',
+    book_file = models.FileField(upload_to=UPLOAD_TO,
                                  verbose_name='книга')
 
     user = models.ForeignKey(User,
