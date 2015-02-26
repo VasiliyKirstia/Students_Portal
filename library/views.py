@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Q
 
 from library.models import *
-from mixins.decorators import login_required_for_class
+from mixins.permissions import LoginRequiredMixin
 
 
 class HomeView(ListView):
@@ -33,16 +33,14 @@ class HomeView(ListView):
         return redirect('library:home')
 
 
-@login_required_for_class
-class BookDetailView(DetailView):
+class BookDetailView(LoginRequiredMixin, DetailView):
     model = Book
     pk_url_kwarg = 'book_pk'
     template_name = 'library/book_detail.html'
     context_object_name = 'book'
 
 
-@login_required_for_class
-class BookCreateView(CreateView):
+class BookCreateView(LoginRequiredMixin, CreateView):
     model = Book
     fields = ['title', 'author', 'publisher', 'imprint_date', 'description', 'category', 'book_file']
     success_url = reverse_lazy('library:home')
@@ -53,8 +51,7 @@ class BookCreateView(CreateView):
         return super(BookCreateView, self).form_valid(form)
 
 
-@login_required_for_class
-class BookUpdateView(UpdateView):
+class BookUpdateView(LoginRequiredMixin, UpdateView):
     model = Book
     fields = ['title', 'author', 'publisher', 'imprint_date', 'description', 'category', 'book_file']
     pk_url_kwarg = 'book_pk'

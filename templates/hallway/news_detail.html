@@ -8,7 +8,7 @@
                 <a>{{ news.title }}</a>
             </h2>
             <div class="news_meta">
-                Автор <a>Команда разработчиков</a>, {{ news.date|date:"j E oг. H:i" }}
+                Добавлено: {{ news.date|date:"j E oг. H:i" }}
             </div>
             <p class='wrapper'>
                 {{ news.text|safe }}

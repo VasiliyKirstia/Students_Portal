@@ -1,7 +1,7 @@
 var chat_room_id = undefined;
 var last_received = 0;
 
-// emoticons
+// смайлики
 var emoticons = {
 	'\\(angel\\)' : 'angel_smile.png',
 	'\\(angry\\)' : 'angry_smile.png',
@@ -62,11 +62,10 @@ function sync_messages() {
 }
 
 /**
- * Generate the Chat box's HTML and bind the ajax events
- * @param target_div_id the id of the html element where the chat will be placed
+ * рендерим скилет чата и добавляем свои обработчики на интересующие нас события
  */
 function layout_and_bind(html_el_id) {
-		// layout stuff
+		// рендерим скилет чата
 		var html = '<div id="chat-messages-container">'+
 						'<div id="chat-messages"> </div>'+
 						'<div id="chat-last"> </div>'+
@@ -92,7 +91,7 @@ function layout_and_bind(html_el_id) {
 			});
 		});
 
-		// event stuff
+		// прикручиваем свой обработчик отправки формы
     	$("#chat-form").submit( function () {
             var $inputs = $(this).children('input');
             var values = {};
@@ -109,12 +108,13 @@ function layout_and_bind(html_el_id) {
                 url: '/chat/send/'
             });
             $('#chat-form .message').val('');
+
             return false;
 	});
 };
 
 /**
- * Gets the list of messages from the server and appends the messages to the chatbox
+ * получаем список сообщений и отображаем их
  */
 function get_messages() {
     $.ajax({
@@ -124,12 +124,15 @@ function get_messages() {
 		dataType: 'JSON',
 		success: function (json) {
 			var scroll = false;
-			// first check if we are at the bottom of the div, if we are, we shall scroll once the content is added
+			//если находимся внизу div-а, то прокручиваем при каждом новом сообщении
 			var $containter = $("#chat-messages-container");
-			if ($containter.scrollTop() == $containter.attr("scrollHeight", $containter.height()))
+			//вобще без понятия откуда тут взялось 13, но без него никак.
+			if ($containter.scrollTop() == $("#chat-messages").outerHeight() - $containter.innerHeight()){
 				scroll = true;
-
-			// add messages
+			}
+			//alert($containter.scrollTop());
+			//alert($("#chat-messages").outerHeight() - $containter.innerHeight());
+			// добавляем сообщения
 			$.each(json, function(i,m){
 				if (m.type == 's')
 					$('#chat-messages').append('<div class="system">' + replace_emoticons(m.message) + '</div>');
@@ -143,17 +146,17 @@ function get_messages() {
 				last_received = m.id;
 			})
 
-			// scroll to bottom
+			// прокручиваем вниз
 			if (scroll)
-				$("#chat-messages-container").animate({ scrollTop: $("#chat-messages-container").attr("scrollHeight") }, 500);
+				$containter.scrollTop($("#chat-messages").height());
 		}
     });
-    // wait for next
+    // ждем 2 секунды и просим прислать нам еще сообщений
     setTimeout("get_messages()", 2000);
 }
 
 /**
- * Tells the chat app that we are joining
+ * сообщаем что пользователь присоеденился к чату
  */
 function chat_join() {
 	$.ajax({
@@ -165,7 +168,7 @@ function chat_join() {
 }
 
 /**
- * Tells the chat app that we are leaving
+ * сообщаем что пользователь покидает чат
  */
 function chat_leave() {
 	$.ajax({
@@ -176,13 +179,12 @@ function chat_leave() {
     });
 }
 
-// attach join and leave events
+// добавляем обработчики событий входа в чат и выхода из чата
 $(window).load(function(){chat_join()});
 $(window).unload(function(){chat_leave()});
 
 /**
- * Regular expression maddness!!!
- * Replace the above strings for their img counterpart
+ * заменяем в таксте сокращения смайликов тегом img
  */
 function replace_emoticons(text) {
 	$.each(emoticons, function(char, img) {

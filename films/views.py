@@ -4,10 +4,14 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Q
 
 from films.models import *
-from mixins.decorators import login_required_for_class
+from mixins.permissions import LoginRequiredMixin
 
 
-class HomeView(ListView):
+class FilmsListView(ListView):
+    """
+    Фильтрует фильмы по категории/автору/"поисковому запросу".
+    По умолчанию отображает все фильмы отсортированые по дате добавления.
+    """
     paginate_by = 20
     context_object_name = 'films_list'
     template_name = 'films/index.html'
@@ -30,16 +34,20 @@ class HomeView(ListView):
         return redirect('films:home')
 
 
-@login_required_for_class
-class FilmDetailView(DetailView):
+class FilmDetailView(LoginRequiredMixin, DetailView):
+    """
+    Страница "онлайн просмотра"/скачивания фильма.
+    """
     model = Film
     pk_url_kwarg = 'film_pk'
     template_name = 'films/film_detail.html'
     context_object_name = 'film'
 
 
-@login_required_for_class
-class FilmCreateView(CreateView):
+class FilmCreateView(LoginRequiredMixin, CreateView):
+    """
+    Страница добавления нового фильма.
+    """
     model = Film
     fields = ['title', 'release_date', 'description', 'category', 'film_file']
     success_url = reverse_lazy('films:home')
@@ -50,8 +58,10 @@ class FilmCreateView(CreateView):
         return super(FilmCreateView, self).form_valid(form)
 
 
-@login_required_for_class
-class FilmUpdateView(UpdateView):
+class FilmUpdateView(LoginRequiredMixin, UpdateView):
+    """
+    Страница редактирования фильма.
+    """
     model = Film
     fields = ['title', 'release_date', 'description', 'category', 'film_file']
     pk_url_kwarg = 'film_pk'

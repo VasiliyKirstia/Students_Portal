@@ -4,17 +4,10 @@ from django.views.generic import ListView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Q
-from django import forms
 
 from forum.models import *
-from mixins.decorators import login_required_for_class
-
-
-#TODO убрать к чертям эту подпорку
-class AnswerForm(forms.ModelForm):
-    class Meta:
-        model = Answer
-        fields = ['text']
+from mixins.permissions import LoginRequiredMixin
+from mixins.forms import AnswerForm
 
 
 class QuestionsList(ListView):
@@ -64,15 +57,14 @@ class QuestionAnswers(ListView):
                 user=request.user,
             )
             answer.save()
-            #TODO еще один костылец
+            # TODO еще один костылец
             _question.answers_count += 1
             _question.save()
-        #TODO Настроить редирект так, чтоб он отсылал на ту же самую страницу с которой пришел пользователь без использования костыля
+        # TODO Настроить редирект так, чтоб он отсылал на ту же самую страницу с которой пришел пользователь
         return redirect(request.path + '?page=last')
 
 
-@login_required_for_class
-class QuestionCreate(CreateView):
+class QuestionCreate(LoginRequiredMixin, CreateView):
     model = Question
     fields = ['title', 'text', 'category', 'solved']
     success_url = reverse_lazy('forum:home')
@@ -83,8 +75,7 @@ class QuestionCreate(CreateView):
         return super(QuestionCreate, self).form_valid(form)
 
 
-@login_required_for_class
-class QuestionUpdate(UpdateView):
+class QuestionUpdate(LoginRequiredMixin, UpdateView):
     model = Question
     fields = ['title', 'text', 'category', 'solved']
     pk_url_kwarg = 'question_id'
@@ -92,8 +83,7 @@ class QuestionUpdate(UpdateView):
     template_name = 'forum/question_create.html'
 
 
-@login_required_for_class
-class QuestionDelete(DeleteView):
+class QuestionDelete(LoginRequiredMixin, DeleteView):
     model = Question
     pk_url_kwarg = 'question_id'
     success_url = reverse_lazy('forum:home')

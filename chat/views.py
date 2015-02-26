@@ -10,7 +10,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Q
 
-from mixins.decorators import login_required_for_class
+from mixins.permissions import LoginRequiredMixin
 
 from chat.models import Room, Message
 
@@ -133,16 +133,14 @@ class RoomsListView(ListView):
         return redirect('chat:home')
 
 
-@login_required_for_class
-class RoomCreateView(CreateView):
+class RoomCreateView(LoginRequiredMixin, CreateView):
     model = Room
     fields = ['title']
     template_name = 'chat/room_create.html'
     success_url = reverse_lazy('chat:home' )
 
 
-@login_required_for_class
-class RoomDetailView(DetailView):
+class RoomDetailView(LoginRequiredMixin, DetailView):
     model = Room
     pk_url_kwarg = 'room_pk'
     template_name = 'chat/room_detail.html'
