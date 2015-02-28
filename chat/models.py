@@ -14,6 +14,8 @@ class Room(models.Model):
                                      through='Membership',
                                      verbose_name='участники')
 
+    last_recv = models.DateTimeField(auto_now=True)
+
     def __add_message(self, type, sender, message=None):
         """Generic function for adding a message to the chat room"""
         m = Message(room=self, type=type, author=sender, message=message)

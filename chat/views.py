@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.db.models import Q
 
 from mixins.permissions import LoginRequiredMixin
-
+from django.utils import timezone
 from chat.models import Room, Message
 
 
@@ -83,6 +83,10 @@ def receive(request):
 
     r = Room.objects.get(id=room_id)
 
+    if timezone.now() - r.last_recv > timezone.timedelta(minutes=5):
+        r.last_recv = timezone.now()
+        r.save()
+
     m = r.messages(offset)
 
     #TODO придумать как по другому сериализовать сообщения
@@ -121,9 +125,20 @@ def leave(request):
 
 class RoomsListView(ListView):
     paginate_by = 20
-    queryset = Room.objects.all()
     context_object_name = 'rooms_list'
     template_name = 'chat/index.html'
+
+    def get_queryset(self):
+        queryset = []
+        now = timezone.now()
+        for room in Room.objects.all():
+            print(room.last_recv)
+            print(timezone.now())
+            if now - room.last_recv > timezone.timedelta(minutes=10):
+                room.delete()
+            else:
+                queryset.append(room)
+        return queryset
 
     def post(self, request, *args, **kwargs):
         if 'query' in self.request.POST and self.request.POST['query'] != '':
