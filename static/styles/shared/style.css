@@ -785,14 +785,14 @@ a.continue {
 
 #chat-messages .join {
 	color: #696;
-	background: url(img/silk/door_in.png) top left no-repeat;
+	background: url(../../images/chat/in.png) top left no-repeat;
 	padding-left: 20px;
 	margin: 4px 0;
 }
 
 #chat-messages .leave {
 	color: #966;
-	background: url(img/silk/door_out.png) top left no-repeat;
+	background: url(../../images/chat/out.png) top left no-repeat;
 	padding-left: 20px;
 	margin: 4px 0;
 }

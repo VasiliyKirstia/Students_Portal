@@ -6,7 +6,7 @@
     {% for book in books_list %}
         <div class="post_box">
             <h2 class='title'>
-                <a href="{% url 'library:detail' book.id %}">{{ book.title|truncatechars:38 }}</a>
+                <a href="{% url 'library:detail' book.id %}">{{ book.title|truncatechars:40 }}</a>
             </h2>
             <div class="news_meta">
                 Автор: {{ book.author }}

@@ -6,7 +6,7 @@
     {% for film in films_list %}
         <div class="post_box">
             <h2 class='title'>
-                <a href="{% url 'films:detail' film.id %}">{{ film.title|truncatechars:38 }}</a>
+                <a href="{% url 'films:detail' film.id %}">{{ film.title|truncatechars:40 }}</a>
             </h2>
             <div class="news_meta">
                 Добавил <a href="{% url 'films:by-author' film.user.pk %}">{{ film.user.first_name}} {{ film.user.last_name}}</a>, {{ film.date|date:"j M" }}

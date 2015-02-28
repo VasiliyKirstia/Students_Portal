@@ -1,14 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.utils.html import escape
 
 class Room(models.Model):
 
     id = models.AutoField(primary_key=True)
 
     title = models.CharField(max_length=150, verbose_name='название')
-
-    date = models.DateTimeField(auto_now=True, verbose_name='дата создания')
 
     members = models.ManyToManyField(User,
                                      through='Membership',
@@ -18,7 +16,7 @@ class Room(models.Model):
 
     def __add_message(self, type, sender, message=None):
         """Generic function for adding a message to the chat room"""
-        m = Message(room=self, type=type, author=sender, message=message)
+        m = Message(room=self, type=type, author=sender, message=escape(message))
         m.save()
         return m
 
@@ -59,7 +57,7 @@ class Room(models.Model):
         return 'Chat for %s %d' % (self.content_type, self.object_id)
 
     class Meta:
-        ordering = ['-date']
+        ordering = ['-last_recv']
         verbose_name = 'комната'
         verbose_name_plural = 'комнаты'
 

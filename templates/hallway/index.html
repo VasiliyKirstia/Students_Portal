@@ -6,7 +6,7 @@
     {% for news in news_list %}
         <div class="post_box">
             <h2 class='title'>
-                <a href="{% url 'hallway:news' news.pk %}">{{ news.title|truncatechars:38 }}</a>
+                <a href="{% url 'hallway:news' news.pk %}">{{ news.title|truncatechars:40 }}</a>
             </h2>
             <div class="news_meta">
                 Добавлено: {{ news.date|date:"j E oг. H:i" }}

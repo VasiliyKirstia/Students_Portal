@@ -83,8 +83,7 @@ def receive(request):
 
     r = Room.objects.get(id=room_id)
 
-    if timezone.now() - r.last_recv > timezone.timedelta(minutes=5):
-        r.last_recv = timezone.now()
+    if timezone.now() - r.last_recv > timezone.timedelta(minutes=1):
         r.save()
 
     m = r.messages(offset)
@@ -118,8 +117,6 @@ def leave(request):
     p = request.POST
     r = Room.objects.get(id=int(p['chat_room_id']))
     r.leave(request.user)
-    if r.members.count() < 1:
-        r.delete()
     return HttpResponse('')
 
 
@@ -134,7 +131,7 @@ class RoomsListView(ListView):
         for room in Room.objects.all():
             print(room.last_recv)
             print(timezone.now())
-            if now - room.last_recv > timezone.timedelta(minutes=10):
+            if now - room.last_recv > timezone.timedelta(minutes=30):
                 room.delete()
             else:
                 queryset.append(room)

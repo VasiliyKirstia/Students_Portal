@@ -6,10 +6,10 @@
     {% for room in rooms_list %}
         <div class="post_box">
             <h2 class='title'>
-                <a href="{% url 'chat:room' room.id %}">{{ room.title|truncatechars:38 }}</a>
+                <a href="{% url 'chat:room' room.id %}">{{ room.title|truncatechars:40 }}</a>
             </h2>
             <div class="news_meta">
-                Дата(придумайте пожалуйста название этому полю): {{ room.date|date:"j E oг. H:i" }}
+                Время последнего проявления активности в комнате: {{ room.last_recv|date:"j E oг. H:i" }}
             </div>
             <p class='wrapper'>
                 Участники:

@@ -81,7 +81,7 @@ function layout_and_bind(html_el_id) {
 
 		//вставляем панель с сайликами
 		for(key in emoticons){
-			$("#chat-smiles-container").append('<img style="margin: 3px;" src="/static/images/emotions/'+ emoticons[key] +' " value="'+ key.replace(/\\/g,'') +'" />');
+			$("#chat-smiles-container").append('<img style="margin: 3px;" src="/static/images/chat/'+ emoticons[key] +' " value="'+ key.replace(/\\/g,'') +'" />');
 		}
 
 		//навешиваем обработчиков нажатия на каждый смайлик
@@ -190,7 +190,7 @@ function replace_emoticons(text) {
 	$.each(emoticons, function(char, img) {
 		re = new RegExp(char,'g');
 		// replace the following at will
-		text = text.replace(re, '<img src="/static/images/emotions/'+img+'" />');
+		text = text.replace(re, '<img src="/static/images/chat/'+img+'" />');
 	});
 	return text;
 }
