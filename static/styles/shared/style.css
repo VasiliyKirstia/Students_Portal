@@ -29,6 +29,10 @@
     font-weight: bold;
 }
 
+textarea:focus, input:focus{
+    outline: none;
+}
+
 html,
 body {
     margin: 0;
@@ -206,9 +210,9 @@ cite span {
     color: #696443;
 }
 
-em {
+/*em {
     color: #e55822;
-}
+}*/
 
 .tmo_list {
     margin: 20px 0;
