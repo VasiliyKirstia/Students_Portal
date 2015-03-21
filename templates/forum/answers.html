@@ -1,25 +1,25 @@
 {% extends "forum/layout.html" %}
 
-{% block title %} Форум {% endblock title %}
+{% block title %}Форум | {{ question.title}}{% endblock title %}
 
 {% block content %}
     <div class="post_box">
         <h2 class='title'>
-            <a href="#">{{ topic.title}}</a>
+            <a href="#">{{ question.title}}</a>
         </h2>
         <div class="news_meta">
-            Автор <a href="{% url 'forum:by-author' topic.user.pk %}">{{ topic.user.first_name}} {{ topic.user.last_name}}</a>, {{ topic.date|date:"j M" }}
-            | Категория: <a href="{% url 'forum:by-category' topic.category.pk %}">{{ topic.category.name }}</a>
-            {% if user.is_authenticated %}
-                | <a href="{% url 'forum:update_topic' topic.id %}">Р</a>
-                | <a href="{% url 'forum:delete_topic' topic.id %}">У</a>
+            Автор <a href="{% url 'forum:by-author' question.user.pk %}">{{ question.user.first_name}} {{ question.user.last_name}}</a>, {{ question.date|date:"j M" }}
+            | Категория: <a href="{% url 'forum:by-category' question.category.pk %}">{{ question.category.name }}</a>
+            {% if user.is_authenticated and user == question.user %}
+                | <a href="{% url 'forum:update_question' question.id %}">Р</a>
+                | <a href="{% url 'forum:delete_question' question.id %}">У</a>
             {% endif %}
-            {% if topic.solved %}
+            {% if question.solved %}
                 | <strong style="color: green;">Решено!</strong>
             {% endif %}
         </div>
         <p class='wrapper'>
-            {{ topic.text|safe }}
+            {{ question.text|safe }}
         </p>
         <div class="cleaner"></div>
     </div>
@@ -38,7 +38,7 @@
 
     {% if user.is_authenticated and not topic.solved %}
         <div class="post_box pb_last">
-            <form action="{% url 'forum:answers' topic.id %}" method="post">
+            <form action="{% url 'forum:answers' question.id %}" method="post">
                 {% csrf_token %}
                 {{ form.media }}
                 {{ form.text }}
@@ -59,7 +59,7 @@
     {% endif %}
 
     {% if is_paginated %}
-    <div class="post_box pb_last">
+    <div class="post_box pb_last" style="margin-left: 320px;">
         <div class="page-links">
             <span>
                 Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.

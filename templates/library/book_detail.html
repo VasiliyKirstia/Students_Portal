@@ -1,0 +1,27 @@
+{% extends "library/layout.html" %}
+
+{% block title %}Библиотека | {{ book.title }}{% endblock title %}
+
+{% block content %}
+        <div class="post_box">
+            <h2 class='title'>
+                <a>{{ book.title }}</a>
+            </h2>
+            <div class="news_meta">
+                Автор: {{ book.author }}
+                | Издана: {{ book.publisher }}, {{ book.imprint_date }}г.
+                | Добавил <a href="{% url 'library:by-author' book.user.pk %}">{{ book.user.first_name }} {{ book.user.last_name }}</a>, {{ book.date|date:"j M"}}
+                | Категория: <a href="{% url 'library:by-category' book.category.pk %}">{{ book.category.name }}</a>
+                {% if user.is_authenticated and user == book.user %}
+                    | <a href="{% url 'library:update' book.id %}">Р</a>
+                {% endif %}
+            </div>
+            <p class='wrapper'>
+                {{ book.description|safe }}
+            </p>
+            <p class='wrapper'>
+                <a href="{{ book.book_file.url }}" download >Скачать</a>
+            </p>
+            <div class="cleaner"></div>
+        </div>
+{% endblock content %}

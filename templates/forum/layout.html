@@ -7,7 +7,7 @@
     <div id="search_box">
         <form action="{% url 'forum:home' %}" method="post">
             {% csrf_token %}
-            <input type="text" placeholder="Искать..." name="query" id="searchfield"/>
+            <input type="text" placeholder="Искать на форуме..." name="query" id="searchfield"/>
           <input type="submit" value="Поехали" id="searchbutton" />
         </form>
     </div>
@@ -16,7 +16,7 @@
 {% block sidebar %}
 
     <div class="sidebar_box">
-        <h3 class='title'><a style="color:white;" href="{% url 'forum:create_topic' %}">Задать вопрос</a></h3>
+        <h3 class='title'><a style="color:white;" href="{% url 'forum:create_question' %}">Задать вопрос</a></h3>
     </div>
 
     {% forum_categories_partial %}

@@ -1,0 +1,8 @@
+<div class="footer_box col_w293 fb_last">
+    <h4 class='title'>Фильмы</h4>
+    <ul class="footer_menu">
+        {% for film in films %}
+            <li><a href="{% url 'films:detail' film.id %}">{{ film.title|truncatechars:35 }}</a></li>
+        {% endfor %}
+    </ul>
+</div>

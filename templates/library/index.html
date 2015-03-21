@@ -1,0 +1,56 @@
+{% extends "library/layout.html" %}
+
+{% block title %}Библиотека | Главная{% endblock title %}
+
+{% block content %}
+    {% for book in books_list %}
+        <div class="post_box">
+            <h2 class='title'>
+                <a href="{% url 'library:detail' book.id %}">{{ book.title|truncatechars:40 }}</a>
+            </h2>
+            <div class="news_meta">
+                Автор: {{ book.author }}
+                | Издана: {{ book.publisher }}, {{ book.imprint_date }}г.
+                | Добавил <a href="{% url 'library:by-author' book.user.pk %}">{{ book.user.first_name }} {{ book.user.last_name }}</a>, {{ book.date|date:"j M" }}
+                | Категория: <a href="{% url 'library:by-category' book.category.pk %}">{{ book.category.name }}</a>
+                {% if user.is_authenticated and user == book.user %}
+                    | <a href="{% url 'library:update' book.id %}">Р</a>
+                {% endif %}
+            </div>
+            <p class='wrapper'>
+                {{ book.description|truncatewords_html:35|safe }}
+                <a href="{% url 'library:detail' book.id %}" class="continue">Подробнее.</a>
+            </p>
+            <div class="cleaner"></div>
+        </div>
+    {% empty %}
+        <div class="post_box">
+            <b><i>По Вашему запросу ничего не найдено. Попробуйте переформулировать запрос.</i></b>
+            <div class="cleaner"></div>
+        </div>
+    {% endfor %}
+
+    {% if is_paginated %}
+    <div class="post_box pb_last" style="margin-left: 320px;">
+        <div class="page-links">
+            <span>
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+                {% endif %}
+
+                {% if page_obj.has_previous and page_obj.has_next %}
+                    |
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">следующая</a>
+                {% endif %}
+            </span>
+
+        </div>
+        <div class="cleaner"></div>
+    </div>
+    {% endif %}
+
+{% endblock content %}

@@ -36,11 +36,14 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'ckeditor',
     'account',
     'forum',
     'hallway',
+    'films',
+    'library',
+    'chat',
     'mixins',
+    'ckeditor',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -73,7 +76,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = None
+TIME_ZONE = 'Europe/Chisinau'
 
 USE_I18N = True
 
@@ -98,6 +101,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 CKEDITOR_IMAGE_BACKEND = 'pillow'
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates/'),
+)
+
+LOGIN_URL = '/account/login/'
 
 CKEDITOR_JQUERY_URL = '/static/scripts/jquery.min.js'
 
@@ -138,9 +147,3 @@ CKEDITOR_CONFIGS = {
         #],
     }
 }
-
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, 'templates/'),
-)
-
-LOGIN_URL = '/account/login/'

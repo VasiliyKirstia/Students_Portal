@@ -1,9 +1,9 @@
-from django.conf.urls import patterns, include, url
+import django.conf.urls
 from account.views import *
 
-urlpatterns = patterns(
+urlpatterns = django.conf.urls.patterns(
     '',
-    url(r'^registration/$', RegistrationView.as_view(), name='registration'),
-    url(r'^login/$', log_in, name='login'),
-    url(r'^logout/$', log_out, name='logout'),
+    django.conf.urls.url(r'^registration/$', RegistrationView.as_view(), name='registration'),
+    django.conf.urls.url(r'^login/$', log_in, name='login'),
+    django.conf.urls.url(r'^logout/$', log_out, name='logout'),
 )

@@ -7,12 +7,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>{% block title %} {% endblock title %}</title>
     <link href="{% static 'styles/shared/style.css' %}" rel="stylesheet" type="text/css" />
+    {% block head %} {% endblock head %}
 </head>
 
 <body>
 
-    <div class="body_wrapper">
-        <div class="header_wrapper">
+    <div class="site_body_wrapper">
+        <div class="site_content_wrapper">
 
             <div class="header-container">
 
@@ -38,11 +39,11 @@
                     </li>
                     <li><a href="{% url 'forum:home' %}" {% block forum_current %}{% endblock forum_current %}><span></span>Форум</a>
                     </li>
-                    <li><a href="#" {% block films_current %}{% endblock films_current %}><span></span>Фильмы</a>
+                    <li><a href="{% url 'films:home' %}" {% block films_current %}{% endblock films_current %}><span></span>Фильмы</a>
                     </li>
-                    <li><a href="#" {% block books_current %}{% endblock books_current %}><span></span>Книги</a>
+                    <li><a href="{% url 'library:home' %}" {% block library_current %}{% endblock library_current %}><span></span>Библиотека</a>
                     </li>
-                    <li><a href="#" {% block somethink_current %}{% endblock somethink_current %}><span></span>Кое-что еще</a>
+                    <li><a href="{% url 'chat:home' %}" {% block somethink_current %}{% endblock somethink_current %}><span></span>Чаты</a>
                     </li>
                 </ul>
 
@@ -50,7 +51,7 @@
                     {% if not user.is_authenticated %}
                     <a href="{% url 'account:login' %}" class="signup">Вход</a> |
                     <a href="{% url 'account:registration' %}" class="new_reg">Регистрация</a> {% else %}
-                    <a href="#" class="new_reg">{{user.username}}</a> |
+                    <a class="new_reg">{{user.username}}</a> |
                     <a href="{% url 'account:logout' %}" class="signup">Выход</a> {% endif %}
                 </div>
             </div>
@@ -67,11 +68,11 @@
                 </div>
                 <div class="cleaner"></div>
             </div>
-
+            
         </div>
         <div class="cleaner"></div>
     </div>
-
+    
     <div class="footer_wrapper">
         <div class="footer">
 
@@ -81,14 +82,12 @@
 
             {% popular_films_partial %}
 
-            {% tag_cloud_partial %}
-
             <div class="cleaner"></div>
         </div>
     </div>
 
     <div class="copyright">
-        Copyright © 2015 <a href="#">Василий</a> | Студент физико-математического факультета ПГУ им. Т. Г. Шевченко
+        Copyright © 2015 <a href="{% url 'hallway:developers' %}">Василий</a> | Студент физико-математического факультета ПГУ им. Т. Г. Шевченко
     </div>
 
 </body>

@@ -9,9 +9,9 @@ urlpatterns = patterns(
 
     url(r'^rules/$', RulesView.as_view(), name='rules'),
 
-    url(r'^news/(?P<news_pk>\d+)/', NewsDetailView.as_view(), name='news'),
+    url(r'^news/(?P<news_pk>\d+)/$', NewsDetailView.as_view(), name='news'),
 
-    url(r'^developers/', DevelopersDetailView.as_view(), name='developers'),
+    url(r'^developers/$', DevelopersDetailView.as_view(), name='developers'),
 
-    url(r'^suggestions/', SuggestionCreate.as_view(), name='suggestions'),
+    url(r'^suggestions/$', SuggestionCreate.as_view(), name='suggestions'),
 )

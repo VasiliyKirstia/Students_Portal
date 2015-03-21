@@ -1,15 +1,15 @@
 {% extends "hallway/layout.html" %}
 
-{% block title %} Гостиная {% endblock title %}
+{% block title %}Гостиная | Новости{% endblock title %}
 
 {% block content %}
     {% for news in news_list %}
         <div class="post_box">
             <h2 class='title'>
-                <a href="{% url 'hallway:news' news.pk %}">{{ news.title|truncatechars:38 }}</a>
+                <a href="{% url 'hallway:news' news.pk %}">{{ news.title|truncatechars:40 }}</a>
             </h2>
             <div class="news_meta">
-                Автор <a>Команда разработчиков</a>, {{ news.date|date:"j E oг. H:i" }}
+                Добавлено: {{ news.date|date:"j E oг. H:i" }}
             </div>
             <p class='wrapper'>
                 {{ news.description }}
@@ -25,7 +25,7 @@
     {% endfor %}
 
     {% if is_paginated %}
-    <div class="post_box pb_last">
+    <div class="post_box pb_last" style="margin-left: 320px;">
         <div class="page-links">
             <span>
                 Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.

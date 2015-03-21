@@ -1,0 +1,8 @@
+<div class="sidebar_box">
+    <h3 class='title'>Категории</h3>
+    <ul class="sidebar_menu">
+        {% for category in categories %}
+            <li><a href="{% url 'library:by-category' category.pk %}">&raquo; {{ category.name }} <span>({{ category.books.count }})</span></a></li>
+        {% endfor %}
+    </ul>
+</div>

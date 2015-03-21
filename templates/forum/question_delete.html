@@ -1,0 +1,15 @@
+{% extends "forum/layout.html" %}
+
+{% block title %}Форум | Удаление вопроса "{{ object.title }}"{% endblock title %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="fieldWrapper">
+            <b>Точно хотите удалить "{{ object.title }}"?</b>
+            <input type="submit" value="Удалить" />
+        </div>
+    </form>
+{% endblock content %}
+
+

@@ -1,20 +1,12 @@
-from django.http import Http404, HttpResponseRedirect
-from django.views.generic import ListView, DetailView, TemplateView, CreateView
-from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect, render
-from hallway.models import *
-from django.contrib.auth.decorators import login_required
-from mixins.AccessMixins import LoginRequiredMixin
-from django.utils.decorators import method_decorator
+from django.http import HttpResponseRedirect
+from django.views.generic import ListView, DetailView, TemplateView
+from django.shortcuts import redirect, render
 from django.db.models import Q
-from datetime import datetime
 from django import forms
 
-#TODO убрать к чертям эту подпорку 2
-class SuggestionForm(forms.ModelForm):
-    class Meta:
-        model = Suggestion
-        fields = ['text']
+from hallway.models import *
+from mixins.permissions import LoginRequiredMixin
+from mixins.forms import SuggestionForm
 
 
 class HomeView(ListView):
@@ -29,7 +21,7 @@ class HomeView(ListView):
         if 'query' in self.request.POST and self.request.POST['query'] != '':
             query = self.request.POST['query']
             return render(self.request, 'hallway/index.html',
-                          {'news_list': News.objects.filter(Q(title__contains=query)|Q(text__contains=query))[:40]})
+                          {'news_list': News.objects.filter(Q(title__contains=query) | Q(text__contains=query))[:40]})
         return redirect('hallway:home')
 
 
@@ -63,14 +55,9 @@ class SuggestionCreate(LoginRequiredMixin, ListView):
         return context
 
     def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated():
-            return HttpResponseRedirect('/account/login/?next=%s' % request.path)
-        if request.POST['text'] != '':
-            suggestion = Suggestion(
-                text=request.POST['text'],
-                date=datetime.now(),
-                user=request.user,
-            )
-            suggestion.save()
-        #TODO Настроить редирект так, чтоб он отсылал на ту же самую страницу с которой пришел пользователь без использования костыля
+        form = SuggestionForm(request.POST)
+        form.instance.user = self.request.user
+        if form.is_valid():
+            form.save()
+        # TODO Настроить редирект так, чтоб он отсылал на ту же самую страницу с которой пришел
         return redirect(request.path)

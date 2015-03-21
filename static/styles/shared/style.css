@@ -1,8 +1,48 @@
+@font-face {
+    font-family: Tahoma;
+    src: url(../../fonts/TahomaRegular.ttf);
+    font-style: normal;
+}
+@font-face {
+    font-family: Georgia;
+    src: url(../../fonts/GeorgiaRegular.ttf);
+    font-style: normal;
+}
+@font-face {
+    font-family: Georgia;
+    src: url(../../fonts/GeorgiaItalic.ttf);
+    font-style: italic;
+}
+@font-face {
+    font-family: Times New Roman;
+    src: url(../../fonts/Times_New_Roman.ttf);
+}
+@font-face {
+    font-family: Times New Roman;
+    src: url(../../fonts/Times_New_Roman_Bold_Italic.ttf);
+    font-style: italic;
+    font-weight: bold;
+}
+@font-face {
+    font-family: Times New Roman;
+    src: url(../../fonts/Times_New_Roman_Bold.ttf);
+    font-weight: bold;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+html,
 body {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+body {
     color: #333;
-    font-family: Tahoma, Geneva, sans-serif;
+    font-family: Tahoma;
     font-size: 13px;
     line-height: 1.5em;
     background-color: #ccc;
@@ -22,10 +62,15 @@ a:hover {
     text-decoration: none;
 }
 
-p.wrapper {
-    margin: 0px;
+p.wrapper, p.video_wrapper{
+    margin: 0;
     padding: 0;
     text-align: justify;
+}
+
+p.video_wrapper{
+    box-shadow: 0 0 5px 0 lightslategrey;
+    margin: 50px 0;
 }
 
 img {
@@ -165,9 +210,9 @@ cite span {
     color: #696443;
 }
 
-em {
+/*em {
     color: #e55822;
-}
+}*/
 
 .tmo_list {
     margin: 20px 0;
@@ -195,15 +240,16 @@ em {
 a.continue {
     color: #F00;
     font-weight: bold;
+    margin-left: 5px;
     text-decoration: none;
 }
 
-.body_wrapper {
+.site_body_wrapper {
     width: 100%;
     background: url(../../images/shared/body_top.jpg) top repeat-x;
 }
 
-.header_wrapper {
+.site_content_wrapper {
     width: 1000px;
     padding: 0 10px;
     margin: 0 auto;
@@ -218,7 +264,7 @@ a.continue {
     float: left;
     width: 615px;
     padding: 40px 0 30px;
-    font-family: Georgia, "Times New Roman", Times, serif;
+    font-family: Times New Roman;
 }
 
 .site_title a {
@@ -274,8 +320,8 @@ a.continue {
     border: 1px solid #444444;
     vertical-align: bottom;
 }
-
 /* menu */
+
 .site_menu {
     clear: both;
     width: 1000px;
@@ -348,8 +394,8 @@ a.continue {
     text-decoration: none;
 }
 /* end of menu */
-
 /* content */
+
 .site_main {
     width: 920px;
     padding: 40px;
@@ -408,7 +454,7 @@ a.continue {
     height: 23px;
     padding: 10px;
     color: #fff;
-    font-family: Georgia, "Times New Roman", Times, serif;
+    font-family: Georgia;
     background: url(../../images/shared/sidebar_title.jpg) no-repeat;
 }
 
@@ -422,7 +468,7 @@ a.continue {
 #aboutus h3 {
     color: #fff;
     padding: 0;
-    font-family: Georgia, "Times New Roman", Times, serif;
+    font-family: Georgia;
 }
 
 .sidebar_box {
@@ -519,12 +565,14 @@ a.continue {
     width: 50px;
 }
 /* end of content */
-
 /* footer */
+
 .footer_wrapper {
     width: 100%;
     background: #000;
 }
+
+
 
 .footer {
     width: 920px;
@@ -558,8 +606,12 @@ a.continue {
     width: 200px;
 }
 
-.col_300 {
+.col_w300 {
     width: 300px;
+}
+
+.col_w293{
+    width: 293,3px;
 }
 
 .fb_last {
@@ -618,7 +670,7 @@ a.continue {
 .RegfieldWrapper input[type=password] {
     border: 1px solid gainsboro;
     box-shadow: 1px 1px 0 1px lightcyan;
-    font-family: Times New Roman;
+    font-family: Georgia;
     font-size: 15px;
     padding: 5px;
 }
@@ -648,7 +700,7 @@ a.continue {
     background-color: black;
     border: 1px solid;
     color: white;
-    font-family: Times New Roman;
+    font-family: Georgia;
     font-size: 20px;
     padding: 5px;
 }
@@ -662,6 +714,132 @@ a.continue {
 .RegfieldWrapper label {
     width: 240px;
 }
-.my_custom_body_class{
 
+/* индикатор занрузки данных на сервер */
+
+#loading{
+    display:none;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top:0;
+    left:0;
 }
+#loading .message_container{
+    background: white;
+    height: 300px;
+    left: 50%;
+    margin-left: -200px;
+    margin-top: -150px;
+    position: relative;
+    top: 50%;
+    width: 400px;
+}
+
+#loading img{
+    border: medium none;
+    left: 135px;
+    position: absolute;
+    top: 25px;
+}
+#loading .message{
+    font-family: Tahoma;
+    font-size: 19px;
+    font-style: italic;
+    font-weight: bold;
+    left: 50px;
+    position: absolute;
+    text-align: center;
+    top: 185px;
+    width: 300px;
+}
+
+/* end of 'индикатор занрузки данных на сервер' */
+
+/* CHAT */
+#chat{
+    border: 1px solid black;
+    width: 100%;
+}
+
+#chat-messages-container {
+	overflow: auto; /* used for scrolling */
+	height: 420px;
+}
+
+#chat-messages {
+	padding: 5px;
+}
+
+#chat-messages .author {
+	font-weight: bold;
+	margin-right: 0.5em;
+	display: inline;
+}
+
+#chat-messages .message {
+	margin-bottom: 4px;
+}
+
+#chat-messages .system {
+	font-weight: bold;
+	color: #642;
+}
+
+#chat-messages .join {
+	color: #696;
+	background: url(../../images/chat/in.png) top left no-repeat;
+	padding-left: 20px;
+	margin: 4px 0;
+}
+
+#chat-messages .leave {
+	color: #966;
+	background: url(../../images/chat/out.png) top left no-repeat;
+	padding-left: 20px;
+	margin: 4px 0;
+}
+
+#chat .message {
+	width: 100%;
+}
+
+#chat-form{
+    width: 100%;
+    position: relative;
+    height: 30px;
+}
+
+#chat-form input[type="text"], #chat-form input[type="submit"]{
+    box-shadow: none;
+    border: none;
+    font-size: 15px;
+    height: 30px;
+}
+
+#chat-form input[type="text"]{
+    margin: 0;
+    padding: 0 5px;
+    width: 83%;
+}
+
+#chat-form input[type="submit"]{
+    background-color: black;
+    font-size: 15px;
+    color: white;
+    position:absolute;
+    right: 0;
+    height: 30px;
+}
+
+#chat-smiles-container{
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+    padding-left: 5px;
+}
+
+.smile{
+    margin: 3px;
+}
+/* end of CHAT */

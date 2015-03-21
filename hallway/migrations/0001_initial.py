@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
+import ckeditor.fields
 from django.conf import settings
 
 
@@ -19,10 +20,11 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(max_length=30, verbose_name='имя')),
                 ('last_name', models.CharField(max_length=30, verbose_name='фамилия')),
                 ('short_description', models.TextField(max_length=80, verbose_name='краткое описание')),
-                ('description', models.TextField(verbose_name='полное описание')),
+                ('description', ckeditor.fields.RichTextField(verbose_name='полное описание')),
             ],
             options={
-                'verbose_name': 'Разработчик',
+                'verbose_name_plural': 'разработчики',
+                'verbose_name': 'разработчик',
                 'ordering': ['first_name'],
             },
             bases=(models.Model,),
@@ -32,12 +34,13 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
                 ('title', models.CharField(max_length=150, verbose_name='заголовок')),
-                ('date', models.DateTimeField()),
+                ('date', models.DateTimeField(auto_now=True)),
                 ('description', models.TextField(verbose_name='описание')),
-                ('text', models.TextField(verbose_name='новость')),
+                ('text', ckeditor.fields.RichTextField(verbose_name='новость')),
             ],
             options={
-                'verbose_name': 'Новости',
+                'verbose_name_plural': 'новости',
+                'verbose_name': 'новость',
                 'ordering': ['-date'],
             },
             bases=(models.Model,),
@@ -49,7 +52,8 @@ class Migration(migrations.Migration):
                 ('text', models.TextField(verbose_name='правила')),
             ],
             options={
-                'verbose_name': 'Правила',
+                'verbose_name_plural': 'правила',
+                'verbose_name': 'правила',
             },
             bases=(models.Model,),
         ),
@@ -57,12 +61,13 @@ class Migration(migrations.Migration):
             name='Suggestion',
             fields=[
                 ('id', models.AutoField(primary_key=True, serialize=False)),
-                ('date', models.DateTimeField()),
-                ('text', models.TextField(verbose_name='предложение')),
-                ('user', models.ForeignKey(verbose_name='автор', to=settings.AUTH_USER_MODEL, related_name='suggestions')),
+                ('date', models.DateTimeField(auto_now=True)),
+                ('text', ckeditor.fields.RichTextField(verbose_name='предложение')),
+                ('user', models.ForeignKey(related_name='suggestions', verbose_name='автор', to=settings.AUTH_USER_MODEL)),
             ],
             options={
-                'verbose_name': 'Предложения и пожелания',
+                'verbose_name_plural': 'предложения (пожелания)',
+                'verbose_name': 'пожелание (предложение)',
                 'ordering': ['-date'],
             },
             bases=(models.Model,),

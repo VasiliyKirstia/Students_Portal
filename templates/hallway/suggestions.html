@@ -1,6 +1,6 @@
 {% extends "hallway/layout.html" %}
 
-{% block title %} Предложения и пожелания {% endblock title %}
+{% block title %}Гостиная | Предложения и пожелания{% endblock title %}
 
 {% block content %}
     {% for suggestion in suggestions_list %}
@@ -27,7 +27,7 @@
     </div>
 
     {% if is_paginated %}
-    <div class="post_box pb_last">
+    <div class="post_box pb_last" style="margin-left: 320px;">
         <div class="page-links">
             <span>
                 Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.

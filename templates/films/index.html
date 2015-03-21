@@ -1,0 +1,55 @@
+{% extends "films/layout.html" %}
+
+{% block title %}Фильмы | Главная{% endblock title %}
+
+{% block content %}
+    {% for film in films_list %}
+        <div class="post_box">
+            <h2 class='title'>
+                <a href="{% url 'films:detail' film.id %}">{{ film.title|truncatechars:40 }}</a>
+            </h2>
+            <div class="news_meta">
+                Добавил <a href="{% url 'films:by-author' film.user.pk %}">{{ film.user.first_name}} {{ film.user.last_name}}</a>, {{ film.date|date:"j M" }}
+                | Категория: <a href="{% url 'films:by-category' film.category.pk %}">{{ film.category.name }}</a>
+                | Год выхода: {{ film.release_date }}
+                {% if user.is_authenticated and film.user == user %}
+                    | <a href="{% url 'films:update' film.id %}">Р</a>
+                {% endif %}
+            </div>
+            <p class='wrapper'>
+                {{ film.description|truncatewords_html:35|safe }}
+                <a href="{% url 'films:detail' film.id %}" class="continue">Подробнее.</a>
+            </p>
+            <div class="cleaner"></div>
+        </div>
+    {% empty %}
+        <div class="post_box">
+            <b><i>По Вашему запросу ничего не найдено. Попробуйте переформулировать запрос.</i></b>
+            <div class="cleaner"></div>
+        </div>
+    {% endfor %}
+
+    {% if is_paginated %}
+    <div class="post_box pb_last" style="margin-left: 320px;">
+        <div class="page-links">
+            <span>
+                Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}">предыдущая</a>
+                {% endif %}
+
+                {% if page_obj.has_previous and page_obj.has_next %}
+                    |
+                {% endif %}
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">следующая</a>
+                {% endif %}
+            </span>
+
+        </div>
+        <div class="cleaner"></div>
+    </div>
+    {% endif %}
+
+{% endblock content %}

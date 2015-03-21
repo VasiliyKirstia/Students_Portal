@@ -1,0 +1,42 @@
+{% extends "films/layout.html" %}
+{% load staticfiles %}
+
+{% block head %}
+    <link href="{% static 'plugins/video-js/video-js.css' %}" rel="stylesheet">
+    <script src="{% static 'plugins/video-js/video.js' %}"></script>
+    <script>
+        videojs.options.flash.swf = "{% static 'plugins/video-js/video-js.swf' %}"
+    </script>
+{% endblock head %}
+
+{% block title %}Фильмы | {{ film.title }}{% endblock title %}
+
+{% block content %}
+        <div class="post_box">
+            <h2 class='title'>
+                <a>{{ film.title }}</a>
+            </h2>
+            <div class="news_meta">
+                Добавил <a href="{% url 'films:by-author' film.user.pk %}">{{ film.user.first_name}} {{ film.user.last_name}}</a>, {{ film.date|date:"j M" }}
+                | Категория: <a href="{% url 'films:by-category' film.category.pk %}">{{ film.category.name }}</a>
+                | Год выхода: {{ film.release_date }}
+                {% if user.is_authenticated and film.user == user %}
+                    | <a href="{% url 'films:update' film.id %}">Р</a>
+                {% endif %}
+            </div>
+            <p class='wrapper'>
+                {{ film.description|safe }}
+            </p>
+            <p class='video_wrapper'>
+                <video id="example_video_1" class="video-js vjs-default-skin vjs-big-play-centered"
+                    controls preload="auto" width="620" height="348.5"
+                    data-setup='{"example_option":true}'>
+                    <source src="{{ film.film_file.url }}"/>
+                </video>
+            </p>
+            <p class='wrapper'>
+                <b><i>Если по каким-либо причинам видео не воспроизводится, Вы можете его <a href="{{ film.film_file.url }}" download >скачать</a>, и посмотреть у себя на компьютере.</i></b>
+            </p>
+            <div class="cleaner"></div>
+        </div>
+{% endblock content %}
