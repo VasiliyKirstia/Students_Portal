@@ -15,7 +15,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Membership',
             fields=[
-                ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
+                ('id', models.AutoField(primary_key=True, auto_created=True, serialize=False, verbose_name='ID')),
             ],
             options={
             },
@@ -25,10 +25,10 @@ class Migration(migrations.Migration):
             name='Message',
             fields=[
                 ('id', models.AutoField(serialize=False, primary_key=True)),
-                ('type', models.CharField(verbose_name='тип', choices=[('s', 'system'), ('a', 'action'), ('m', 'message'), ('j', 'join'), ('l', 'leave'), ('n', 'notification')], max_length=1)),
-                ('message', models.CharField(blank=True, verbose_name='текст сообщения', null=True, max_length=255)),
+                ('type', models.CharField(choices=[('s', 'system'), ('a', 'action'), ('m', 'message'), ('j', 'join'), ('l', 'leave'), ('n', 'notification')], verbose_name='тип', max_length=1)),
+                ('message', models.CharField(verbose_name='текст сообщения', max_length=255, null=True, blank=True)),
                 ('timestamp', models.DateTimeField(auto_now=True, verbose_name='время отправки')),
-                ('author', models.ForeignKey(blank=True, related_name='messages', to=settings.AUTH_USER_MODEL, verbose_name='автор', null=True)),
+                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL, verbose_name='автор', null=True, blank=True, related_name='messages')),
             ],
             options={
                 'verbose_name': 'сообщение',
@@ -41,13 +41,13 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(serialize=False, primary_key=True)),
                 ('title', models.CharField(verbose_name='название', max_length=150)),
-                ('date', models.DateTimeField(auto_now=True, verbose_name='дата создания')),
-                ('members', models.ManyToManyField(through='chat.Membership', verbose_name='участники', to=settings.AUTH_USER_MODEL)),
+                ('last_recv', models.DateTimeField(auto_now=True)),
+                ('members', models.ManyToManyField(to=settings.AUTH_USER_MODEL, verbose_name='участники', through='chat.Membership')),
             ],
             options={
                 'verbose_name': 'комната',
                 'verbose_name_plural': 'комнаты',
-                'ordering': ['-date'],
+                'ordering': ['-last_recv'],
             },
             bases=(models.Model,),
         ),
