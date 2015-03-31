@@ -758,88 +758,56 @@ a.continue {
 /* end of 'индикатор занрузки данных на сервер' */
 
 /* CHAT */
-#chat{
-    border: 1px solid black;
-    width: 100%;
+.chat-closed, .chat-opened{
+    z-index: 1000;
 }
-
-#chat-messages-container {
-	overflow: auto; /* used for scrolling */
-	height: 420px;
-}
-
-#chat-messages {
-	padding: 5px;
-}
-
-#chat-messages .author {
-	font-weight: bold;
-	margin-right: 0.5em;
-	display: inline;
-}
-
-#chat-messages .message {
-	margin-bottom: 4px;
-}
-
-#chat-messages .system {
-	font-weight: bold;
-	color: #642;
-}
-
-#chat-messages .join {
-	color: #696;
-	background: url(../../images/chat/in.png) top left no-repeat;
-	padding-left: 20px;
-	margin: 4px 0;
-}
-
-#chat-messages .leave {
-	color: #966;
-	background: url(../../images/chat/out.png) top left no-repeat;
-	padding-left: 20px;
-	margin: 4px 0;
-}
-
-#chat .message {
-	width: 100%;
-}
-
-#chat-form{
-    width: 100%;
-    position: relative;
-    height: 30px;
-}
-
-#chat-form input[type="text"], #chat-form input[type="submit"]{
-    box-shadow: none;
-    border: none;
-    font-size: 15px;
-    height: 30px;
-}
-
-#chat-form input[type="text"]{
-    margin: 0;
-    padding: 0 5px;
-    width: 83%;
-}
-
-#chat-form input[type="submit"]{
-    background-color: black;
-    font-size: 15px;
-    color: white;
-    position:absolute;
+.chat-opened{
+    background: none no-repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+    bottom: 0;
+    left: 0;
+    position: fixed;
     right: 0;
-    height: 30px;
+    top: 0;
+    z-index: 1000;
+
+    /*display: none;*/
+}
+.chat-closed{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+    border-radius: 0 15px 15px 0;
+    cursor: pointer;
+    height: 180px;
+    left: 0;
+    margin-top: -90px;
+    position: fixed;
+    top: 50%;
+    width: 63px;
+
+    display: none;
+}
+.chat-messages-count{
+    background: url("../../images/chat/letter.png") no-repeat;
+    color: black;
+    font-size: 25px;
+    height: 40px;
+    margin: 15px 4px;
+    text-align: center;
+    width: 51px;
+}
+.chat-main{
+    background: none repeat scroll 0 0 white;
+    height: 100%;
+    position: relative;
+    width: 1000px;
+}
+.chat-menu-left{
+    background: none repeat scroll 0 0 lightgrey;
+    border-right: 1px solid gray;
+    height: 100%;
+    width: 300px;
+}
+.chat-container-invites, .chat-container-rooms{
+    width: 100%
 }
 
-#chat-smiles-container{
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
-    padding-left: 5px;
-}
-
-.smile{
-    margin: 3px;
-}
 /* end of CHAT */
