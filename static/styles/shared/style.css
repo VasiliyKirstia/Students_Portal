@@ -758,10 +758,10 @@ a.continue {
 /* end of 'индикатор занрузки данных на сервер' */
 
 /* CHAT */
-.chat-closed, .chat-opened{
+#chat_closed, #chat_opened{
     z-index: 1000;
 }
-.chat-opened{
+#chat_opened{
     background: none no-repeat scroll 0 0 rgba(0, 0, 0, 0.5);
     bottom: 0;
     left: 0;
@@ -769,9 +769,9 @@ a.continue {
     right: 0;
     top: 0;
 
-    /*display: none;*/
+    display: none;
 }
-.chat-label-close{
+#chat_label_close{
     background: none repeat scroll 0 0 white;
     border-bottom: 1px solid black;
     border-radius: 0 10px 10px 0;
@@ -791,7 +791,7 @@ a.continue {
     width: 30px;
     z-index: 1001;
 }
-.chat-closed{
+#chat_closed{
     background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
     border-radius: 0 15px 15px 0;
     cursor: pointer;
@@ -801,8 +801,6 @@ a.continue {
     position: fixed;
     top: 50%;
     width: 63px;
-
-    display: none;
 }
 .chat-messages-count{
     background: url("../../images/chat/letter.png") no-repeat;
@@ -860,7 +858,7 @@ a.continue {
     width: 700px;
 }
 #add_room,
-#send_invite{
+#send_invitation{
     color: white;
     cursor: pointer;
     float: right;
@@ -879,7 +877,7 @@ a.continue {
     height: 80%;
     width: 100%;
 }
-#chat-textarea{
+#chat_textarea{
     border: none;
     height: 20%;
     margin: 0;
@@ -887,5 +885,21 @@ a.continue {
     resize: none;
     width: 500px;
 }
+#chat_room_create, #chat_send_invitation{
+    background: none repeat scroll 0 0 black;
+    height: 90px;
+    left: 300px;
+    position: absolute;
+    top: 40px;
+    width: 700px;
+    z-index: 1002;
 
+    display: none;
+}
+#chat_room_create{
+    height: 90px;
+}
+#chat_send_invitation{
+    height: 300px;
+}
 /* end of CHAT */

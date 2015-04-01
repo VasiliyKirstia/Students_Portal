@@ -1,5 +1,6 @@
 {% load staticfiles %}
-<div class="chat-opened">
+
+<div id="chat_opened">
     <div class="chat-main">
         <div class="chat-menu-left">
             <div class="chat-block-title">Приглашения</div>
@@ -24,23 +25,37 @@
                 <div class="chat-block-room">Комната для ровных пацанчиков</div>
             </div>
         </div>
+
         <div class="chat-menu-top">
             <div id="add_room">создать комнату</div>
-            <div id="send_invite">пригласить в комнату</div>
+            <div id="send_invitation">пригласить в комнату</div>
             <div style="clear: both;"></div>
         </div>
+
+        <div id="chat_room_create">
+            <input type="text">
+        </div>
+
+        <div id="chat_send_invitation">
+            <input type="text">
+        </div>
+
         <div class="chat-wrapper-messages">
             <div id="chat_messages_container">
 
             </div>
-            <textarea id="chat-textarea"></textarea>
+            <textarea id="chat_textarea"></textarea>
         </div>
+
     </div>
-    <div class="chat-label-close">с в е р н у т ь</div>
+    <div id="chat_label_close">с в е р н у т ь</div>
 </div>
-<div class="chat-closed">
+
+<div id="chat_closed">
     <div class="chat-messages-count">
         236
     </div>
 </div>
+
+<script src="{% static 'scripts/jquery.min.js' %}"></script>
 <script src="{% static 'scripts/chat.js' %}"></script>

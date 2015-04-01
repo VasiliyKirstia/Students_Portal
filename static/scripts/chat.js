@@ -180,7 +180,27 @@ function chat_leave() {
 }
 
 // добавляем обработчики событий входа в чат и выхода из чата
-$(window).load(function(){chat_join()});
+$(window).load(function(){
+	$('#chat_label_close').click(function(obj){
+		$('#chat_opened').hide();
+		$('#chat_closed').show();
+	});
+
+	$('#chat_closed').click(function(obj){
+		$('#chat_opened').show();
+		$('#chat_closed').hide();
+	});
+
+	$('#add_room').click(function(obj){
+		$('#chat_room_create').show();
+	});
+
+	$('#send_invitation').click(function(obj){
+		$('#chat_send_invitation').show();
+	});
+
+	/*chat_join();*/
+});
 $(window).unload(function(){chat_leave()});
 
 /**
