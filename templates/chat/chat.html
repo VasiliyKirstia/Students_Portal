@@ -33,18 +33,25 @@
         </div>
 
         <div id="chat_room_create">
-            <input type="text">
+            <input id="chat_button_room_create" type="button" value="Создать" />
+            <input id="chat_new_room_name" type="text">
+            <div style="clear: both;"></div>
         </div>
 
         <div id="chat_send_invitation">
-            <input type="text">
+            <select multiple>
+            </select>
+            <input id="chat_button_invitation_send" type="button" value="Пригласить" />
+            <div style="clear: both;"></div>
         </div>
 
         <div class="chat-wrapper-messages">
             <div id="chat_messages_container">
-
+                <!-- тут будут размещаться сообщения -->
             </div>
             <textarea id="chat_textarea"></textarea>
+            <input id="chat_button_message_send" type="button" value="Отправить" />
+            <div style="clear: both;"></div>
         </div>
 
     </div>

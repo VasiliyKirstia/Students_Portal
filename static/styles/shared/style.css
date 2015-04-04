@@ -879,15 +879,29 @@ a.continue {
 }
 #chat_textarea{
     border: none;
+    border-top: solid black 1px;
+    float: left;
+    font-size: 15px;
+    height: 20%;
+    line-height: 1.2em;
+    margin: 0;
+    padding: 5px;
+    resize: none;
+    width: 490px;
+}
+#chat_button_message_send{
+    background: none repeat scroll 0 0 black;
+    border: medium none;
+    color: white;
+    font-size: 25px;
     height: 20%;
     margin: 0;
     padding: 0;
-    resize: none;
-    width: 500px;
+    width: 200px;
+    cursor: pointer;
 }
 #chat_room_create, #chat_send_invitation{
-    background: none repeat scroll 0 0 black;
-    height: 90px;
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.3);
     left: 300px;
     position: absolute;
     top: 40px;
@@ -897,9 +911,32 @@ a.continue {
     display: none;
 }
 #chat_room_create{
-    height: 90px;
+}
+#chat_button_room_create{
+    background: none repeat scroll 0 0 black;
+    border: medium none;
+    color: white;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    margin: 10px 10px 10px 0;
+    padding: 5px;
+}
+#chat_new_room_name{
+    border: medium none;
+    float: right;
+    margin: 10px;
+    padding: 5px;
+    width: 360px;
 }
 #chat_send_invitation{
-    height: 300px;
 }
+#chat_button_invitation_send{
+
+}
+#chat_room_create select{
+
+}
+
+
 /* end of CHAT */
