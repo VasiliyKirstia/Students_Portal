@@ -26,27 +26,12 @@ var emoticons = {
 	';\\)' : 'wink_smile.png',
 }
 
-/**
- * Initialize chat:
- * - Set the room id
- * - Generate the html elements (chat box, forms & inputs, etc)
- * - Sync with server
- * @param chat_room_id the id of the chatroom
- * @param html_el_id the id of the html element where the chat html should be placed
- * @return
- */
 function init_chat(chat_id, html_el_id) {
 	chat_room_id = chat_id;
 	layout_and_bind(html_el_id);
 	sync_messages();
 }
 
-/**
- * Asks the server which was the last message sent to the room, and stores it's id.
- * This is used so that when joining the user does not request the full list of
- * messages, just the ones sent after he logged in.
- * @return
- */
 function sync_messages() {
     $.ajax({
         type: 'POST',
@@ -64,52 +49,77 @@ function sync_messages() {
 /**
  * рендерим скилет чата и добавляем свои обработчики на интересующие нас события
  */
-function layout_and_bind(html_el_id) {
-		// рендерим скилет чата
-		var html = '<div id="chat-messages-container">'+
-						'<div id="chat-messages"> </div>'+
-						'<div id="chat-last"> </div>'+
-					'</div>'+
-					'<div id="chat-smiles-container"> </div>'+
-					'<form id="chat-form">'+
-						'<input name="message" type="text" class="message" value="" />'+
-						'<input type="submit" value="Отправить"/>'+
-					'</form>';
 
-		//рендерим чатик
-		$("#"+html_el_id).append(html);
+function bind_handlers(){
+	$('#chat_label_close').click(function(obj){
+		$('#chat_opened').hide();
+		$('#chat_closed').show();
+	});
 
-		//вставляем панель с сайликами
-		for(key in emoticons){
-			$("#chat-smiles-container").append('<img style="margin: 3px;" src="/static/images/chat/'+ emoticons[key] +' " value="'+ key.replace(/\\/g,'') +'" />');
-		}
+	$('#chat_closed').click(function(obj){
+		$('#chat_opened').show();
+		$('#chat_closed').hide();
+	});
 
-		//навешиваем обработчиков нажатия на каждый смайлик
-		$.each($('#chat-smiles-container > img'), function(i, obj) {
-			$(obj).bind('click', function(eventObj){
-				$('#chat-form > input.message').val($('#chat-form > input.message').val() + ' ' + $(eventObj.target).attr('value') + ' ');
-			});
+	$('#add_room').click(function(obj){
+		$('#chat_room_create').slideToggle();
+	});
+
+	$('#send_invitation').click(function(obj){
+		$('#chat_send_invitation').slideToggle();
+	});
+
+	//вставляем панель с сайликами
+	for(key in emoticons){
+		$("#chat-smiles-container").append('<img style="margin: 3px;" src="/static/images/chat/'+ emoticons[key] +' " value="'+ key.replace(/\\/g,'') +'" />');
+	}
+
+	//навешиваем обработчиков нажатия на каждый смайлик
+	$.each($('#chat-smiles-container > img'), function(i, obj) {
+		$(obj).bind('click', function(eventObj){
+			$('#chat_textarea').val($('#chat_textarea').val() + ' ' + $(eventObj.target).attr('value') + ' ');
+			$('#chat_textarea').focus();
 		});
+	});
 
-		// прикручиваем свой обработчик отправки формы
-    	$("#chat-form").submit( function () {
-            var $inputs = $(this).children('input');
-            var values = {};
+	$("#chat_button_room_create").click( function () {
+		$.ajax({
+			data: {
+				room_name: $('#chat_new_room_name').val()
+			},
+			async: false,
+			dataType: 'json',
+			type: 'post',
+			url: '/chat/send/'
+		});
+		$('#chat_new_room_name').val('');
+	});
 
-            $inputs.each(function(i,el) {
-            	values[el.name] = $(el).val();
-            });
-			values['chat_room_id'] = window.chat_room_id;
+	$("#chat_button_room_create").click( function () {
+		$.ajax({
+			data: {
+				room_name: $('#chat_new_room_name').val()
+			},
+			async: false,
+			dataType: 'json',
+			type: 'post',
+			url: '/chat/send/'
+		});
+		$('#chat_new_room_name').val('');
+	});
 
-        	$.ajax({
-                data: values,
-                dataType: 'json',
-                type: 'post',
-                url: '/chat/send/'
-            });
-            $('#chat-form .message').val('');
-
-            return false;
+	$("#chat_button_message_send").click( function () {
+		$.ajax({
+			data: {
+				message: $('#chat_textarea').val()
+			},
+			async: true,
+			dataType: 'json',
+			type: 'post',
+			url: '/chat/send/'
+		});
+		$('#chat_textarea').val('');
+		$('#chat_textarea').focus();
 	});
 };
 
@@ -181,24 +191,8 @@ function chat_leave() {
 
 // добавляем обработчики событий входа в чат и выхода из чата
 $(window).load(function(){
-	$('#chat_label_close').click(function(obj){
-		$('#chat_opened').hide();
-		$('#chat_closed').show();
-	});
-
-	$('#chat_closed').click(function(obj){
-		$('#chat_opened').show();
-		$('#chat_closed').hide();
-	});
-
-	$('#add_room').click(function(obj){
-		$('#chat_room_create').show();
-	});
-
-	$('#send_invitation').click(function(obj){
-		$('#chat_send_invitation').show();
-	});
-
+	//init_chat();
+	bind_handlers();
 	/*chat_join();*/
 });
 $(window).unload(function(){chat_leave()});

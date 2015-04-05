@@ -828,7 +828,7 @@ a.continue {
 .chat-container-invites, .chat-container-rooms{
     border-bottom: 0.5px solid gray;
     border-top: 0.5px solid gray;
-    height: 43.7%;
+    height: calc(50% - 40px);
     overflow-y: auto;
     width: 100%;
 }
@@ -872,9 +872,10 @@ a.continue {
     top: 40px;
     width: 700px;
     bottom: 0px;
+    height: calc(100% - 40px);
 }
 #chat_messages_container{
-    height: 80%;
+    height: calc(100% - 135px);
     width: 100%;
 }
 #chat_textarea{
@@ -882,7 +883,7 @@ a.continue {
     border-top: solid black 1px;
     float: left;
     font-size: 15px;
-    height: 20%;
+    height: 90px;
     line-height: 1.2em;
     margin: 0;
     padding: 5px;
@@ -894,7 +895,7 @@ a.continue {
     border: medium none;
     color: white;
     font-size: 25px;
-    height: 20%;
+    height: 100px;
     margin: 0;
     padding: 0;
     width: 200px;
@@ -932,11 +933,10 @@ a.continue {
 #chat_send_invitation{
 }
 #chat_button_invitation_send{
-
 }
 #chat_room_create select{
-
 }
-
-
+#chat-smiles-container{
+    border-top: 1px solid black;
+}
 /* end of CHAT */
