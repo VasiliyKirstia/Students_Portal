@@ -913,6 +913,10 @@ a.continue {
 }
 #chat_room_create{
 }
+#chat_send_invitation{
+    padding: 10px;
+    max-height: calc(100% - 40px);
+}
 #chat_button_room_create{
     background: none repeat scroll 0 0 black;
     border: medium none;
@@ -923,14 +927,20 @@ a.continue {
     margin: 10px 10px 10px 0;
     padding: 5px;
 }
+#chat_button_invitation_send{
+    background: none repeat scroll 0 0 black;
+    border: medium none;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 5px;
+}
 #chat_new_room_name{
     border: medium none;
     float: right;
     margin: 10px;
     padding: 5px;
     width: 360px;
-}
-#chat_send_invitation{
 }
 #chat_button_invitation_send{
 }

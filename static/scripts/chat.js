@@ -57,15 +57,18 @@ function bind_handlers(){
 	});
 
 	$('#chat_closed').click(function(obj){
-		$('#chat_opened').show();
 		$('#chat_closed').hide();
+		$('#chat_opened').show();
 	});
 
 	$('#add_room').click(function(obj){
+		$('#chat_send_invitation').hide();
 		$('#chat_room_create').slideToggle();
+
 	});
 
 	$('#send_invitation').click(function(obj){
+		$('#chat_room_create').hide();
 		$('#chat_send_invitation').slideToggle();
 	});
 
@@ -121,6 +124,8 @@ function bind_handlers(){
 		$('#chat_textarea').val('');
 		$('#chat_textarea').focus();
 	});
+
+	//$('#chat_textarea').keydown()
 };
 
 /**
