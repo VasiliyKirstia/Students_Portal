@@ -1,5 +1,7 @@
 {% load staticfiles %}
 
+<link type="text/css" rel="stylesheet" href="{% static 'plugins/chosen/chosen.min.css' %}">
+
 <div id="chat_opened">
     <div class="chat-main">
         <div class="chat-menu-left">
@@ -39,7 +41,11 @@
         </div>
 
         <div id="chat_send_invitation">
-            <select multiple>
+            <select multiple id="chat_invited_users">
+                <option>Чебурашка</option>
+                <option>Крокодил Гена</option>
+                <option>Шапокляк</option>
+                <option>Крыса Лариса</option>
             </select>
             <input id="chat_button_invitation_send" type="button" value="Пригласить" />
             <div style="clear: both;"></div>
@@ -67,3 +73,8 @@
 
 <script src="{% static 'scripts/jquery.min.js' %}"></script>
 <script src="{% static 'scripts/chat.js' %}"></script>
+<script src="{% static 'plugins/chosen/chosen.jquery.min.js' %}"></script>
+
+<script>
+    $('#chat_invited_users').chosen({width: "400px", no_results_text: "Мы не нашли ничего похожего на "});
+</script>
