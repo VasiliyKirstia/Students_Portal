@@ -916,6 +916,7 @@ a.continue {
 #chat_send_invitation{
     padding: 10px;
     max-height: calc(100% - 40px);
+    width: 680px;
 }
 #chat_button_room_create{
     background: none repeat scroll 0 0 black;

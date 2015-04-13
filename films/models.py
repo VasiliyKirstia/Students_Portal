@@ -27,6 +27,11 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'категория'
         verbose_name_plural = 'категории'
+        permissions = (
+            ('create_films_category', 'добавлять новые категории фильмов'),
+            ('delete_films_category', 'удалять категории фильмов'),
+            ('change_films_category', 'редактировать категории фильмов'),
+        )
 
 
 class Film(models.Model):
@@ -59,3 +64,9 @@ class Film(models.Model):
         ordering = ['-date']
         verbose_name = 'фильм'
         verbose_name_plural = 'фильмы'
+        permissions = (
+            ('create_films', 'добавлять фильмы'),
+            ('delete_films', 'удалять фильмы'),
+            ('change_films', 'редактировать фильмы'),
+            ('view_films', 'просматривать фильмы'),
+        )

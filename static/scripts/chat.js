@@ -98,17 +98,18 @@ function bind_handlers(){
 		$('#chat_new_room_name').val('');
 	});
 
-	$("#chat_button_room_create").click( function () {
+	$("#chat_button_invitation_send").click( function () {
 		$.ajax({
 			data: {
-				room_name: $('#chat_new_room_name').val()
+				invited_users: $('#chat_invited_users').val()
 			},
 			async: false,
 			dataType: 'json',
 			type: 'post',
 			url: '/chat/send/'
 		});
-		$('#chat_new_room_name').val('');
+		alert($('#chat_invited_users').val());
+		$('#chat_invited_users').;
 	});
 
 	$("#chat_button_message_send").click( function () {
