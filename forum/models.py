@@ -16,11 +16,6 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'категория'
         verbose_name_plural = 'категории'
-        permissions = (
-            ('create_questions_category', 'добавлять категории вопросов'),
-            ('delete_questions_category', 'удалять категории вопросов'),
-            ('change_questions_category', 'редактировать категории вопросов'),
-        )
 
 
 class Question(models.Model):
@@ -58,12 +53,6 @@ class Question(models.Model):
         ordering = ['solved', '-date']
         verbose_name = 'вопрос'
         verbose_name_plural = 'вопросы'
-        permissions = (
-            ('create_question', 'добавлять вопросы'),
-            ('delete_question', 'удалять вопросы'),
-            ('change_question', 'редактировать вопросы'),
-            ('view_questions', 'просматривать вопросы'),
-        )
 
 
 class Answer(models.Model):
@@ -85,10 +74,4 @@ class Answer(models.Model):
 
     class Meta:
         ordering = ['date']
-        permissions = (
-            ('create_answer', 'добавлять ответы'),
-            ('delete_answer', 'удалять ответы'),
-            ('change_answer', 'редактировать ответы'),
-            ('view_answers', 'просматривать ответы'),
-        )
 

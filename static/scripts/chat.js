@@ -109,7 +109,7 @@ function bind_handlers(){
 			url: '/chat/send/'
 		});
 		alert($('#chat_invited_users').val());
-		$('#chat_invited_users').;
+		$('#chat_invited_users').val('');//TODO КОСЯК!
 	});
 
 	$("#chat_button_message_send").click( function () {

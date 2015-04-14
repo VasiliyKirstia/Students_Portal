@@ -27,11 +27,6 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'категория'
         verbose_name_plural = 'категории'
-        permissions = (
-            ('create_books_category', 'добавлять категории книг'),
-            ('delete_books_category', 'удалять категории книг'),
-            ('change_books_category', 'редактировать категории книг'),
-        )
 
 
 class Book(models.Model):
@@ -70,9 +65,3 @@ class Book(models.Model):
         ordering = ['-date']
         verbose_name = 'книга'
         verbose_name_plural = 'книги'
-        permissions = (
-            ('create_books', 'добавлять книги'),
-            ('delete_books', 'удалять книги'),
-            ('change_books', 'редактировать книги'),
-            ('view_books', 'просматривать книги'),
-        )

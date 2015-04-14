@@ -25,12 +25,6 @@ class Developer(models.Model):
         ordering = ['first_name']
         verbose_name = 'разработчик'
         verbose_name_plural = 'разработчики'
-        permissions = (
-            ('create_developers', 'добавлять разработчиков'),
-            ('delete_developers', 'удалять разработчиков'),
-            ('change_developers', 'редактировать разработчиков'),
-            ('view_developers', 'просматривать разработчиков'),
-        )
 
 
 class Rules(models.Model):
@@ -45,12 +39,6 @@ class Rules(models.Model):
     class Meta:
         verbose_name = 'правила'
         verbose_name_plural = 'правила'
-        permissions = (
-            ('create_rules', 'добавлять правила'),
-            ('delete_rules', 'удалять правила'),
-            ('change_rules', 'редактировать правила'),
-            ('view_rules', 'просматривать правила'),
-        )
 
 
 class News(models.Model):
@@ -73,12 +61,6 @@ class News(models.Model):
         ordering = ['-date']
         verbose_name = 'новость'
         verbose_name_plural = 'новости'
-        permissions = (
-            ('create_news', 'добавлять новости'),
-            ('delete_news', 'удалять новости'),
-            ('change_news', 'редактировать новости'),
-            ('view_news', 'просматривать новости'),
-        )
 
 
 class Suggestion(models.Model):
@@ -100,9 +82,3 @@ class Suggestion(models.Model):
         ordering = ['-date']
         verbose_name = 'пожелание (предложение)'
         verbose_name_plural = 'предложения (пожелания)'
-        permissions = (
-            ('create_suggestions', 'добавлять предложения'),
-            ('delete_suggestions', 'удалять предложения'),
-            ('change_suggestions', 'редактировать предложения'),
-            ('view_suggestions', 'просматривать предложения'),
-        )
