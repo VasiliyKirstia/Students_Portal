@@ -11,6 +11,4 @@ class Profile(models.Model):
 
     room_number = models.IntegerField(verbose_name='комната')
 
-    photo = models.ImageField(width_field=150, height_field=250, verbose_name='фото')
-
-    is_free = models.BooleanField(verbose_name='ищу вторую половинку')
+    is_free = models.BooleanField(default=False, verbose_name='ищу вторую половинку')
