@@ -1,6 +1,7 @@
 var chat_room_id = undefined;
-var is_active = false;
 var last_received = 0;
+var is_active = false;
+var tid = undefined;
 
 // смайлики
 var emoticons = {
@@ -27,7 +28,7 @@ var emoticons = {
 	';\\)' : 'wink_smile.png',
 }
 
-function init_chat(chat_id, html_el_id) {
+function init_chat(chat_id) {
 	chat_room_id = chat_id;
 	sync_messages();
 }
@@ -43,11 +44,8 @@ function sync_messages() {
 		}
     });
 
-	if(is_active){
-		setTimeout("get_messages()", 2000); //2 секунды между синхронизациями
-	}else{
-		setTimeout("get_messages()", 20000); //20 секунд между синхронизациями
-	}
+	clearTimeout(tid);
+	get_messages()
 }
 
 /**
@@ -80,7 +78,10 @@ function bind_handlers(){
 	$('#chat_closed').click(function(obj){
 		$('#chat_closed').hide();
 		$('#chat_opened').show();
+
 		window.is_active = true;
+		clearTimeout(tid);
+		get_messages();
 	});
 
 	//показываем формочку добавления комнаты
@@ -101,7 +102,9 @@ function bind_handlers(){
 
 		$.ajax({
 			data: {
-				room_name: $('#chat_new_room_name').val()
+				room_name: $('#chat_new_room_name').val(),
+				is_protected: true
+				//TODO добавить на формочку чекбокс
 			},
 			async: false,
 			dataType: 'json',
@@ -109,6 +112,7 @@ function bind_handlers(){
 			url: '/chat/send/',
 			success: function(response){
 				alert('успешно добавлена была комната');
+				//TODO перебросить юзера в только что созданую комнату
 			}
 		});
 
@@ -129,6 +133,7 @@ function bind_handlers(){
 			url: '/chat/send/',
 			success: function(response){
 				alert('все извещены');
+				//TODO: придумать реакцию на успешную рассылку приглосов
 			}
 		});
 
@@ -157,6 +162,8 @@ function bind_handlers(){
 	$('.chat-block-room').click(function(obj){
 		$('.chat-room-current').removeClass('chat-room-current');
 		$(this).addClass('chat-room-current');
+		init_chat(chat_id = 10); //TODO ересь эту поправить
+		chat_join();
 	});
 
 	//$('#chat_textarea').keydown()
@@ -170,9 +177,10 @@ function get_messages() {
         url:'/chat/receive/',
 		dataType: 'JSON',
 		success: function (json) {
+//TODO проверить хорошенько все классы
 			var scroll = false;
 			//если находимся внизу div-а, то прокручиваем при каждом новом сообщении
-			var $containter = $("#chat-messages-container");
+			var $containter = $("#chat_messages_container");
 			//вобще без понятия откуда тут взялось 13, но без него никак.
 			if ($containter.scrollTop() == $("#chat-messages").outerHeight() - $containter.innerHeight()){
 				scroll = true;
@@ -181,25 +189,23 @@ function get_messages() {
 			//alert($("#chat-messages").outerHeight() - $containter.innerHeight());
 			// добавляем сообщения
 			$.each(json, function(i,m){
-				if (m.type == 's')
-					$('#chat-messages').append('<div class="system">' + replace_emoticons(m.message) + '</div>');
-				else if (m.type == 'm')
-					$('#chat-messages').append('<div class="message"><div class="author">'+m.author+': </div>'+replace_emoticons(m.message) + '</div>');
-				else if (m.type == 'j')
-					$('#chat-messages').append('<div class="join">'+m.author+' присоеденился к чату.</div>');
-				else if (m.type == 'l')
-					$('#chat-messages').append('<div class="leave">'+m.author+' покинул чат.</div>');
-
+				$('#chat_messages_container').append('<div class="chat-message"><div class="author">'+m.author+': </div>'+replace_emoticons(m.message) + '</div>');
 				last_received = m.id;
-			})
+			});
 
 			// прокручиваем вниз
 			if (scroll)
-				$containter.scrollTop($("#chat-messages").height());
+				$containter.scrollTop($("#chat_messages_container").height());
 		}
     });
-    // ждем 2 секунды и просим прислать нам еще сообщений
-    setTimeout("get_messages()", 2000);
+
+    if(window.is_active){
+    	clearTimeout(tid);
+		tid = setTimeout("get_messages()", 2000); //2 секунды между синхронизациями
+	}else{
+		clearTimeout(tid);
+		tid = setTimeout("get_messages()", 20000); //20 секунд между синхронизациями
+	}
 }
 
 //присоеденяем пользователя к комнате
@@ -224,9 +230,9 @@ function chat_leave() {
 
 // добавляем обработчики событий входа в чат и выхода из чата
 $(window).load(function(){
-	//init_chat();
+	init_chat(chat_id = 10);
 	bind_handlers();
-	/*chat_join();*/
+	chat_join();
 });
 
 $(window).unload(function(){chat_leave()});
