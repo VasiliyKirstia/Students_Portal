@@ -838,10 +838,17 @@ a.continue {
     font-size: 20px;
     padding: 10px;
 }
-.chat-block-room{
-    cursor: pointer;
+.chat-block-room, .chat-block-invite{
+    cursor: default;
     font-size: 15px;
     padding: 5px;
+}
+.chat-room-closer, .chat-invite-closer{
+    background: none repeat scroll 0 0 black;
+    float: right;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
 }
 .chat-room-current{
     background: none repeat scroll 0 0 white;
