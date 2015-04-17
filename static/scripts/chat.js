@@ -30,8 +30,8 @@ var emoticons = {
 
 function init() {
 	$.ajax({
-        type: 'GET',
-        url:'/chat/sync/',
+        type: 'post',
+        url:'/chat/init/',
 		dataType: 'json',
 		success: function (json) {
         	for(invite in json.invites){

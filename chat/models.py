@@ -35,13 +35,18 @@ class Room(models.Model):
             m = m.filter(timestamp__gte=after_date)
             return m.order_by('timestamp')
 
-
     def last_message_id(self):
         m = Message.objects.filter(room=self).order_by('pk')
         if m:
             return m[0].id - 1
         else:
             return 0
+
+    def to_json(self):
+        return {
+            'title': self.title,
+            'room_id': self.id,
+        }
 
     def __str__(self):
         return self.title
@@ -85,7 +90,7 @@ class Message(models.Model):
 
     author = models.ForeignKey(User, related_name='messages', verbose_name='автор')
 
-    message = models.CharField(verbose_name='текст сообщения')
+    message = models.TextField(verbose_name='текст сообщения')
 
     timestamp = models.DateTimeField(auto_now=True, verbose_name='время отправки')
 
