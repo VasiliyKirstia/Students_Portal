@@ -91,8 +91,8 @@ def active_sync(request):
     last_message_id = request.POST.get('last_message_id')
     last_invite_id = request.POST.get('last_invite_id')
 
-    if not Membership.objects.get(user=request.user, room=Room.objects.get(id=chat_room_id)):
-        raise Http404
+    if chat_room_id is None or not Membership.objects.get(user=request.user, room=Room.objects.get(id=chat_room_id)):
+        return JsonResponse({})
 
     return JsonResponse(
         {
@@ -112,16 +112,14 @@ def invitation(request):
     возвращает:
                 НИЧЕГОШЕНЬКИ,
     """
-    users = request.POST.get('invited_users_list')  # TODO
+    users = request.POST.getlist('invited_users_list[]')  # TODO
     _room = Room.objects.get(id=request.POST.get('chat_room_id'))
 
     if not Membership.objects.get(user=request.user, room=_room):
         raise Http404
 
-    for _user in User.objects.in_bulk(users):
-        print(users)
-        print(_user)
-        invite = Invite(room=_room, user=_user)
+    for _user in User.objects.in_bulk(users).values():
+        invite = Invite(room=_room, to=_user)
         invite.save()
     return HttpResponse('')
 

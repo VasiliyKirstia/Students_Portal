@@ -142,9 +142,10 @@ function bind_handlers(){
 
 	//рассылаем приглашения
 	$("#chat_button_invitation_send").click( function () {
+
 		$.ajax({
 			data: {
-				users: $('#chat_invited_users').val(),
+				invited_users_list: $('#chat_invited_users').val(),
 				chat_room_id: window.chat_room_id
 			},
 			async: false,
