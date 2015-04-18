@@ -802,14 +802,19 @@ a.continue {
     top: 50%;
     width: 63px;
 }
-.chat-messages-count{
-    background: url("../../images/chat/letter.png") no-repeat;
+.chat-messages-count, .chat-invites-count{
     color: black;
     font-size: 25px;
     height: 40px;
     margin: 15px 4px;
     text-align: center;
     width: 51px;
+}
+.chat-messages-count{
+    background: url("../../images/chat/letter.png") no-repeat;
+}
+.chat-invites-count{
+    background: url("../../images/chat/letter.png") no-repeat;
 }
 .chat-main{
     background: none repeat scroll 0 0 white;

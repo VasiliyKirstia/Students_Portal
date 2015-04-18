@@ -21,10 +21,10 @@ class Room(models.Model):
         return self.__add_message(sender, message)
 
     def join(self, user):
-        Membership.objects.create(room=self, user=user)
+        Membership.objects.update_or_create(room=self, user=user)
 
     def leave(self, user):
-        Membership.objects.filter(room=self).filter(user=user)[0].delete()
+        Membership.objects.get(user=user, room=self).delete()
 
     def messages(self, after_pk=None, after_date=None):
         m = Message.objects.filter(room=self)
@@ -74,6 +74,7 @@ class Invite(models.Model):
 
     def to_json(self):
         return {
+            'id': self.id,
             'title': self.room.title,
             'room_id': self.room.id,
         }
@@ -86,7 +87,7 @@ class Invite(models.Model):
 class Message(models.Model):
     id = models.AutoField(primary_key=True)
 
-    room = models.ForeignKey(Room, verbose_name='комната')
+    room = models.ForeignKey(Room, verbose_name='комната', related_name='messages')
 
     author = models.ForeignKey(User, related_name='messages', verbose_name='автор')
 
@@ -96,7 +97,7 @@ class Message(models.Model):
 
     def to_json(self):
         return {
-            'date': self.timestamp,
+            'id': self.id,
             'author': "{} {}".format(self.author.first_name, self.author.last_name),
             'message': self.__str__(),
         }

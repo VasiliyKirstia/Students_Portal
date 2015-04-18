@@ -1,5 +1,6 @@
 var chat_room_id = undefined;
-var last_received = 0;
+var last_message_id = 0;
+var last_invite_id = 0;
 var is_active = false;
 var tid = undefined;
 
@@ -34,14 +35,16 @@ function init() {
         url:'/chat/init/',
 		dataType: 'json',
 		success: function (json) {
-        	for(invite in json.invites){
-        		$('.chat-container-invites').append('<div class="chat-block-invite"><input type="hidden" value="' + invite.room_id + '"><div class="chat-invite-closer"></div>' + invite.title + '</div>');
+        	for(var i in json.invites_list){
+        		$('.chat-container-invites').append('<div class="chat-block-invite"><input type="hidden" value="' + json.invites_list[i].room_id + '"><div class="chat-invite-closer"></div>' + json.invites_list[i].title + '</div>');
         	}
-        	for(room in json.rooms){
-        		$('.chat-container-rooms').append('<div class="chat-block-room"><input type="hidden" value="' + room.id + '"><div class="chat-room-closer"></div>' + room.title + '</div>');
+        	for(var i in json.rooms_list){
+        		$('.chat-container-rooms').append('<div class="chat-block-room"><input type="hidden" value="' + json.rooms_list[i].room_id + '"><div class="chat-room-closer"></div>' + json.rooms_list[i].title + '</div>');
         	}
+
+			$('.chat-block-room').click(change_room);
+			$('.chat-room-closer').click(remove_room);
 		},
-		onerror: alert('С сервером не удалось связаться')
     });
 
 	set_passive_mode();
@@ -50,7 +53,7 @@ function init() {
 function set_passive_mode(){
 	clearTimeout(tid);
 	is_active = false;
-	tid = setTimeout('active_sync()', 1000);
+	tid = setTimeout('passive_sync()', 1000);
 }
 
 function set_active_mode(){
@@ -63,15 +66,16 @@ function change_room(obj){
 	$('.chat-room-current').removeClass('chat-room-current');
 	$(this).addClass('chat-room-current');
 
-	init_chat(chat_id = 10); //TODO ересь эту поправить
-	room_join();
+	room_join(this);
 }
 
 function remove_room(obj){
 	var element = $(this).parent();
+	room_leave(element);
 	if(element.hasClass('chat-room-current'))
-		room_leave();
+		$('#chat_messages_container').html('');
 	element.remove();
+
 }
 
 function bind_handlers(){
@@ -117,20 +121,19 @@ function bind_handlers(){
 
 	//отправляем запрос на создание комнаты
 	$("#chat_button_room_create").click( function () {
-		alert($('#chat_new_room_name').val());
-
 		$.ajax({
 			data: {
-				room_name: $('#chat_new_room_name').val(),
-				//TODO добавить на формочку чекбокс
+				'new_room_name': $('#chat_new_room_name').val(),
 			},
 			async: false,
 			dataType: 'json',
 			type: 'post',
 			url: '/chat/create_room/',
-			success: function(response){
-				alert('успешно добавлена была комната');
-				//TODO перейти в только что добавленую комнату
+			success: function(json){
+				var element = $('<div class="chat-block-room"><input type="hidden" value="' + json.new_room_id + '"><div class="chat-room-closer"></div>' + json.new_room_name + '</div>');
+				element.click(change_room);
+				element.find('.chat-room-closer').click(remove_room);
+				$('.chat-container-rooms').append(element); //TODO
 			}
 		});
 
@@ -139,11 +142,10 @@ function bind_handlers(){
 
 	//рассылаем приглашения
 	$("#chat_button_invitation_send").click( function () {
-		alert($('#chat_invited_users').val());
-
 		$.ajax({
 			data: {
-				users: $('#chat_invited_users').val()
+				users: $('#chat_invited_users').val(),
+				chat_room_id: window.chat_room_id
 			},
 			async: false,
 			dataType: 'json',
@@ -155,7 +157,6 @@ function bind_handlers(){
 			}
 		});
 		//TODO: очистить сланый мультиселект
-		$('#chat_invited_users').val('');
 	});
 
 	//отправляем сообщение
@@ -163,25 +164,16 @@ function bind_handlers(){
 		$.ajax({
 			data: {
 				message: $('#chat_textarea').val(),
-				room_id: chat_room_id,
+				chat_room_id: window.chat_room_id,
 			},
 			async: true,
 			dataType: 'json',
 			type: 'post',
 			url: '/chat/send/',
-			success: function(response){
-				alert('послал сообщение успешно');
-			}
 		});
 		$('#chat_textarea').val('');
 		$('#chat_textarea').focus();
 	});
-
-	//переходим в другую комнату
-	$('.chat-block-room').click(change_room);
-
-	//удаляем комнаты из списка
-	$('.chat-room-closer').click(remove_room);
 
 	//переходим по приглашению
 	$('.chat-block-invite').click(function(obj){
@@ -197,20 +189,22 @@ function bind_handlers(){
 	$('.chat-invite-closer').click(function(obj){
 		$(this).parent().remove();
 	});
-
-	//TODO: $('#chat_textarea').keydown()
 };
 
 //получаем список сообщений и отображаем их TODO: проверить скролинг окна с сообщениями на адекватность
 function active_sync() {
     $.ajax({
         type: 'POST',
-        data: {id:window.chat_room_id, offset: window.last_received},
+        data: {
+        	'chat_room_id': window.chat_room_id,
+        	'last_message_id': window.last_message_id,
+        	'last_invite_id': window.last_invite_id,
+		},
         url:'/chat/active_sync/',
 		dataType: 'JSON',
 		success: function (json) {
 //TODO проверить хорошенько все классы
-			var scroll = false;
+			/*var scroll = false;
 			//если находимся внизу div-а, то прокручиваем при каждом новом сообщении
 			var $containter = $("#chat_messages_container");
 			//вобще без понятия откуда тут взялось 13, но без него никак.
@@ -219,15 +213,18 @@ function active_sync() {
 			}
 			//alert($containter.scrollTop());
 			//alert($("#chat-messages").outerHeight() - $containter.innerHeight());
-			// добавляем сообщения
-			$.each(json, function(i,m){
-				$('#chat_messages_container').append('<div class="chat-message"><div class="author">'+m.author+': </div>'+replace_emoticons(m.message) + '</div>');
-				last_received = m.id;
-			});
-
-			// прокручиваем вниз
+			// добавляем сообщения*/
+			for(var i in json.new_messages){
+				$('#chat_messages_container').append('<div class="chat-message"><div class="author">'+json.new_messages[i].author+': </div>'+replace_emoticons(json.new_messages[i].message) + '</div>');
+				window.last_message_id = json.new_messages[i].id;
+			}
+			for(var i in json.new_invites){
+        		$('.chat-container-invites').append('<div class="chat-block-invite"><input type="hidden" value="' + json.new_invites[i].room_id + '"><div class="chat-invite-closer"></div>' + json.new_invites[i].title + '</div>');
+				window.last_invite_id = json.new_invites[i].id
+			}
+			/*// прокручиваем вниз
 			if (scroll)
-				$containter.scrollTop($("#chat_messages_container").height());
+				$containter.scrollTop($("#chat_messages_container").height());*/
 		}
     });
 
@@ -243,12 +240,15 @@ function passive_sync() {
 	$.ajax({
         type: 'POST',
         data: {
-        	id:window.chat_room_id
+        	'chat_room_id': window.chat_room_id,
+        	'last_message_id': window.last_message_id,
+        	'last_invite_id': window.last_invite_id,
 		},
         url:'/chat/passive_sync/',
 		dataType: 'JSON',
 		success: function (json) {
-			//TODO доделать мф
+			$('#chat_closed > .chat-messages-count').text(json.new_messages_count);
+			$('#chat_closed > .chat-invites-count').text(json.new_invites_count);
 		}
     });
 
@@ -262,30 +262,31 @@ function passive_sync() {
 
 //переходим в другую комнату
 function room_join(roomObj) {
-	$('.chat-room-current').removeClass('chat-room-current');
-	$(roomObj).addClass('chat-room-current');
-	$('#chat_messages_container').html('');
-
 	$.ajax({
 		async: false,
         type: 'POST',
         data: {
-        	id: $(roomObj).children('input').val()
+        	'chat_room_id': $(roomObj).children('input').val(),
 		},
         url:'/chat/join/',
         success: function(){
+			$('.chat-room-current').removeClass('chat-room-current');
+			$(roomObj).addClass('chat-room-current');
+			$('#chat_messages_container').html('');
+
         	window.chat_room_id = $(roomObj).children('input').val()
+        	window.last_message_id = 0;
         }
     });
 }
 
 //выходим из комнаты
-function room_leave(room_id) {
+function room_leave(roomObj) {
 	$.ajax({
 		async: true,
         type: 'POST',
         data: {
-        	chat_room_id:room_id
+        	'chat_room_id': $(roomObj).children('input').val(),
         },
         url:'/chat/leave/',
     });

@@ -12,7 +12,7 @@ from django.db.models import Q
 
 from mixins.permissions import LoginRequiredMixin
 from django.utils import timezone
-from chat.models import Room, Message,Invite
+from chat.models import Room, Message, Invite, Membership
 
 
 @login_required
@@ -27,8 +27,8 @@ def init(request):
     """
     return JsonResponse(
         {
-            'rooms_list': [room.to_json() for room in Room.objects.filter(user=request.user)],  # TODO
-            'invites_list': [invite.to_json() for invite in User.objects.filter(user=request.user).invites],
+            'rooms_list': [room.to_json() for room in request.user.room_set.all()],
+            'invites_list': [invite.to_json() for invite in request.user.invites.all()],
         }
     )
 
@@ -43,10 +43,11 @@ def send(request):
     возвращает:
                 НИЧЕГОШЕНЬКИ
     """
-    chat_room_id = request.POST['chat_room_id']
-    message = request.POST['message']
-    r = Room.objects.get(id=int(chat_room_id))
-    r.say(request.user, message)
+    chat_room_id = request.POST.get('chat_room_id')
+    message = request.POST.get('message')
+
+    room = request.user.room_set.get(id=chat_room_id)
+    room.say(request.user, message)
     return HttpResponse('')
 
 
@@ -62,14 +63,14 @@ def passive_sync(request):
                 new_messages_count
                 new_invites_count
     """
-    chat_room_id = request.POST['chat_room_id']
-    last_message_id = request.POST['last_message_id']
-    last_invite_id = request.POST['last_invite_id']
+    chat_room_id = request.POST.get('chat_room_id')
+    last_message_id = request.POST.get('last_message_id')
+    last_invite_id = request.POST.get('last_invite_id')
 
     return JsonResponse(
         {
-            'new_messages_count': Room.objects.get(id=chat_room_id).messages.filter(pk__gt=last_message_id).count(),
-            'new_invites_count': User.objects.get(pk=request.user).invites.filter(pk__gt=last_invite_id).count(),
+            'new_messages_count': request.user.room_set.get(id=chat_room_id).messages.filter(pk__gt=last_message_id).count() if chat_room_id else 0,
+            'new_invites_count': request.user.invites.filter(pk__gt=last_invite_id).count() if last_invite_id else 0,
         }
     )
 
@@ -86,17 +87,17 @@ def active_sync(request):
                 new_messages
                 new_invites
     """
-    chat_room_id = request.POST['chat_room_id']
-    last_message_id = request.POST['last_message_id']
-    last_invite_id = request.POST['last_invite_id']
+    chat_room_id = request.POST.get('chat_room_id')
+    last_message_id = request.POST.get('last_message_id')
+    last_invite_id = request.POST.get('last_invite_id')
 
-    # TODO придумать как по другому сериализовать объекты
+    if not Membership.objects.get(user=request.user, room=Room.objects.get(id=chat_room_id)):
+        raise Http404
+
     return JsonResponse(
         {
-            'new_messages': [message.to_json() for message in
-                             Room.objects.get(id=chat_room_id).messages.filter(pk__gt=last_message_id)],
-            'new_invites': [invite.to_json() for invite in
-                            User.objects.get(pk=request.user).invites.filter(pk__gt=last_invite_id)],
+            'new_messages': [message.to_json() for message in Room.objects.get(id=chat_room_id).messages.filter(pk__gt=last_message_id)],
+            'new_invites': [invite.to_json() for invite in request.user.invites.filter(pk__gt=last_invite_id)],
         }
     )
 
@@ -111,10 +112,15 @@ def invitation(request):
     возвращает:
                 НИЧЕГОШЕНЬКИ,
     """
-    users = request.POST['invited_users_list']
-    _room = Room.objects.get(id=request.POST['chat_room_id'])
+    users = request.POST.get('invited_users_list')  # TODO
+    _room = Room.objects.get(id=request.POST.get('chat_room_id'))
 
-    for _user in users:
+    if not Membership.objects.get(user=request.user, room=_room):
+        raise Http404
+
+    for _user in User.objects.in_bulk(users):
+        print(users)
+        print(_user)
         invite = Invite(room=_room, user=_user)
         invite.save()
     return HttpResponse('')
@@ -130,20 +136,32 @@ def create_room(request):
                 new_room_id
                 new_room_name
     """
+    new_room_name = request.POST.get('new_room_name')
 
+    new_room = Room(title=new_room_name)
+    new_room.save()
+    new_room.join(request.user)
+
+    return JsonResponse(
+        {
+            'new_room_id': new_room.id,
+            'new_room_name': new_room.title,
+        }
+    )
 
 
 @login_required
 @csrf_exempt
 def join(request):
     """
-    Expects the following POST parameters:
-    chat_room_id
-    message
+    необходимо:
+                chat_room_id
+    возвращает:
+                НИЧЕГОШЕНЬКИ
     """
-    p = request.POST
-    r = Room.objects.get(id=int(p['chat_room_id']))
-    r.join(request.user)
+    room = Room.objects.get(id=request.POST.get('chat_room_id'))
+    if request.user.invites.filter(room=room):
+        room.join(request.user)
     return HttpResponse('')
 
 
@@ -151,11 +169,13 @@ def join(request):
 @csrf_exempt
 def leave(request):
     """
-    Expects the following POST parameters:
-    chat_room_id
-    message
+    необходимо:
+                chat_room_id
+    возвращает:
+                НИЧЕГОШЕНЬКИ
     """
-    p = request.POST
-    r = Room.objects.get(id=int(p['chat_room_id']))
-    r.leave(request.user)
+    room = Room.objects.get(id=request.POST.get('chat_room_id'))
+    room.leave(request.user)
+    if not Membership.objects.filter(room=room):
+        room.delete()
     return HttpResponse('')
