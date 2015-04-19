@@ -803,18 +803,20 @@ a.continue {
     width: 63px;
 }
 .chat-messages-count, .chat-invites-count{
-    color: black;
+    color: white;
     font-size: 25px;
-    height: 40px;
+    height: 20px;
     margin: 15px 4px;
     text-align: center;
     width: 51px;
 }
 .chat-messages-count{
     background: url("../../images/chat/letter.png") no-repeat;
+    padding-top: 42px;
 }
 .chat-invites-count{
-    background: url("../../images/chat/letter.png") no-repeat;
+    background: url("../../images/chat/invite.png") no-repeat;
+    padding-top: 50px;
 }
 .chat-main{
     background: none repeat scroll 0 0 white;
@@ -889,6 +891,23 @@ a.continue {
 #chat_messages_container{
     height: calc(100% - 135px);
     width: 100%;
+    overflow-y: scroll;
+}
+#chat_messages_list{
+    padding: 0 20px;
+}
+.chat-message{
+    background: none repeat scroll 0 0 rgb(240, 240, 240);
+    border: 1px solid rgb(200, 200, 200);
+    border-radius: 5px;
+    color: black;
+    font-size: 10pt;
+    margin: 10px 0;
+    padding: 10px;
+}
+.chat-message > .author{
+    color: olivedrab;
+    text-align: center;
 }
 #chat_textarea{
     border: none;

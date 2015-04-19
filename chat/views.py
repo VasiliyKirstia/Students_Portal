@@ -91,12 +91,13 @@ def active_sync(request):
     last_message_id = request.POST.get('last_message_id')
     last_invite_id = request.POST.get('last_invite_id')
 
-    if chat_room_id is None or not Membership.objects.get(user=request.user, room=Room.objects.get(id=chat_room_id)):
-        return JsonResponse({})
+    messages = []
+    if chat_room_id is not None and Membership.objects.get(user=request.user, room=Room.objects.get(id=chat_room_id)):
+        messages = [message.to_json() for message in Room.objects.get(id=chat_room_id).messages.filter(pk__gt=last_message_id)]
 
     return JsonResponse(
         {
-            'new_messages': [message.to_json() for message in Room.objects.get(id=chat_room_id).messages.filter(pk__gt=last_message_id)],
+            'new_messages': messages,
             'new_invites': [invite.to_json() for invite in request.user.invites.filter(pk__gt=last_invite_id)],
         }
     )
@@ -119,8 +120,22 @@ def invitation(request):
         raise Http404
 
     for _user in User.objects.in_bulk(users).values():
-        invite = Invite(room=_room, to=_user)
-        invite.save()
+        Invite.objects.update_or_create(room=_room, to=_user)
+    return HttpResponse('')
+
+
+@login_required
+@csrf_exempt
+def remove_invite(request):
+    """
+    необходимо:
+                room_id
+    возвращает:
+                НИЧЕГОШЕНЬКИ,
+    """
+    invite = Invite.objects.get(to=request.user, room=Room.objects.get(id=request.POST.get('room_id')))
+    if invite is not None:
+        invite.delete()
     return HttpResponse('')
 
 

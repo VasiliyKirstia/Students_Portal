@@ -9,6 +9,7 @@ urlpatterns = patterns(
 
     url(r'^send/$', send),
     url(r'^invitation/$', invitation),
+    url(r'^remove_invite/$', remove_invite),
     url(r'^create_room/$', create_room),
 
     url(r'^join/$', join),
