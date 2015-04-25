@@ -35,7 +35,7 @@ def init(request):
 
 @login_required
 @csrf_exempt
-def send(request):
+def send_message(request):
     """
     необходимо:
                 chat_room_id
@@ -46,7 +46,7 @@ def send(request):
     chat_room_id = request.POST.get('chat_room_id')
     message = request.POST.get('message')
 
-    room = request.user.room_set.get(id=chat_room_id)
+    room = get_object_or_404(request.user.room_set, id=chat_room_id)
     room.say(request.user, message)
     return HttpResponse('')
 
@@ -105,7 +105,7 @@ def active_sync(request):
 
 @login_required
 @csrf_exempt
-def invitation(request):
+def send_invites(request):
     """
     необходимо:
                 invited_users_list
@@ -113,7 +113,7 @@ def invitation(request):
     возвращает:
                 НИЧЕГОШЕНЬКИ,
     """
-    users = request.POST.getlist('invited_users_list[]')  # TODO
+    users = request.POST.getlist('invited_users_list[]')
     _room = Room.objects.get(id=request.POST.get('chat_room_id'))
 
     if not Membership.objects.get(user=request.user, room=_room):
@@ -133,9 +133,8 @@ def remove_invite(request):
     возвращает:
                 НИЧЕГОШЕНЬКИ,
     """
-    invite = Invite.objects.get(to=request.user, room=Room.objects.get(id=request.POST.get('room_id')))
-    if invite is not None:
-        invite.delete()
+    invite = get_object_or_404(Invite, to=request.user, room=get_object_or_404(Room, id=request.POST.get('room_id')))
+    invite.delete()
     return HttpResponse('')
 
 
@@ -172,7 +171,7 @@ def join(request):
     возвращает:
                 НИЧЕГОШЕНЬКИ
     """
-    room = Room.objects.get(id=request.POST.get('chat_room_id'))
+    room = get_object_or_404(Room, id=request.POST.get('chat_room_id'))
     if request.user.invites.filter(room=room):
         room.join(request.user)
     return HttpResponse('')
@@ -187,7 +186,7 @@ def leave(request):
     возвращает:
                 НИЧЕГОШЕНЬКИ
     """
-    room = Room.objects.get(id=request.POST.get('chat_room_id'))
+    room = get_object_or_404(Room, id=request.POST.get('chat_room_id'))
     room.leave(request.user)
     if not Membership.objects.filter(room=room):
         room.delete()

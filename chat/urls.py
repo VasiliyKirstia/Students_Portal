@@ -7,8 +7,8 @@ urlpatterns = patterns(
     url(r'^active_sync/$', active_sync),
     url(r'^passive_sync', passive_sync),
 
-    url(r'^send/$', send),
-    url(r'^invitation/$', invitation),
+    url(r'^send_message/$', send_message),
+    url(r'^send_invites/$', send_invites),
     url(r'^remove_invite/$', remove_invite),
     url(r'^create_room/$', create_room),
 
