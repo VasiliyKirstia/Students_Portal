@@ -66,16 +66,20 @@ WSGI_APPLICATION = 'students_portal.wsgi.application'
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'default': {},
+    'main_db': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'database/mainDataBase.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'database/main_db.sqlite3'),
     },
-    'research_work_db': {
+    'research_db': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'database/research_work.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'database/research_db.sqlite3'),
     }
 }
-DATABASE_ROUTERS = ['research_work.models.ResearchWorkRouter']
+DATABASE_ROUTERS = [
+    'students_portal.database_routers.ResearchWorkRouter',
+    'students_portal.database_routers.MainDataBaseRouter',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
