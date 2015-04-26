@@ -1,6 +1,6 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect, render
+from django.shortcuts import get_object_or_404, redirect, render, Http404
 from django.db.models import Q
 
 from films.models import *
@@ -55,6 +55,8 @@ class FilmCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
+        if not self.request.user.is_superuser:
+            raise Http404
         return super(FilmCreateView, self).form_valid(form)
 
 

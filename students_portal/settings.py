@@ -66,8 +66,7 @@ WSGI_APPLICATION = 'students_portal.wsgi.application'
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
 
 DATABASES = {
-    'default': {},
-    'main_db': {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'database/main_db.sqlite3'),
     },

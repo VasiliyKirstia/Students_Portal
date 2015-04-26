@@ -14,10 +14,11 @@
 {% endblock search_box %}
 
 {% block sidebar %}
-
+    {% if user.is_superuser %}
     <div class="sidebar_box">
         <h3 class='title'><a style="color:white;" href="{% url 'films:add' %}">Добавить фильм</a></h3>
     </div>
+    {% endif %}
 
     {% films_categories_partial %}
 

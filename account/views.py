@@ -7,7 +7,7 @@ from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 
-from mixins.forms import UserRegistrationForm, UserProfileUpdateForm
+from mixins.forms import UserRegistrationForm
 
 def log_out(request):
     """
@@ -48,11 +48,3 @@ class RegistrationView(CreateView):
     form_class = UserRegistrationForm
     template_name = 'account/registration.html'
     success_url = reverse_lazy('account:login')
-
-
-class ProfileEditView(CreateView):
-    form_class = UserProfileUpdateForm
-    model = User
-    pk_url_kwarg = 'user_pk'
-    template_name = 'account/update.html'
-    success_url = reverse_lazy('hallway:home')
