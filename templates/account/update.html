@@ -1,0 +1,54 @@
+{% extends "account/layout.html" %}
+
+{% block title %} Редактирование профиля {% endblock title %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.media }}
+        {{form.non_field_errors}}
+        <div class="RegfieldWrapper">
+            {{ form.username.errors }}
+            {{ form.username.label_tag }}
+            <input placeholder="логин" type="text" id="{{ form.username.id_for_label }}" name="{{ form.username.html_name }}" value="{{ form.username.value|default_if_none:'' }}" maxlength="{{ form.username.field.max_length }}">
+        </div>
+        <div class="RegfieldWrapper">
+            {{ form.first_name.errors }}
+            {{ form.first_name.label_tag }}
+            <input placeholder="ваше имя" type="text" id="{{ form.first_name.id_for_label }}" name="{{ form.first_name.html_name }}" value="{{ form.first_name.value|default_if_none:'' }}" maxlength="{{ form.first_name.field.max_length }}">
+        </div>
+        <div class="RegfieldWrapper">
+            {{ form.last_name.errors }}
+            {{ form.last_name.label_tag }}
+            <input placeholder="ваша фамилия" type="text" id="{{ form.last_name.id_for_label }}" name="{{ form.last_name.html_name }}" value="{{ form.last_name.value|default_if_none:'' }}" maxlength="{{ form.last_name.field.max_length }}">
+        </div>
+        <div class="fieldWrapper">
+            {{ form.year.errors }}
+            {{ form.year.label_tag }}
+            {{ form.year }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.room_number.errors }}
+            {{ form.room_number.label_tag }}
+            {{ form.room_number }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.sex.errors }}
+            {{ form.sex.label_tag }}
+            {{ form.sex }}
+        </div>
+        <div class="fieldWrapper">
+            {{ form.is_free.errors }}
+            {{ form.is_free.label_tag }}
+            {{ form.is_free }}
+        </div>
+        <div class="RegfieldWrapper">
+            {{ form.password.errors }}
+            {{ form.password.label_tag }}
+            <input placeholder="ваш сложний пароль" type="password" id="{{ form.password.id_for_label }}" name="{{ form.password.html_name }}" value="">
+        </div>
+        <div class="fieldWrapper">
+            <input type="submit" value="Сохранить изменения" />
+        </div>
+    </form>
+{% endblock content %}

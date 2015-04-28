@@ -12,97 +12,168 @@ from django.db.models import Q
 
 from mixins.permissions import LoginRequiredMixin
 from django.utils import timezone
-from chat.models import Room, Message
+from chat.models import Room, Message, Invite, Membership
 
 
 @login_required
 @csrf_exempt
-def send(request):
+def init(request):
     """
-    Expects the following POST parameters:
-    chat_room_id
-    message
+    необходимо:
+                НИЧЕГОШЕНЬКИ
+    возвращает:
+                rooms_list,
+                invites_list.
     """
-    p = request.POST
-    r = Room.objects.get(id=int(p['chat_room_id']))
-    r.say(request.user, p['message'])
+    return JsonResponse(
+        {
+            'rooms_list': [room.to_json() for room in request.user.room_set.all()],
+            'invites_list': [invite.to_json() for invite in request.user.invites.all()],
+        }
+    )
+
+
+@login_required
+@csrf_exempt
+def send_message(request):
+    """
+    необходимо:
+                chat_room_id
+                message
+    возвращает:
+                НИЧЕГОШЕНЬКИ
+    """
+    chat_room_id = request.POST.get('chat_room_id')
+    message = request.POST.get('message')
+
+    room = get_object_or_404(request.user.room_set, id=chat_room_id)
+    room.say(request.user, message)
     return HttpResponse('')
 
 
 @login_required
 @csrf_exempt
-def sync(request):
-    """Return last message id
-
-    EXPECTS the following POST parameters:
-    id
+def passive_sync(request):
     """
-    if request.method != 'POST':
-        raise Http404
-    post = request.POST
+    необходимо:
+                chat_room_id
+                last_message_id
+                last_invite_id
+    возвращает:
+                new_messages_count
+                new_invites_count
+    """
+    chat_room_id = request.POST.get('chat_room_id')
+    last_message_id = request.POST.get('last_message_id')
+    last_invite_id = request.POST.get('last_invite_id')
 
-    if not post.get('id'):
-        raise Http404
-
-    r = Room.objects.get(id=post['id'])
-
-    lmid = r.last_message_id()
-
-    return JsonResponse({'last_message_id': lmid})
+    return JsonResponse(
+        {
+            'new_messages_count': request.user.room_set.get(id=chat_room_id).messages.filter(pk__gt=last_message_id).count() if chat_room_id else 0,
+            'new_invites_count': request.user.invites.filter(pk__gt=last_invite_id).count() if last_invite_id else 0,
+        }
+    )
 
 
 @login_required
 @csrf_exempt
-def receive(request):
+def active_sync(request):
     """
-    Returned serialized data
-
-    EXPECTS the following POST parameters:
-    id
-    offset
-
-    This could be useful:
-    @see: http://www.djangosnippets.org/snippets/622/
+    необходимо:
+                chat_room_id
+                last_message_id
+                last_invite_id
+    возвращает:
+                new_messages
+                new_invites
     """
-    if request.method != 'POST':
+    chat_room_id = request.POST.get('chat_room_id')
+    last_message_id = request.POST.get('last_message_id')
+    last_invite_id = request.POST.get('last_invite_id')
+
+    messages = []
+    if chat_room_id is not None and Membership.objects.get(user=request.user, room=Room.objects.get(id=chat_room_id)):
+        messages = [message.to_json() for message in Room.objects.get(id=chat_room_id).messages.filter(pk__gt=last_message_id)]
+
+    return JsonResponse(
+        {
+            'new_messages': messages,
+            'new_invites': [invite.to_json() for invite in request.user.invites.filter(pk__gt=last_invite_id)],
+        }
+    )
+
+
+@login_required
+@csrf_exempt
+def send_invites(request):
+    """
+    необходимо:
+                invited_users_list
+                chat_room_id
+    возвращает:
+                НИЧЕГОШЕНЬКИ,
+    """
+    users = request.POST.getlist('invited_users_list[]')
+    _room = Room.objects.get(id=request.POST.get('chat_room_id'))
+
+    if not Membership.objects.get(user=request.user, room=_room):
         raise Http404
-    post = request.POST
 
-    if not post.get('id') or not post.get('offset'):
-        raise Http404
+    for _user in User.objects.in_bulk(users).values():
+        Invite.objects.update_or_create(room=_room, to=_user)
+    return HttpResponse('')
 
-    try:
-        room_id = int(post['id'])
-    except:
-        raise Http404
 
-    try:
-        offset = int(post['offset'])
-    except:
-        offset = 0
+@login_required
+@csrf_exempt
+def remove_invite(request):
+    """
+    необходимо:
+                room_id
+    возвращает:
+                НИЧЕГОШЕНЬКИ,
+    """
+    invite = get_object_or_404(Invite, to=request.user, room=get_object_or_404(Room, id=request.POST.get('room_id')))
+    invite.delete()
+    return HttpResponse('')
 
-    r = Room.objects.get(id=room_id)
 
-    if timezone.now() - r.last_recv > timezone.timedelta(minutes=1):
-        r.save()
+@login_required
+@csrf_exempt
+def create_room(request):
+    """
+    необходимо:
+                new_room_name
+    возвращает:
+                new_room_id
+                new_room_name
+    """
+    new_room_name = request.POST.get('new_room_name')
 
-    m = r.messages(offset)
+    new_room = Room(title=new_room_name)
+    new_room.save()
+    new_room.join(request.user)
 
-    #TODO придумать как по другому сериализовать сообщения
-    return JsonResponse([message.to_json() for message in m], safe=False)
+    return JsonResponse(
+        {
+            'new_room_id': new_room.id,
+            'new_room_name': new_room.title,
+        }
+    )
 
 
 @login_required
 @csrf_exempt
 def join(request):
     """
-    Expects the following POST parameters:
-    chat_room_id
-    message
+    необходимо:
+                chat_room_id
+    возвращает:
+                НИЧЕГОШЕНЬКИ
     """
-    p = request.POST
-    r = Room.objects.get(id=int(p['chat_room_id']))
-    r.join(request.user)
+    room = get_object_or_404(Room, id=request.POST.get('chat_room_id'))
+    if request.user.invites.filter(room=room):
+        room.join(request.user)
     return HttpResponse('')
 
 
@@ -110,50 +181,13 @@ def join(request):
 @csrf_exempt
 def leave(request):
     """
-    Expects the following POST parameters:
-    chat_room_id
-    message
+    необходимо:
+                chat_room_id
+    возвращает:
+                НИЧЕГОШЕНЬКИ
     """
-    p = request.POST
-    r = Room.objects.get(id=int(p['chat_room_id']))
-    r.leave(request.user)
+    room = get_object_or_404(Room, id=request.POST.get('chat_room_id'))
+    room.leave(request.user)
+    if not Membership.objects.filter(room=room):
+        room.delete()
     return HttpResponse('')
-
-
-class RoomsListView(ListView):
-    paginate_by = 20
-    context_object_name = 'rooms_list'
-    template_name = 'chat/index.html'
-
-    def get_queryset(self):
-        queryset = []
-        now = timezone.now()
-        for room in Room.objects.all():
-            print(room.last_recv)
-            print(timezone.now())
-            if now - room.last_recv > timezone.timedelta(minutes=30):
-                room.delete()
-            else:
-                queryset.append(room)
-        return queryset
-
-    def post(self, request, *args, **kwargs):
-        if 'query' in self.request.POST and self.request.POST['query'] != '':
-            query = self.request.POST['query']
-            return render(self.request, 'chat/index.html',
-                          {'rooms_list': Room.objects.filter(title__contains=query)[:40]})
-        return redirect('chat:home')
-
-
-class RoomCreateView(LoginRequiredMixin, CreateView):
-    model = Room
-    fields = ['title']
-    template_name = 'chat/room_create.html'
-    success_url = reverse_lazy('chat:home' )
-
-
-class RoomDetailView(LoginRequiredMixin, DetailView):
-    model = Room
-    pk_url_kwarg = 'room_pk'
-    template_name = 'chat/room_detail.html'
-    context_object_name = 'room'

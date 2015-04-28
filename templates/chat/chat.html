@@ -1,0 +1,88 @@
+{% load staticfiles %}
+
+<link type="text/css" rel="stylesheet" href="{% static 'plugins/chosen/chosen.min.css' %}">
+
+<div id="chat_opened">
+    <div class="chat-main">
+        <div class="chat-menu-left">
+            <div class="chat-block-title">Приглашения</div>
+            <div class="chat-container-invites">
+               <!-- <div class="chat-block-invite">
+                    <input type="hidden" value="1234">
+                    <div class="chat-invite-closer"></div>
+                    Комната для ровных пацанчиков
+                </div> -->
+            </div>
+
+            <div class="chat-block-title">Комнаты</div>
+            <div class="chat-container-rooms">
+                <!--<div class="chat-block-room">
+                    <div class="chat-room-closer"></div>
+                    Комната для ровных пацанчиков Комната для
+                </div>
+                <div class="chat-block-room chat-room-current">
+                    <div class="chat-room-closer"></div>
+                    Комната для ровных пацанчиков Комната для ровных
+                </div>
+                <div class="chat-block-room">
+                    <div class="chat-room-closer"></div>
+                    Комната для ровных пацанчиков Комната для ровных пацанчиков
+                </div>
+                <div class="chat-block-room">
+                    <div class="chat-room-closer"></div>
+                    Комната для ровных пацанчиков Комната для ровных пацанчиков Комната для ровных пацанчиков
+                </div>-->
+            </div>
+        </div>
+
+        <div class="chat-menu-top">
+            <div id="add_room">создать комнату</div>
+            <div id="send_invitation">пригласить в комнату</div>
+            <div style="clear: both;"></div>
+        </div>
+
+        <div id="chat_room_create">
+            <input id="chat_button_room_create" type="button" value="Создать" />
+            <input id="chat_new_room_name" type="text">
+            <div style="clear: both;"></div>
+        </div>
+
+        <div id="chat_send_invitation">
+            <select multiple id="chat_invited_users" data-placeholder="Выберите приглашаемых пользователей.">
+                {% for user in users %}
+                    <option value="{{ user.pk }}">{{ user.full_name }}</option>
+                {% endfor %}
+            </select>
+            <input id="chat_button_invitation_send" type="button" value="Пригласить" />
+            <div style="clear: both;"></div>
+        </div>
+
+        <div class="chat-wrapper-messages">
+            <div id="chat_messages_container">
+                <div id="chat_messages_list">
+                    <!-- тут будут размещаться сообщения -->
+                </div>
+            </div>
+            <div id="chat-smiles-container"></div>
+            <textarea id="chat_textarea"></textarea>
+            <input id="chat_button_message_send" type="button" value="Отправить" />
+            <div style="clear: both;"></div>
+        </div>
+
+    </div>
+    <div id="chat_label_close">с в е р н у т ь</div>
+</div>
+
+<div id="chat_closed">
+    <div class="chat-messages-count"></div>
+    <div class="chat-invites-count"></div>
+</div>
+
+<script src="{% static 'scripts/jquery.min.js' %}"></script>
+<script src="{% static 'scripts/chat.js' %}"></script>
+<script src="{% static 'plugins/chosen/chosen.jquery.min.js' %}"></script>
+
+<script>
+    $('#chat_invited_users').chosen({width: "400px", no_results_text: "Мы не нашли ничего похожего на "});
+    $("#chat_invited_users").trigger("chosen:updated");
+</script>

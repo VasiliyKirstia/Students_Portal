@@ -758,88 +758,227 @@ a.continue {
 /* end of 'индикатор занрузки данных на сервер' */
 
 /* CHAT */
-#chat{
-    border: 1px solid black;
-    width: 100%;
+#chat_closed, #chat_opened{
+    z-index: 1000;
 }
-
-#chat-messages-container {
-	overflow: auto; /* used for scrolling */
-	height: 420px;
-}
-
-#chat-messages {
-	padding: 5px;
-}
-
-#chat-messages .author {
-	font-weight: bold;
-	margin-right: 0.5em;
-	display: inline;
-}
-
-#chat-messages .message {
-	margin-bottom: 4px;
-}
-
-#chat-messages .system {
-	font-weight: bold;
-	color: #642;
-}
-
-#chat-messages .join {
-	color: #696;
-	background: url(../../images/chat/in.png) top left no-repeat;
-	padding-left: 20px;
-	margin: 4px 0;
-}
-
-#chat-messages .leave {
-	color: #966;
-	background: url(../../images/chat/out.png) top left no-repeat;
-	padding-left: 20px;
-	margin: 4px 0;
-}
-
-#chat .message {
-	width: 100%;
-}
-
-#chat-form{
-    width: 100%;
-    position: relative;
-    height: 30px;
-}
-
-#chat-form input[type="text"], #chat-form input[type="submit"]{
-    box-shadow: none;
-    border: none;
-    font-size: 15px;
-    height: 30px;
-}
-
-#chat-form input[type="text"]{
-    margin: 0;
-    padding: 0 5px;
-    width: 83%;
-}
-
-#chat-form input[type="submit"]{
-    background-color: black;
-    font-size: 15px;
-    color: white;
-    position:absolute;
+#chat_opened{
+    background: none no-repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+    bottom: 0;
+    left: 0;
+    position: fixed;
     right: 0;
-    height: 30px;
-}
+    top: 0;
 
-#chat-smiles-container{
+    display: none;
+}
+#chat_label_close{
+    background: none repeat scroll 0 0 white;
+    border-bottom: 1px solid black;
+    border-radius: 0 10px 10px 0;
+    border-right: 1px solid black;
+    border-top: 1px solid black;
+    color: black;
+    cursor: pointer;
+    font-size: 25px;
+    height: 205px;
+    left: 1000px;
+    line-height: 1em;
+    margin-top: -102.5px;
+    padding: 5px;
+    position: fixed;
+    text-align: center;
+    top: 50%;
+    width: 30px;
+    z-index: 1001;
+}
+#chat_closed{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+    border-radius: 0 15px 15px 0;
+    cursor: pointer;
+    height: 180px;
+    left: 0;
+    margin-top: -90px;
+    position: fixed;
+    top: 50%;
+    width: 63px;
+}
+.chat-messages-count, .chat-invites-count{
+    color: white;
+    font-size: 25px;
+    height: 20px;
+    margin: 15px 4px;
+    text-align: center;
+    width: 51px;
+}
+.chat-messages-count{
+    background: url("../../images/chat/letter.png") no-repeat;
+    padding-top: 42px;
+}
+.chat-invites-count{
+    background: url("../../images/chat/invite.png") no-repeat;
+    padding-top: 50px;
+}
+.chat-main{
+    background: none repeat scroll 0 0 white;
+    border-right: 1px solid black;
+    height: 100%;
+    position: relative;
+    width: 1000px;
+}
+.chat-menu-left{
+    background: none repeat scroll 0 0 lightgrey;
+    border-right: 1px solid gray;
+    height: 100%;
+    width: 300px;
+    position: absolute;
+}
+.chat-container-invites, .chat-container-rooms{
+    border-bottom: 0.5px solid gray;
+    border-top: 0.5px solid gray;
+    height: calc(50% - 40px);
+    overflow-y: auto;
+    width: 100%;
+}
+.chat-block-title{
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    padding: 10px;
+}
+.chat-block-room, .chat-block-invite{
+    cursor: default;
+    font-size: 15px;
+    padding: 5px;
+}
+.chat-room-closer, .chat-invite-closer{
+    background: none repeat scroll 0 0 black;
+    float: right;
+    height: 20px;
+    width: 20px;
+    cursor: pointer;
+}
+.chat-room-current{
+    background: none repeat scroll 0 0 white;
     border-bottom: 1px solid black;
     border-top: 1px solid black;
-    padding-left: 5px;
+    color: black;
 }
+.chat-menu-top{
+    background: none repeat scroll 0 0 black;
+    height: 40px;
+    left: 300px;
+    position: absolute;
+    top: 0;
+    width: 700px;
+}
+#add_room,
+#send_invitation{
+    color: white;
+    cursor: pointer;
+    float: right;
+    font-size: 20px;
+    padding: 10px;
+    text-decoration: underline;
+}
+.chat-wrapper-messages{
+    position: absolute;
+    left: 300px;
+    top: 40px;
+    width: 700px;
+    bottom: 0px;
+    height: calc(100% - 40px);
+}
+#chat_messages_container{
+    height: calc(100% - 135px);
+    width: 100%;
+    overflow-y: scroll;
+}
+#chat_messages_list{
+    padding: 0 20px;
+}
+.chat-message{
+    background: none repeat scroll 0 0 rgb(240, 240, 240);
+    border: 1px solid rgb(200, 200, 200);
+    border-radius: 5px;
+    color: black;
+    font-size: 10pt;
+    margin: 10px 0;
+    padding: 10px;
+}
+.chat-message > .author{
+    color: olivedrab;
+    text-align: center;
+}
+#chat_textarea{
+    border: none;
+    border-top: solid black 1px;
+    float: left;
+    font-size: 15px;
+    height: 90px;
+    line-height: 1.2em;
+    margin: 0;
+    padding: 5px;
+    resize: none;
+    width: 490px;
+}
+#chat_button_message_send{
+    background: none repeat scroll 0 0 black;
+    border: medium none;
+    color: white;
+    font-size: 25px;
+    height: 100px;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    cursor: pointer;
+}
+#chat_room_create, #chat_send_invitation{
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.3);
+    left: 300px;
+    position: absolute;
+    top: 40px;
+    width: 700px;
+    z-index: 1002;
 
-.smile{
-    margin: 3px;
+    display: none;
+}
+#chat_room_create{
+}
+#chat_send_invitation{
+    padding: 10px;
+    max-height: calc(100% - 40px);
+    width: 680px;
+}
+#chat_button_room_create{
+    background: none repeat scroll 0 0 black;
+    border: medium none;
+    color: white;
+    cursor: pointer;
+    float: right;
+    font-size: 12px;
+    margin: 10px 10px 10px 0;
+    padding: 5px;
+}
+#chat_button_invitation_send{
+    background: none repeat scroll 0 0 black;
+    border: medium none;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 5px;
+}
+#chat_new_room_name{
+    border: medium none;
+    float: right;
+    margin: 10px;
+    padding: 5px;
+    width: 360px;
+}
+#chat_button_invitation_send{
+}
+#chat_room_create select{
+}
+#chat-smiles-container{
+    border-top: 1px solid black;
 }
 /* end of CHAT */

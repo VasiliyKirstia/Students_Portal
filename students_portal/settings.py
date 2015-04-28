@@ -44,6 +44,7 @@ INSTALLED_APPS = (
     'chat',
     'mixins',
     'ckeditor',
+    'research_work',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -67,9 +68,17 @@ WSGI_APPLICATION = 'students_portal.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'database/mainDataBase.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'database/main_db.sqlite3'),
+    },
+    'research_db': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'database/research_db.sqlite3'),
     }
 }
+DATABASE_ROUTERS = [
+    'students_portal.database_routers.ResearchWorkRouter',
+    'students_portal.database_routers.MainDataBaseRouter',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/

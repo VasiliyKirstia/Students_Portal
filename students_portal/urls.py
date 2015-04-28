@@ -9,6 +9,7 @@ import hallway.urls as hallway_urls
 import library.urls as library_urls
 import films.urls as films_urls
 import chat.urls as chat_urls
+import research_work.urls as research_urls
 
 urlpatterns = patterns(
     '',
@@ -28,6 +29,8 @@ urlpatterns = patterns(
     url(r'^ckeditor/', include('ckeditor.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^secret_research/$', include(research_urls, namespace='research')),
 
     url(r'^secret_view_404/$', views.error_page_404),
 

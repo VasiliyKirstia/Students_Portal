@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.template import RequestContext
 from django.core.context_processors import csrf
 from django.shortcuts import render_to_response
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import redirect
 
@@ -31,9 +32,9 @@ def log_in(request):
                 if 'next' in request.GET:
                     return redirect(request.GET['next'])
                 else:
-                    return redirect('forum:home')
+                    return redirect('hallway:home')
             else:
-                ctx.update({'error': 'Пользователь отключён'})
+                ctx.update({'error': 'Ваша учетная запись не активна. За подробностями обращайтесь к администрации сайта.'})
         else:
             ctx.update({'error': 'Неправильный логин или пароль'})
     ctx.update(csrf(request))

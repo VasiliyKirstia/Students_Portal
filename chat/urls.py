@@ -3,14 +3,15 @@ from chat.views import *
 
 urlpatterns = patterns(
     '',
-    url(r'^$', RoomsListView.as_view(), name='home'),
-    url(r'^room/(?P<room_pk>\d+)/$', RoomDetailView.as_view(), name='room'),
-    url(r'^create/room/', RoomCreateView.as_view(), name='create'),
+    url(r'^init/$', init),
+    url(r'^active_sync/$', active_sync),
+    url(r'^passive_sync', passive_sync),
 
-    url(r'^send/$', 'chat.views.send'),
-    url(r'^receive/$', 'chat.views.receive'),
-    url(r'^sync/$', 'chat.views.sync'),
+    url(r'^send_message/$', send_message),
+    url(r'^send_invites/$', send_invites),
+    url(r'^remove_invite/$', remove_invite),
+    url(r'^create_room/$', create_room),
 
-    url(r'^join/$', 'chat.views.join'),
-    url(r'^leave/$', 'chat.views.leave'),
+    url(r'^join/$', join),
+    url(r'^leave/$', leave),
 )
