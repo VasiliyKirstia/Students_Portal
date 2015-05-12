@@ -80,9 +80,14 @@
 
 <script src="{% static 'scripts/jquery.min.js' %}"></script>
 <script src="{% static 'scripts/chat.js' %}"></script>
+<script src="{% static 'scripts/keylogger.js' %}"></script>
 <script src="{% static 'plugins/chosen/chosen.jquery.min.js' %}"></script>
 
 <script>
     $('#chat_invited_users').chosen({width: "400px", no_results_text: "Мы не нашли ничего похожего на "});
     $("#chat_invited_users").trigger("chosen:updated");
+    $(window).load(function(){
+        Keylogger.init($("#chat_textarea"));
+        $('#chat_button_message_send').on("click", Keylogger.send);
+    });
 </script>
