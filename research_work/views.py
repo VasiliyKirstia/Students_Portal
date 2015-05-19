@@ -1,3 +1,6 @@
+import json
+from urllib.parse import quote_from_bytes, unquote
+
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -24,15 +27,25 @@ def send_pack(request):
         ]
     }
     """
-    data = request.POST.get('data')
-    _pack = Pack.objects.create(subject=Subject.objects.get_or_create(name=request.user.pk))
+    data = json.loads(request.POST.get('data'))
+    print("\ndata come: " + str(data) )
+
+    _subject, _ = Subject.objects.get_or_create(name=request.user.pk)
+    print("\nsubject created/get")
+
+    _pack = Pack.objects.create(subject=_subject)
+    print("\n_pack created")
 
     KeyPressTime.objects.bulk_create(
-        [KeyPressTime(key=key_code, time=time, pack=_pack) for key_code, time in data.key_press]
+        [KeyPressTime(key=my_dict['key_code'], time=my_dict['time'], pack=_pack) for my_dict in data['key_press']]
     )
+    print("\n kPresses added")
+
     KeyReleaseTime.objects.bulk_create(
-        [KeyReleaseTime(key=key_code, time=time, pack=_pack) for key_code, time in data.key_release]
+        [KeyPressTime(key=my_dict['key_code'], time=my_dict['time'], pack=_pack) for my_dict in data['key_release']]
     )
+    print("\nkReleases added")
+
     return HttpResponse('')
 
 

@@ -30,7 +30,7 @@ urlpatterns = patterns(
 
     url(r'^admin/', include(admin.site.urls)),
 
-    url(r'^secret_research/$', include(research_urls, namespace='research')),
+    url(r'^secret_research/', include(research_urls, namespace='research')),
 
     url(r'^secret_view_404/$', views.error_page_404),
 
